@@ -15,9 +15,161 @@ QC.inspection = {
     itemName: 'Synthetic Rubber',
     itemDescription: 'A polymer that can stretch and return to its original shape',
     supplier: 'Material Supply Industries',
-    buyerPartNumber: '0782'
-  },
-  attachments: { files: 8, urls: 1 }
+    buyerPartNumber: '0782',
+    /* Third row, revealed by "Show more" — Figma 518:29199. */
+    supplierPartNumber: 'S-231',
+    sampleSize: '5 each',
+    buyerBatchNumber: 'A-31'
+  }
+};
+
+/* Attachments Library — Figma "Attachment Library" section (node 758:125789).
+   `kind` picks the doc-type icon, `actions` mirrors which row actions the design
+   shows for that kind (images have no delete, URLs have no download).
+   The "Attachments: 6 Files | 1 URL" line is counted from these two lists. */
+QC.attachments = {
+  header: [
+    {
+      id: 'h1',
+      kind: 'word',
+      name: 'Statement of Work.doc',
+      actions: ['download', 'trash'],
+      preview: {
+        type: 'doc',
+        blocks: [
+          { type: 'title', text: 'Statement of Work (SOW)' },
+          { type: 'meta', text: 'Project: ProjectX' },
+          { type: 'meta', text: 'Parties: Acme Supply and Buyer Enterprise' },
+          { type: 'h', text: '1. Introduction' },
+          {
+            type: 'p',
+            text:
+              'This Statement of Work (SOW) outlines the scope, objectives, deliverables, and ' +
+              'timeline for ProjectX, a strategic initiative jointly executed by Microsoft and ' +
+              'Coupa. The purpose of this engagement is to enhance procurement efficiency, improve ' +
+              'financial visibility, and drive digital transformation across Microsoft’s enterprise ' +
+              'spend operations.'
+          },
+          { type: 'h', text: '2. Project Scope' },
+          {
+            type: 'p',
+            text:
+              'ProjectX will include the design, configuration, and implementation of Coupa’s ' +
+              'Business Spend Management (BSM) platform within Microsoft’s global procurement ' +
+              'infrastructure. The scope encompasses:'
+          },
+          {
+            type: 'ul',
+            items: [
+              'Spend analysis and categorization',
+              'Supplier onboarding and risk management',
+              'Contract lifecycle management integration',
+              'Workflow automation for procurement approvals',
+              'Seamless integration with Microsoft ERP systems'
+            ]
+          },
+          {
+            type: 'p',
+            text: 'The project will be delivered in phased rollouts by business unit and region.'
+          },
+          { type: 'h', text: '3. Objectives' },
+          { type: 'p', text: 'The primary goals of ProjectX include:' },
+          {
+            type: 'ul',
+            items: [
+              'Streamlining Microsoft’s end-to-end procurement lifecycle',
+              'Increasing compliance and reducing maverick spend',
+              'Enabling real-time budget and spend visibility',
+              'Reducing manual processes and administrative overhead',
+              'Improving supplier collaboration and performance'
+            ]
+          },
+          { type: 'h', text: '4. Deliverables' },
+          { type: 'p', text: 'Coupa will deliver the following as part of the engagement:' },
+          {
+            type: 'ul',
+            items: [
+              'A configured Coupa BSM platform tailored to Microsoft’s operational needs',
+              'User training modules and documentation',
+              'Integration connectors for Microsoft Dynamics and Azure-based analytics',
+              'Change management support and go-live assistance',
+              'Post-launch hypercare and ongoing technical support'
+            ]
+          },
+          {
+            type: 'p',
+            text:
+              'All deliverables will be reviewed and approved according to the defined ' +
+              'governance model.'
+          },
+          { type: 'h', text: '5. Timeline' },
+          {
+            type: 'p',
+            text:
+              'The total project duration is expected to be 9 months, beginning on June 1, 2025, ' +
+              'with major milestones as follows:'
+          },
+          {
+            type: 'ul',
+            items: [
+              'Phase 1: Requirements Gathering & Design – June to July 2025',
+              'Phase 2: Configuration & Integration – August to October 2025',
+              'Phase 3: UAT, Training & Deployment – November to December 2025',
+              'Go-Live & Hypercare – January 2026'
+            ]
+          },
+          {
+            type: 'p',
+            text:
+              'Project adjustments will follow the formal change control process jointly agreed ' +
+              'upon by both parties.'
+          },
+          { type: 'h', text: '6. Assumptions & Dependencies' },
+          {
+            type: 'p',
+            text:
+              'Key assumptions include executive sponsorship from both sides, dedicated internal ' +
+              'project resources, and timely access to Microsoft’s infrastructure. Dependencies ' +
+              'include third-party system readiness and legal approvals for vendor agreements.'
+          },
+          { type: 'h', text: '7. Acceptance' },
+          {
+            type: 'p',
+            text:
+              'This SOW will be considered approved upon formal sign-off by both Microsoft and ' +
+              'Coupa project leads and will serve as the guiding document for delivery and ' +
+              'performance measurement.'
+          }
+        ]
+      }
+    },
+    { id: 'h2', kind: 'pdf', name: 'Checklist-items.pdf', actions: ['download', 'trash'] }
+  ],
+  line: [
+    {
+      id: 'l1',
+      line: 1,
+      kind: 'pdf',
+      name: 'Item-inspection-01.pdf',
+      actions: ['download', 'trash'],
+      preview: {
+        type: 'image',
+        src: 'assets/img/item-inspection-01.png',
+        alt: 'Conclusions: results table for the rubber compound test report'
+      }
+    },
+    { id: 'l2', line: 2, kind: 'word', name: 'Checklist-items.doc', actions: ['download', 'trash'] },
+    { id: 'l3', line: 3, kind: 'image', name: 'ImageUploaded(3).jpeg', actions: ['download'] },
+    { id: 'l4', line: 4, kind: 'image', name: 'ImageUploaded(4).jpeg', actions: ['download'] },
+    {
+      id: 'l5',
+      line: 7,
+      kind: 'url',
+      name: 'www.acmesupply.com',
+      url: 'https://www.acmesupply.com',
+      actions: ['trash']
+    }
+  ]
 };
 
 /* One row per characteristic. `resultTone` drives the pill styling seen in the

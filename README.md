@@ -11,14 +11,18 @@ Two screens from that section are implemented:
 | [`index.html`](index.html) | `3782:74663` — *Supplier - Item Inspection* | Coupa Supplier Portal (CSP) |
 | [`buyer.html`](buyer.html) | `3782:77297` — *Item Inspection* | Coupa core / buyer |
 
+Two components on those screens are built from their own dedicated Figma sections:
+
+| Component | Figma node |
+| --- | --- |
+| Attachments Library (11 states) | [`758:125789`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=758-125789) — *Attachment Library* |
+| Summary, expanded third row | [`518:28852`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=518-28852) — *Header Summary / Variant2* |
+
 ## Live preview
 
-Once GitHub Pages is enabled for this repo (Settings → Pages → Branch `main`, folder `/`), the
-prototype is served at:
+GitHub Pages serves the prototype from `main` / root:
 
-```
-https://<owner>.github.io/qc-collaboration-prototype/
-```
+**https://liemnguyen-afk.github.io/qc-collaboration-prototype/**
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
 
@@ -54,9 +58,26 @@ python3 -m http.server 8000
 - Row action icons, attachment icons, filter/more buttons, pagination, and page-size controls all
   respond (with toasts where the target screen is outside this prototype’s scope).
 
+**Attachments Library** (Figma `758:125789`)
+- **Header Level / Line Level** tabs switch the list; the badges count the attachments at each level.
+- Clicking a row selects it and renders it in the **preview pane** — the Statement of Work as a
+  document, `Item-inspection-01.pdf` as its page image, a URL row as the *Link Attachment* card.
+- The preview **action set** works: zoom out / zoom in, expand to a full-screen sheet (`Esc` closes),
+  rotate 90°, download (toast), and the red remove, which deletes the attachment from the library.
+- Row **download** icons toast; row **trash** icons delete the row, and the counts, badges and
+  pagination follow.
+- **Add File** opens the dashed dropzone — **Browse** or dragging files onto it really attaches them
+  to the level you are on, with the doc-type icon picked from the extension.
+- **Add URL** enables its **Add** button only once you type something, then adds the URL as a row.
+- Either add mode also shows **Enter Comment** / **Add Comment**, which posts to History.
+- **Pagination** appears once a level holds more than 10 attachments (the Figma
+  *Line level - w/pagination* state); add enough files with Browse to see it.
+- The “6 Files | 1 URL” links expand the card and jump to the list; the URL link selects the URL.
+
 **Cards**
 - Summary, Attachments Library, Comments, and History all collapse/expand from their chevrons.
-- Attachments Library’s “8 Files | 1 URL” expands an itemised list.
+- Summary’s **Show more / Show less** reveals the third field row (Supplier Part Number, Sample
+  Size, Buyer Batch Number) from Figma `518:28852`.
 
 ## Structure
 
@@ -65,9 +86,10 @@ index.html            Supplier screen
 buyer.html            Buyer review screen
 assets/css/tokens.css Clarity UI (CUI) design tokens, resolved from Figma variables
 assets/css/styles.css Component styling for both product chromes
-assets/js/data.js     Characteristics + history content transcribed from Figma
-assets/js/app.js      Filtering, sorting, accordions, comments, modals, navigation
-assets/icons/         33 assets exported from the Figma file (SVG + one PNG flag)
+assets/js/data.js     Characteristics, attachments + history content transcribed from Figma
+assets/js/app.js      Filtering, sorting, accordions, attachments, comments, modals, navigation
+assets/icons/         47 assets exported from the Figma file (SVG + one PNG flag)
+assets/img/           Document preview image exported from the Figma file
 ```
 
 Every icon is the asset exported from Figma — none are hand-drawn — so glyphs match the design
@@ -87,8 +109,27 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
 - **Pagination is chrome only.** The Figma pager shows “Prev 1 2 3 … 17 Next” over a table that
   contains 8 rows of real data. The controls highlight and toast but do not page, because there is no
   further data in the design.
-- **“Show more” in Summary** — the Figma frame shows both summary rows plus a “Show more” affordance,
-  but does not define what the expanded state reveals. The toggle works and says so explicitly.
+- **Summary third row** comes from a different frame (`518:28852`) than the two screens
+  (`3782:74670` / `3782:77332`), because the QC-History frames only show the collapsed state. That
+  frame also carries different values for two fields it shares with the screens — Status `Open` and
+  Buyer Part Number `0762`, against `In Progress` / `In Buyer Review` and `0782` on the screens. The
+  screens’ own values are kept; only the three new fields were taken from `518:28852`.
+- **Attachment counts.** The QC-History frames say “8 Files | 1 URL”, but the Attachment Library
+  component itemises 2 header-level plus 5 line-level attachments — 6 files and 1 URL. The itemised
+  list wins, so the counts read “6 Files | 1 URL” and are computed from
+  [`assets/js/data.js`](assets/js/data.js) (including in the Submit modal).
+- **Only two attachments have a designed preview**: `Statement of Work.doc` (its text) and
+  `Item-inspection-01.pdf` (a page image, exported to `assets/img/`). Selecting any other file shows
+  a note saying the design has no preview for it, rather than inventing one.
+- **Pagination in the library is real but idle.** The Figma *Line level - w/pagination* state shows
+  35 line-level attachments over 7 pages; this inspection only has 5, so the pager stays hidden until
+  you attach more files.
+- **Row action icons use the CUI outline set** (`download-outline`, `trash-outline`), as every
+  component instance in the design does. The two *Add file* / *Add URL* frames (`829:93201`,
+  `829:93994`) still use the older green/red `Icons/action/*` glyphs; that looked like drift in the
+  design file, so the CUI icons were used consistently.
+- **“Select a document from list to view here”** — the line-level empty state in the design reads
+  “Select an document…”; the typo is not reproduced.
 - **Saved views, filter panel, global search, notifications, help, cart, file pickers** are not
   designed in this section; those controls respond with a toast instead of silently doing nothing.
 - **Fonts** are loaded from Google Fonts (Nunito Sans for CUI, Open Sans for the buyer nav). Helvetica
@@ -99,5 +140,6 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
 ## Data
 
 All content — the 8 characteristics with their specifications, ranges, results, expected results,
-remarks and attachments, and the 11 history entries — is transcribed from the Figma frames and lives
-in [`assets/js/data.js`](assets/js/data.js). Editing that file updates both screens.
+remarks and attachments, the 7 library attachments, and the 11 history entries — is transcribed from
+the Figma frames and lives in [`assets/js/data.js`](assets/js/data.js). Editing that file updates
+both screens.

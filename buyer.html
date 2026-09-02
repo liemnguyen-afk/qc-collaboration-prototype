@@ -140,7 +140,21 @@
             <p class="summary__value">&nbsp;</p>
           </div>
         </div>
-        <p class="summary__note">Additional summary fields are not defined in this Figma frame, so nothing further is shown here.</p>
+        <!-- Third row — Figma 518:29199, revealed by "Show more" -->
+        <div class="summary__extra summary__extra--third">
+          <div>
+            <p class="summary__label">SUPPLIER PART NUMBER</p>
+            <p class="summary__value">S-231</p>
+          </div>
+          <div>
+            <p class="summary__label">SAMPLE SIZE</p>
+            <p class="summary__value">5 each</p>
+          </div>
+          <div>
+            <p class="summary__label">BUYER BATCH NUMBER</p>
+            <p class="summary__value">A-31</p>
+          </div>
+        </div>
         <button class="summary__more" type="button" data-show-more>
           <span>Show more</span>
           <img src="assets/icons/chevron-down.svg" alt="">
@@ -219,30 +233,62 @@
       </div>
     </section>
 
-    <!-- Attachments Library — Figma 3782:79099 -->
-    <section class="card library" data-accordion>
+    <!-- Attachments Library — Figma 758:125789 ("Attachment Library", 11 states) -->
+    <section class="card attachments" data-accordion data-attachments>
       <button class="card__header" type="button" aria-expanded="true">
         <h2 class="card__title">Attachments Library</h2>
         <img class="card__chevron" src="assets/icons/chevron-down.svg" alt="">
       </button>
       <div class="card__body">
-        <p class="library__meta">
+        <p class="att__count">
           Attachments:
-          <button type="button" data-library-toggle>8 Files | 1 URL</button>
+          <button type="button" data-att-jump="file" data-att-files></button>
+          <span class="att__pipe">|</span>
+          <button type="button" data-att-jump="url" data-att-urls></button>
         </p>
-        <div class="library__files">
-          <div class="library__file" data-library-file="QI-001-Test_Report-061025-080512.pdf">
-            <img src="assets/icons/page-blank.svg" alt=""> QI-001-Test_Report-061025-080512.pdf
+
+        <div class="att__panes">
+          <div class="att__list">
+            <div class="att__tabs" role="tablist" aria-label="Attachment level">
+              <button class="att__tab is-active" type="button" role="tab" aria-selected="true" data-att-tab="header">
+                Header Level <span class="att__badge" data-att-badge="header"></span>
+              </button>
+              <button class="att__tab" type="button" role="tab" aria-selected="false" data-att-tab="line">
+                Line Level <span class="att__badge" data-att-badge="line"></span>
+              </button>
+            </div>
+
+            <h3 class="att__list-title" data-att-title>Header</h3>
+            <ul class="att__rows" data-att-rows></ul>
+            <nav class="att__pager" data-att-pager aria-label="Attachment pages"></nav>
+
+            <p class="att__add">
+              Add
+              <button type="button" data-att-add="file">File</button>
+              <span class="att__pipe">|</span>
+              <button type="button" data-att-add="url">URL</button>
+            </p>
+
+            <div class="att__adder" data-att-adder>
+              <div class="att__dropzone" data-att-dropzone>
+                <span>Drop or Browse Files</span>
+                <button class="att__browse" type="button" data-att-browse>Browse</button>
+              </div>
+              <div class="att__url">
+                <input type="text" placeholder="Type URL here" aria-label="URL to attach" data-att-url-input>
+                <button class="att__url-add" type="button" data-att-url-add disabled>Add</button>
+              </div>
+              <div class="comment-form">
+                <label class="comment-form__label" for="att-comment">Enter Comment</label>
+                <textarea id="att-comment" data-att-comment></textarea>
+                <div class="comment-form__row comment-form__row--end">
+                  <button class="btn-legacy" type="button" data-att-adder-submit>Add Comment</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="library__file" data-library-file="Durometer_Calibration_Certificate.pdf">
-            <img src="assets/icons/page-blank.svg" alt=""> Durometer_Calibration_Certificate.pdf
-          </div>
-          <div class="library__file" data-library-file="File_name.doc">
-            <img src="assets/icons/page-blank.svg" alt=""> File_name.doc (×6)
-          </div>
-          <div class="library__file" data-library-file="https://master-proc.coupadev.com/quality_inspections/001/edit">
-            <img src="assets/icons/page-blank.svg" alt=""> https://master-proc.coupadev.com/quality_inspections/001/edit
-          </div>
+
+          <div class="att__preview" data-att-preview></div>
         </div>
       </div>
     </section>
