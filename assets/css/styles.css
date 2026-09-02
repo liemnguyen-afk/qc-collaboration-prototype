@@ -978,9 +978,16 @@ button {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  /* The count line above it already carries the gap under the card title. */
+  margin-top: 20px;
 }
 
-/* Collapsed line: "Attachments: 6 Files | 1 URL" */
+/* Sits outside .card__body so the collapsed card still reads
+   "Attachments: 6 Files | 1 URL" — the Figma collapsed state. */
+.attachments .att__count {
+  margin-top: var(--cui-space-3xl);
+}
+
 .att__count {
   display: flex;
   align-items: center;

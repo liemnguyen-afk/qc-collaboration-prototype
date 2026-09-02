@@ -237,16 +237,15 @@
     <section class="card attachments" data-accordion data-attachments>
       <button class="card__header" type="button" aria-expanded="true">
         <h2 class="card__title">Attachments Library</h2>
-        <img class="card__chevron" src="assets/icons/chevron-down.svg" alt="">
+        <img class="card__chevron" src="assets/icons/chevron-up.svg" alt="">
       </button>
+      <p class="att__count">
+        Attachments:
+        <button type="button" data-att-jump="file" data-att-files></button>
+        <span class="att__pipe">|</span>
+        <button type="button" data-att-jump="url" data-att-urls></button>
+      </p>
       <div class="card__body">
-        <p class="att__count">
-          Attachments:
-          <button type="button" data-att-jump="file" data-att-files></button>
-          <span class="att__pipe">|</span>
-          <button type="button" data-att-jump="url" data-att-urls></button>
-        </p>
-
         <div class="att__panes">
           <div class="att__list">
             <div class="att__tabs" role="tablist" aria-label="Attachment level">
@@ -297,7 +296,7 @@
     <section class="card" data-accordion>
       <button class="card__header" type="button" aria-expanded="true">
         <h2 class="card__title">Comments</h2>
-        <img class="card__chevron" src="assets/icons/chevron-down.svg" alt="">
+        <img class="card__chevron" src="assets/icons/chevron-up.svg" alt="">
       </button>
       <div class="card__body">
         <div class="comment-form">

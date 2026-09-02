@@ -77,6 +77,8 @@ python3 -m http.server 8000
 - **Pagination** appears once a level holds more than 10 attachments (the Figma
   *Line level - w/pagination* state); add enough files with Browse to see it.
 - The “6 Files | 1 URL” links expand the card and jump to the list; the URL link selects the URL.
+- The **“Attachments: 6 Files | 1 URL” line stays visible when the card is collapsed** (the Figma
+  collapsed state), so the counts read without expanding — and the links still expand and jump.
 
 **Cards**
 - Summary, Attachments Library, Comments, and History all collapse/expand from their chevrons.
