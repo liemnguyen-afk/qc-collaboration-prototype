@@ -1,0 +1,91 @@
+/* Clarity UI (CUI) tokens as resolved in Figma:
+   187 Quality Collaboration SCC/SCPL — section "QC- History" (node 3782-77289).
+   Values come from get_variable_defs on the nodes in that section. */
+
+:root {
+  /* Surfaces */
+  --cui-surface-s1: #ffffff;
+  --cui-surface-s2: #fcfcfd;
+  --cui-surface-s3: #f5f7fa;
+  --cui-surface-s4: #ebf0f4;
+
+  /* Borders */
+  --cui-border-b2: #e1e8ef;
+  --cui-border-b2-alt: #ebf0f4;
+  --cui-border-input: #d5dee7;
+  --cui-border-neutral-minimal: #4f6077;
+
+  /* Text */
+  --cui-text-t1: #1b1f28;
+  --cui-text-t2: #455468;
+  --cui-text-t3: #677d98;
+  --cui-text-subtle-neutral: #4f6077;
+  --cui-text-form-label: #60768a;
+  --cui-text-1: #2f2f2f;
+  --cui-text-2: #6a6a6a;
+  --cui-text-dark: #333333;
+  --cui-text-link: #0971f1;
+  --cui-text-link-history: #0059d6;
+
+  /* Status */
+  --cui-status-warning-bold: #e08500;
+  --cui-alert-warning-color: #664109;
+  --cui-orange-subtle-surface: #ffe5c8;
+  --cui-orange-subtle-border: #ff9900;
+  --cui-light-blue-subtle-border: #007ac5;
+  --cui-light-blue-bold-surface: #0060a4;
+  --cui-alert-info-color: #003461;
+  --cui-status-error: #df0f0f;
+  --cui-brand2-200: #9dbfed;
+  --cui-scrollbar-rest: #607590;
+  --cui-scrollbar-hover: #586b84;
+
+  /* Coupa chrome */
+  --csp-brand: #0c7cc0;
+  --csp-link: #268ecd;
+  --coupa-primary: #0971f1;
+  --silver-100: #eff0f1;
+
+  /* Radii */
+  --cui-radii-xs: 8px;
+  --cui-radii-md: 12px;
+  --cui-radii-xl: 16px;
+  --cui-radii-2xl: 100px;
+  --border-radius: 4px;
+
+  /* Space */
+  --cui-space-3xs: 2px;
+  --cui-space-2xs: 4px;
+  --cui-space-xs: 6px;
+  --cui-space-sm: 8px;
+  --cui-space-md: 10px;
+  --cui-space-lg: 12px;
+  --cui-space-2xl: 16px;
+  --cui-space-3xl: 20px;
+  --cui-space-4xl: 24px;
+  --cui-space-5xl: 32px;
+  --cui-space-7xl: 48px;
+
+  /* Typography */
+  --cui-font-control: "Nunito Sans", -apple-system, "Segoe UI", sans-serif;
+  --cui-font-heading: "Nunito Sans", -apple-system, "Segoe UI", sans-serif;
+  --coupa-nav-font: "Open Sans", -apple-system, "Segoe UI", sans-serif;
+  --coupa-chrome-font: Helvetica, Arial, sans-serif;
+
+  --cui-font-size-2xs: 12px;
+  --cui-font-size-sm: 14px;
+  --cui-font-size-md: 16px;
+  --cui-font-size-xl: 20px;
+  --cui-font-size-2xl: 24px;
+
+  --cui-line-3xs: 16px;
+  --cui-line-2xs: 20px;
+  --cui-line-xs: 24px;
+  --cui-line-md: 28px;
+  --cui-line-lg: 36px;
+
+  --cui-weight-regular: 400;
+  --cui-weight-medium: 500;
+  --cui-weight-semibold: 600;
+  --cui-weight-bold: 700;
+}

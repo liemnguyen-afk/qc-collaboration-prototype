@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1440">
+  <title>Quality Inspection #1 for Synthetic Rubber — Supplier Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-role="supplier" data-history-filter="all">
+
+<div class="page">
+
+  <!-- Header — Figma 3782:74664 -->
+  <header class="csp-header">
+    <div class="csp-header__top">
+      <div class="csp-header__brand">
+        <span class="csp-header__logo"><img class="icon" src="assets/icons/csp-logo.svg" alt="Coupa"></span>
+        <span>supplier portal</span>
+      </div>
+      <div class="csp-welcome">
+        <button class="csp-welcome__item" type="button" data-toast="Account menu is out of scope for this prototype.">
+          NILES <img class="csp-welcome__caret" src="assets/icons/caret-down-sm.svg" alt="">
+        </button>
+        <img class="csp-welcome__divider" src="assets/icons/divider.svg" alt="">
+        <button class="csp-welcome__item" type="button" data-toast="No new notifications.">
+          NOTIFICATIONS <span class="csp-welcome__count">0</span>
+        </button>
+        <img class="csp-welcome__divider" src="assets/icons/divider.svg" alt="">
+        <button class="csp-welcome__item" type="button" data-toast="Help menu is out of scope for this prototype.">
+          HELP <img class="csp-welcome__caret" src="assets/icons/caret-down-sm.svg" alt="">
+        </button>
+      </div>
+    </div>
+
+    <nav class="csp-nav" aria-label="Supplier portal">
+      <button class="csp-nav__tab" type="button" data-toast="Home">
+        <img class="csp-nav__home" src="assets/icons/csp-home.svg" alt="Home">
+      </button>
+      <button class="csp-nav__tab" type="button" data-toast="Profile">Profile</button>
+      <button class="csp-nav__tab" type="button" data-toast="Tasks">Tasks</button>
+      <button class="csp-nav__tab" type="button" data-toast="Items">Items</button>
+      <button class="csp-nav__tab" type="button" data-toast="Invoices">Invoices</button>
+      <button class="csp-nav__tab" type="button" data-toast="Orders">Orders</button>
+      <button class="csp-nav__tab csp-nav__tab--active" type="button" aria-current="page">Quality</button>
+      <button class="csp-nav__tab" type="button" data-toast="ASN">ASN</button>
+    </nav>
+
+    <!-- Customer selector — Figma 3782:74665 -->
+    <div class="csp-customer">
+      <label class="csp-customer__label" for="customer">Select Customer</label>
+      <select class="csp-customer__select" id="customer">
+        <option>Frasier Inc</option>
+        <option>Buyer Enterprises</option>
+        <option>Acme Manufacturing</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="page-title">
+    <h1>Quality Inspection #1 for Synthetic Rubber - PO #5001 / 0001</h1>
+  </div>
+
+  <main class="content">
+
+    <!-- Alert — Figma 3782:74669 -->
+    <section class="alert" role="status">
+      <div class="alert__icon"><img src="assets/icons/info-outline.svg" alt="Information"></div>
+      <div class="alert__text">
+        <p class="alert__title">Quality Inspection is ready to be submitted to <strong>Prasad T.</strong> (Buyer Enterprises)</p>
+        <p class="alert__body">Send to <strong>Prasad T.</strong> (Buyer Enterprises) for review by clicking on Submit.</p>
+      </div>
+      <div class="alert__action">
+        <span class="chip">
+          <img src="assets/icons/schedule-outline.svg" alt="">
+          <span class="chip__label">Characteristics provided</span>
+          <span class="chip__count">8</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- Summary — Figma 3782:74670 -->
+    <section class="card summary" data-accordion>
+      <button class="card__header" type="button" aria-expanded="true">
+        <h2 class="card__title">Summary</h2>
+        <img class="card__chevron" src="assets/icons/chevron-up.svg" alt="">
+      </button>
+      <div class="card__body">
+        <div class="summary__grid">
+          <div>
+            <p class="summary__label">INSPECTION ID</p>
+            <p class="summary__value">001</p>
+          </div>
+          <div>
+            <p class="summary__label">REQUEST DATE</p>
+            <p class="summary__value">05/01/25</p>
+          </div>
+          <div>
+            <p class="summary__label">DOCUMENT REFERENCE</p>
+            <p class="summary__value"><a href="#" onclick="return false;">PO:EXTPO123/001</a></p>
+          </div>
+          <div>
+            <p class="summary__label">DUE DATE</p>
+            <p class="summary__value">06/15/25</p>
+          </div>
+          <div>
+            <p class="summary__label">STATUS</p>
+            <p class="summary__value">In Progress</p>
+          </div>
+        </div>
+        <div class="summary__extra">
+          <div>
+            <p class="summary__label">RESOLUTION REASON</p>
+            <p class="summary__value">&nbsp;</p>
+          </div>
+          <div>
+            <p class="summary__label">ITEM NAME</p>
+            <p class="summary__value"><a href="#" onclick="return false;">Synthetic Rubber</a></p>
+          </div>
+          <div>
+            <p class="summary__label">ITEM DESCRIPTION</p>
+            <p class="summary__value">A polymer that can stretch and return to its original shape</p>
+          </div>
+          <div>
+            <p class="summary__label">SUPPLIER</p>
+            <p class="summary__value"><a href="#" onclick="return false;">Material Supply Industries</a></p>
+          </div>
+          <div>
+            <p class="summary__label">BUYER PART NUMBER</p>
+            <p class="summary__value">0782</p>
+          </div>
+        </div>
+        <p class="summary__note">Additional summary fields are not defined in this Figma frame, so nothing further is shown here.</p>
+        <button class="summary__more" type="button" data-show-more>
+          <span>Show more</span>
+          <img src="assets/icons/chevron-down.svg" alt="">
+        </button>
+      </div>
+    </section>
+
+    <!-- Characteristics table — Figma 3782:74674 / 3782:74675 -->
+    <section class="table-block">
+      <div class="table-block__title-row">
+        <button class="views-trigger" type="button" data-views-trigger aria-haspopup="true">
+          <img src="assets/icons/menu-hamburger.svg" alt="">
+          Views
+        </button>
+        <h2 class="table-block__title" data-view-name>All Characteristics</h2>
+      </div>
+
+      <div class="views-panel" data-views-panel>
+        <p class="views-panel__title">SAVED VIEWS</p>
+        <button class="views-panel__item is-active" type="button">All Characteristics</button>
+        <button class="views-panel__item" type="button">Pending Results</button>
+        <button class="views-panel__item" type="button">Out of Specification</button>
+        <button class="views-panel__item" type="button">Revised Results</button>
+      </div>
+
+      <div class="table-block__toolbar">
+        <span class="table-search">
+          <img src="assets/icons/search-in-view.svg" alt="">
+          <input type="search" placeholder="Search in this view" aria-label="Search in this view" data-table-search>
+        </span>
+        <button class="icon-button" type="button" data-toast="Filter panel is out of scope for this prototype.">
+          <img src="assets/icons/filter.svg" alt="Filter">
+        </button>
+        <button class="icon-button" type="button" data-toast="More table actions: export, manage columns.">
+          <img src="assets/icons/more-v.svg" alt="More actions">
+        </button>
+      </div>
+
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th data-sort-key="id">ID</th>
+              <th data-sort-key="characteristic">Characteristic</th>
+              <th data-sort-key="specification">Specification</th>
+              <th data-sort-key="result">Result</th>
+              <th data-sort-key="inspectedBy">Inspected By</th>
+              <th data-sort-key="inspectionDate">Inspection Date</th>
+              <th data-sort-key="remarks">Remarks</th>
+              <th>Att</th>
+              <th class="col-actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody data-table-body></tbody>
+        </table>
+      </div>
+
+      <div class="table-block__footer">
+        <div class="page-size" data-page-size>
+          <span>Items per page:</span>
+          <button type="button" class="is-current">15</button>
+          <button type="button">45</button>
+          <button type="button">90</button>
+          <span data-table-count></span>
+        </div>
+        <div class="pager" data-pager>
+          <button type="button">Prev</button>
+          <button type="button">1</button>
+          <button type="button" class="is-current">2</button>
+          <button type="button">3</button>
+          <span>...</span>
+          <button type="button">17</button>
+          <button type="button">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Attachments Library — Figma 3782:74676 -->
+    <section class="card library" data-accordion>
+      <button class="card__header" type="button" aria-expanded="true">
+        <h2 class="card__title">Attachments Library</h2>
+        <img class="card__chevron" src="assets/icons/chevron-down.svg" alt="">
+      </button>
+      <div class="card__body">
+        <p class="library__meta">
+          Attachments:
+          <button type="button" data-library-toggle>8 Files | 1 URL</button>
+        </p>
+        <div class="library__files">
+          <div class="library__file" data-library-file="QI-001-Test_Report-061025-080512.pdf">
+            <img src="assets/icons/page-blank.svg" alt=""> QI-001-Test_Report-061025-080512.pdf
+          </div>
+          <div class="library__file" data-library-file="Durometer_Calibration_Certificate.pdf">
+            <img src="assets/icons/page-blank.svg" alt=""> Durometer_Calibration_Certificate.pdf
+          </div>
+          <div class="library__file" data-library-file="File_name.doc">
+            <img src="assets/icons/page-blank.svg" alt=""> File_name.doc (×6)
+          </div>
+          <div class="library__file" data-library-file="https://master-proc.coupadev.com/quality_inspections/001/edit">
+            <img src="assets/icons/page-blank.svg" alt=""> https://master-proc.coupadev.com/quality_inspections/001/edit
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comments — Figma 3782:74677 -->
+    <section class="card" data-accordion>
+      <button class="card__header" type="button" aria-expanded="true">
+        <h2 class="card__title">Comments</h2>
+        <img class="card__chevron" src="assets/icons/chevron-down.svg" alt="">
+      </button>
+      <div class="card__body">
+        <div class="comment-form">
+          <label class="comment-form__label" for="comment">Enter Comment</label>
+          <textarea id="comment" data-comment-input></textarea>
+          <div class="comment-form__row">
+            <p class="comment-form__attach">
+              Add <button type="button" data-comment-attach="file">File</button> |
+              <button type="button" data-comment-attach="url">URL</button>
+            </p>
+            <button class="btn-legacy" type="button" data-comment-submit>Add Comment</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- History — Figma 3782:76992 -->
+    <section class="card card--tight history" data-accordion>
+      <button class="card__header" type="button" aria-expanded="true">
+        <h2 class="card__title">History</h2>
+        <img class="card__chevron" src="assets/icons/chevron-up.svg" alt="">
+      </button>
+      <div class="card__body">
+        <div class="history__filter">
+          <div class="history__filter-bar">
+            <span class="history-search">
+              <img src="assets/icons/history-search.svg" alt="">
+              <input type="search" placeholder="Search" aria-label="Search history" data-history-search>
+            </span>
+            <button class="history-sort" type="button" data-history-sort>
+              <img src="assets/icons/sort-outline.svg" alt="">
+              <span>Newest first</span>
+              <img src="assets/icons/caret-dropdown.svg" alt="">
+            </button>
+          </div>
+          <div class="history__chips" role="group" aria-label="Filter history by actor">
+            <button class="history-chip is-active" type="button" data-history-filter="all" aria-pressed="true">All</button>
+            <button class="history-chip" type="button" data-history-filter="buyer" aria-pressed="false">Buyer</button>
+            <button class="history-chip" type="button" data-history-filter="supplier" aria-pressed="false">Supplier</button>
+            <button class="history-chip" type="button" data-history-filter="system" aria-pressed="false">System (ERP)</button>
+          </div>
+        </div>
+        <div class="history__frames">
+          <div class="history__bubbles" data-history-list></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTAs — Figma 3782:74679 / 3782:74693 -->
+    <div class="action-bar">
+      <button class="btn btn--outline" type="button" data-toast="Returning to the Quality Inspections list.">
+        View All Quality Inspections
+      </button>
+      <div class="action-bar__right">
+        <button class="btn btn--primary" type="button" data-open-modal="submit-modal">Submit</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer — Figma 3782:74699 -->
+  <footer class="footer">
+    <div class="footer__border"></div>
+    <div class="footer__contents">
+      <img class="footer__logo" src="assets/icons/footer-logo.svg" alt="Coupa">
+      <p class="footer__links">
+        <span>Business Spend Management</span>
+        <span>•</span>
+        <img src="assets/icons/flag-en.png" alt=""> <span>English</span>
+        <span>•</span>
+        <span>Accessibility</span>
+        <span>•</span>
+        <span>Coupa Cares</span>
+      </p>
+    </div>
+  </footer>
+</div>
+
+<!-- Submit confirmation -->
+<div class="overlay" id="submit-modal" role="dialog" aria-modal="true" aria-labelledby="submit-modal-title">
+  <div class="modal">
+    <h2 id="submit-modal-title">Submit inspection for review?</h2>
+    <p>All 8 characteristics will be sent to Prasad T. (Buyer Enterprises). You will not be able to edit results while the inspection is in buyer review.</p>
+    <dl class="modal__dl">
+      <dt>Inspection ID</dt><dd>001</dd>
+      <dt>Characteristics</dt><dd>8 provided</dd>
+      <dt>Attachments</dt><dd>8 Files | 1 URL</dd>
+      <dt>Due Date</dt><dd>06/15/25</dd>
+    </dl>
+    <div class="modal__actions">
+      <button class="btn btn--outline" type="button" data-close-modal>Cancel</button>
+      <button class="btn btn--primary" type="button" data-goto="buyer.html">Submit to Buyer</button>
+    </div>
+  </div>
+</div>
+
+<div class="proto-switch">
+  <span class="proto-switch__label">View as</span>
+  <a class="is-current" href="index.html">Supplier</a>
+  <a href="buyer.html">Buyer</a>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
