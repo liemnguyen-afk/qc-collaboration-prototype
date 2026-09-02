@@ -754,16 +754,44 @@ button {
 .table-scroll {
   overflow-x: auto;
   padding: 0 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cui-scrollbar-rest) transparent;
 }
 
+.table-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background: var(--cui-scrollbar-rest);
+  border-radius: 50px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--cui-scrollbar-hover);
+}
+
+/* Wider than the viewport on purpose: the data columns scroll sideways while
+   the Actions column stays locked to the right edge. */
 .data-table {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
   font-size: var(--cui-font-size-sm);
   line-height: var(--cui-line-2xs);
   color: var(--cui-text-1);
   white-space: nowrap;
 }
+
+.data-table th[data-sort-key='id'] { min-width: 48px; }
+.data-table th[data-sort-key='characteristic'] { min-width: 240px; }
+.data-table th[data-sort-key='specification'] { min-width: 420px; }
+.data-table th[data-sort-key='range'] { min-width: 150px; }
+.data-table th[data-sort-key='result'] { min-width: 120px; }
+.data-table th[data-sort-key='expectedResult'] { min-width: 200px; }
+.data-table th[data-sort-key='inspectedBy'] { min-width: 160px; }
+.data-table th[data-sort-key='inspectionDate'] { min-width: 150px; }
+.data-table th[data-sort-key='remarks'] { min-width: 300px; }
 
 .data-table th {
   text-align: left;
@@ -785,24 +813,61 @@ button {
   background: var(--cui-surface-s2);
 }
 
-.data-table .col-spec,
-.data-table .col-remarks {
-  max-width: 190px;
+.data-table .col-spec {
+  max-width: 420px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.data-table .col-remarks {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Locked Actions column */
 .data-table .col-actions,
 .data-table th.col-actions {
   position: sticky;
   right: 0;
+  min-width: 76px;
   background: #ffffff;
+  border-left: 1px solid var(--cui-border-b2);
   box-shadow: -4px 0 5px rgba(0, 0, 0, 0.08);
   text-align: center;
+  z-index: 2;
+}
+
+.data-table th.col-actions {
+  z-index: 3;
 }
 
 .data-table tbody tr:hover td.col-actions {
-  background: #ffffff;
+  background: var(--cui-surface-s2);
+}
+
+/* Full text for the cells the columns clip */
+.cell-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 80;
+  max-width: 420px;
+  padding: 8px 12px;
+  border-radius: var(--cui-radii-xs);
+  background: var(--cui-text-t1);
+  color: #ffffff;
+  font-size: var(--cui-font-size-2xs);
+  line-height: var(--cui-line-2xs);
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  transition: opacity 0.12s ease;
+}
+
+.cell-tooltip.is-visible {
+  opacity: 1;
 }
 
 .row-action {

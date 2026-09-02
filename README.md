@@ -54,6 +54,10 @@ python3 -m http.server 8000
 **Characteristics table**
 - **Search in this view** filters the 8 rows; the count next to “Items per page” updates.
 - Any column header sorts ascending/descending.
+- The data columns **scroll horizontally** while the **Actions column stays locked** to the right
+  edge (with a divider and drop shadow), so the row action is always reachable.
+- **Specification** and **Remarks** are clipped to their column width; hovering a clipped cell shows
+  the full text in a tooltip. Cells that are not clipped show no tooltip.
 - **Views** opens a saved-views panel that renames the table heading.
 - Row action icons, attachment icons, filter/more buttons, pagination, and page-size controls all
   respond (with toasts where the target screen is outside this prototype’s scope).
@@ -106,6 +110,12 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   (`Jun 10 - 1:20 PM`), the ERP comment-activity entry (`Jun 10 - 3:00 PM`), and Prasad T.’s comment
   (`Jun 11 - 10:15 AM`). They are flagged with `timestampInferred: true` in
   [`assets/js/data.js`](assets/js/data.js).
+- **Horizontal scroll and the locked Actions column are additions.** The Figma frames draw the table
+  at full width with no scroller. To keep long Specification and Remarks text readable at 1440 px, the
+  data columns are given explicit minimum widths — which makes the table wider than the card — and
+  the Actions column is pinned with `position: sticky; right: 0`. The hover tooltip on truncated
+  Specification / Remarks cells is likewise not in the design; the frames simply show the text cut
+  with an ellipsis.
 - **Pagination is chrome only.** The Figma pager shows “Prev 1 2 3 … 17 Next” over a table that
   contains 8 rows of real data. The controls highlight and toast but do not page, because there is no
   further data in the design.

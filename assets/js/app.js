@@ -104,7 +104,8 @@
 
   function rowHtml(row) {
     var cells = ['<td>' + row.id + '</td>', '<td>' + esc(row.characteristic) + '</td>',
-      '<td class="col-spec" title="' + esc(row.specification) + '">' + esc(row.specification) + '</td>'];
+      '<td class="col-spec" data-tooltip="' + esc(row.specification) + '">' +
+      esc(row.specification) + '</td>'];
 
     if (role === 'buyer') {
       cells.push('<td>' + esc(row.range) + '</td>');
@@ -112,12 +113,14 @@
       cells.push('<td>' + esc(row.expectedResult) + '</td>');
       cells.push('<td>' + esc(row.inspectedBy) + '</td>');
       cells.push('<td>' + esc(row.inspectionDate) + '</td>');
-      cells.push('<td class="col-remarks" title="' + esc(row.remarks) + '">' + esc(row.remarks) + '</td>');
+      cells.push('<td class="col-remarks" data-tooltip="' + esc(row.remarks) + '">' +
+        esc(row.remarks) + '</td>');
     } else {
       cells.push('<td>' + resultCell(row) + '</td>');
       cells.push('<td>' + esc(row.inspectedBy) + '</td>');
       cells.push('<td>' + esc(row.inspectionDate) + '</td>');
-      cells.push('<td class="col-remarks" title="' + esc(row.remarks) + '">' + esc(row.remarks) + '</td>');
+      cells.push('<td class="col-remarks" data-tooltip="' + esc(row.remarks) + '">' +
+        esc(row.remarks) + '</td>');
       cells.push(
         '<td><button class="att-icon" type="button" data-attachment="' +
         esc(row.attachment) +
@@ -191,6 +194,45 @@
   if (tableSearch) {
     tableSearch.addEventListener('input', renderTable);
   }
+
+  /* ── Hover tooltip for cells the column clips ────────────────────────── */
+
+  if (tableBody) (function () {
+    var tip = document.createElement('div');
+    tip.className = 'cell-tooltip';
+    document.body.appendChild(tip);
+
+    function hide() {
+      tip.classList.remove('is-visible');
+    }
+
+    function show(cell) {
+      if (cell.scrollWidth <= cell.clientWidth) return; // nothing is clipped
+      tip.textContent = cell.dataset.tooltip;
+      tip.style.left = '0px';
+      tip.classList.add('is-visible');
+
+      var box = cell.getBoundingClientRect();
+      var limit = document.documentElement.clientWidth - 8;
+      var left = box.left + window.pageXOffset;
+      if (left + tip.offsetWidth > limit) left = Math.max(8, limit - tip.offsetWidth);
+      tip.style.left = left + 'px';
+      tip.style.top = box.bottom + window.pageYOffset + 6 + 'px';
+    }
+
+    tableBody.addEventListener('mouseover', function (event) {
+      var cell = event.target.closest('[data-tooltip]');
+      if (cell) show(cell);
+    });
+
+    tableBody.addEventListener('mouseout', function (event) {
+      if (event.target.closest('[data-tooltip]')) hide();
+    });
+
+    var scroller = tableBody.closest('.table-scroll');
+    if (scroller) scroller.addEventListener('scroll', hide);
+    window.addEventListener('scroll', hide);
+  })();
 
   document.querySelectorAll('[data-sort-key]').forEach(function (th) {
     th.style.cursor = 'pointer';
