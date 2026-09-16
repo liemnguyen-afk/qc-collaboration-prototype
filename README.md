@@ -49,7 +49,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The two HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260916b`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -96,7 +96,7 @@ python3 -m http.server 8000
   as documents, the sound level and CMM reports as page images, a URL row as the *Link Attachment*
   card. Files without a preview say so rather than showing an invented page.
 - The preview **action set** works: zoom out / zoom in, expand to a full-screen sheet (`Esc` closes),
-  rotate 90°, download (toast), and the red remove, which deletes the attachment from the library.
+  rotate 90°, download (toast), and the close **×**, which removes the attachment from the library.
 - Row **download** icons toast; row **trash** icons delete the row, and the counts, badges and
   pagination follow.
 - **Add File** opens the dashed dropzone — **Browse** or dragging files onto it really attaches them
@@ -123,13 +123,14 @@ assets/css/tokens.css Clarity UI (CUI) design tokens, resolved from Figma variab
 assets/css/styles.css Component styling for both product chromes
 assets/js/data.js     Characteristics, attachments + history content for the example inspection
 assets/js/app.js      Filtering, sorting, accordions, attachments, comments, modals, navigation
-assets/icons/         47 assets exported from the Figma file (SVG + one PNG flag)
+assets/icons/         48 assets: 47 exported from the Figma file (SVG + one PNG flag) + Clarity's Close
 assets/img/           Report page images used as attachment previews
 tools/reports/        HTML sources those page images are rendered from
 ```
 
-Every icon is the asset exported from Figma — none are hand-drawn — so glyphs match the design
-exactly. Colours, spacing, radii, and type come from `get_variable_defs` on the Figma nodes and are
+Every icon is a real asset — none are hand-drawn — so glyphs match the design exactly. All but one are
+Figma exports; `close-outline.svg` is Clarity's own `Close` outline path, taken from
+`@coupa/clarity-ui-icons`. Colours, spacing, radii, and type come from `get_variable_defs` on the Figma nodes and are
 declared once in `tokens.css`.
 
 ## Fidelity notes
@@ -180,6 +181,11 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
 - **Pagination in the library is real but idle.** The Figma *Line level - w/pagination* state shows
   35 line-level attachments over 7 pages at 10 a page; this inspection has exactly 10 at line level,
   so the pager stays hidden until you attach one more file.
+- **The preview's remove action uses Clarity's Close icon, not the design's red minus.** The Figma
+  preview bar ends with a red circled minus (`remove-circle-outline`, still in `assets/icons/` for
+  reference). That glyph reads as a destructive status marker rather than a control, so the button now
+  uses Clarity's `Close` outline in the same `text.t1` dark grey as the other five actions. The
+  behaviour is unchanged: it removes the attachment from the library.
 - **Row action icons use the CUI outline set** (`download-outline`, `trash-outline`), as every
   component instance in the design does. The two *Add file* / *Add URL* frames (`829:93201`,
   `829:93994`) still use the older green/red `Icons/action/*` glyphs; that looked like drift in the

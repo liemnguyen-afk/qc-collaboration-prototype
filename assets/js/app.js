@@ -286,7 +286,7 @@
       { key: 'expand', icon: 'expand-outline.svg', label: 'Expand' },
       { key: 'rotate', icon: 'rotate-outline.svg', label: 'Rotate' },
       { key: 'download', icon: 'cloud-download-outline.svg', label: 'Download' },
-      { key: 'remove', icon: 'remove-circle-outline.svg', label: 'Remove' }
+      { key: 'remove', icon: 'close-outline.svg', label: 'Remove' }
     ];
 
     var rowsEl = att.querySelector('[data-att-rows]');
