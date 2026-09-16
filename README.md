@@ -4,12 +4,13 @@ A static, clickable prototype of the **Quality Inspection collaboration** flow, 
 file *187 Quality Collaboration SCC/SCPL*, section **“QC- History”**
 ([node 3782-77289](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=3782-77289)).
 
-Two screens from that section are implemented:
+Three pages are implemented:
 
 | Page | Figma node | Chrome |
 | --- | --- | --- |
 | [`index.html`](index.html) | `3782:74663` — *Supplier - Item Inspection* | Coupa Supplier Portal (CSP) |
 | [`buyer.html`](buyer.html) | `3782:77297` — *Item Inspection* | Coupa core / buyer |
+| [`inspections.html`](inspections.html) | [`514:38555`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=514-38555) — the Quality Inspections list — see the fidelity note below | Coupa Supplier Portal (CSP) |
 
 Two components on those screens are built from their own dedicated Figma sections:
 
@@ -53,8 +54,8 @@ GitHub Pages serves the prototype from `main` / root:
 **https://liemnguyen-afk.github.io/qc-collaboration-prototype/**
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
-will keep using the old files for ten minutes after a push. The two HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916e`) — **bump that date whenever you change
+will keep using the old files for ten minutes after a push. The three HTML files therefore link their
+assets with a version query (`assets/css/styles.css?v=20260916f`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -67,6 +68,8 @@ python3 -m http.server 8000
 ## What is clickable
 
 **Cross-screen flow**
+- Supplier **View All Quality Inspections** → the inspections list (`inspections.html`); inspection
+  **001** in that list opens the supplier screen again.
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
 - Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in History) → returns to `index.html`.
 - Buyer **Accept** / **Reject** → confirmation modals with toast feedback.
@@ -118,6 +121,20 @@ python3 -m http.server 8000
   this row’s ID, so the cell, the library list, the level badge, the file/URL counts and the pager all
   follow immediately — and deleting it in the library updates the open editor.
 
+**Quality Inspections list** (`inspections.html`, Figma `514:38555`)
+- 8 inspections this supplier has with Buyer Enterprises, with the fields the detail screen’s
+  **Summary** card shows: Inspection ID, Item Name, Document Reference, Request Date, Due Date,
+  Characteristics and a **Status** pill (Open, In Progress, In Buyer Review, Sent Back to Supplier,
+  Accepted, Rejected).
+- The **ID link** and the row’s **open action** both open the inspection. **001** is the muffler
+  inspection this prototype builds out, so it goes to `index.html`; the other seven toast, since there
+  is no second inspection behind them.
+- **Search in this view** matches every column and the count follows it; any header sorts
+  ascending/descending (Characteristics sorts as a number). The table fits 1440 px, so unlike the
+  characteristics table it does not scroll sideways.
+- Views, filter, more, page size and the pager behave as they do on the detail screen — highlight and
+  toast, with no second page of data behind them.
+
 **Attachments Library** (Figma `758:125789`)
 - **Header Level / Line Level** tabs switch the list; the badges count the attachments at each level.
 - Clicking a row selects it and renders it in the **preview pane** — the SOW and the inspection plan
@@ -147,9 +164,10 @@ python3 -m http.server 8000
 ```
 index.html            Supplier screen
 buyer.html            Buyer review screen
+inspections.html      Quality Inspections list
 assets/css/tokens.css Clarity UI (CUI) design tokens, resolved from Figma variables
 assets/css/styles.css Component styling for both product chromes
-assets/js/data.js     Characteristics, attachments + history content for the example inspection
+assets/js/data.js     Inspections list, characteristics, attachments + history content
 assets/js/app.js      Filtering, sorting, accordions, attachments, comments, modals, navigation
 assets/icons/         49 assets: 47 from the Figma file (SVG + one PNG flag) + Clarity's Close and Check
 assets/img/           Report page images used as attachment previews
@@ -238,6 +256,21 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   because deciding pass/fail from the specification text would be invented logic. The
   Inspection Date column was widened from 150 px to 166 px so the date field and its picker fit
   without the table resizing when a row opens.
+- **The Quality Inspections list was not verified against Figma `514:38555`.** The Figma connection
+  was not authorised in the session that built it, so the *page* is the one the design is named for —
+  the CSP chrome, a Views panel, the table block with search / filter / more, a status column and the
+  footer's page-size and pager — but the **column set is inferred**: it is the field list the detail
+  screen's Summary card shows, so a row and the screen it opens read the same. Check it against that
+  node; the rows are the `QC.inspections` array in [`assets/js/data.js`](assets/js/data.js). The eight
+  inspections other than 001 are invented content (other exhaust parts from the same supplier) to give
+  the list, its statuses and its search something to work on, and only 001 opens a screen. The six
+  status values and which pill colour each gets are also a decision, not the design.
+- **Two status-pill colours come from the Clarity token set, not from these Figma nodes.** No node in
+  the QC-History section uses a green or a light-blue subtle surface, so `--cui-green-subtle-surface` /
+  `--cui-green-subtle-border` (Accepted) and `--cui-light-blue-subtle-surface` (In Progress / In Buyer
+  Review) were taken from Clarity's own `color.greenSubtle.*` and `color.lightBlueSubtle.*` rather than
+  from `get_variable_defs`, and are marked as such in [`assets/css/tokens.css`](assets/css/tokens.css).
+  Sent Back to Supplier and Rejected reuse the amber and red already in the file from the result pills.
 - **Row action icons use the CUI outline set** (`download-outline`, `trash-outline`), as every
   component instance in the design does. The two *Add file* / *Add URL* frames (`829:93201`,
   `829:93994`) still use the older green/red `Icons/action/*` glyphs; that looked like drift in the
@@ -253,9 +286,9 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
 
 ## Data
 
-All content — the 8 characteristics with their specifications, ranges, results, expected results,
-remarks and attachments, the 13 library attachments, and the 11 history entries — lives in
-[`assets/js/data.js`](assets/js/data.js). Editing that file updates both screens.
+All content — the 8 inspections in the list, the 8 characteristics with their specifications, ranges,
+results, expected results, remarks and attachments, the 13 library attachments, and the 11 history
+entries — lives in [`assets/js/data.js`](assets/js/data.js). Editing that file updates all three pages.
 
 The **structure** of that data is transcribed from the Figma frames and is what the layout was built
 against: 8 characteristic rows with Range left blank on 5 of them, one amber and one red result pill,

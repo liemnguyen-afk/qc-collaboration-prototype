@@ -1102,6 +1102,60 @@ button {
   border: 1px solid var(--cui-status-error);
 }
 
+/* ─── Quality Inspections list — Figma 514:38555 ───────────────────────── */
+
+/* Widths chosen so this table fits the card at 1440px and does not scroll
+   sideways, unlike the characteristics table. */
+.data-table th[data-ins-sort-key='id'] { min-width: 120px; }
+.data-table th[data-ins-sort-key='itemName'] { min-width: 300px; }
+.data-table th[data-ins-sort-key='documentReference'] { min-width: 200px; }
+.data-table th[data-ins-sort-key='requestDate'] { min-width: 140px; }
+.data-table th[data-ins-sort-key='dueDate'] { min-width: 140px; }
+.data-table th[data-ins-sort-key='characteristics'] { min-width: 140px; }
+.data-table th[data-ins-sort-key='status'] { min-width: 200px; }
+
+.link-button {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  color: var(--cui-text-link);
+  cursor: pointer;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--cui-radii-2xl);
+  font-size: var(--cui-font-size-sm);
+  background: var(--cui-surface-s4);
+  border: 1px solid var(--cui-border-neutral-minimal);
+}
+
+.status-pill--info {
+  background: var(--cui-light-blue-subtle-surface);
+  border-color: var(--cui-light-blue-subtle-border);
+}
+
+.status-pill--success {
+  background: var(--cui-green-subtle-surface);
+  border-color: var(--cui-green-subtle-border);
+}
+
+.status-pill--warning {
+  background: var(--cui-orange-subtle-surface);
+  border-color: var(--cui-orange-subtle-border);
+}
+
+.status-pill--error {
+  background: #fdecec;
+  border-color: var(--cui-status-error);
+}
+
 .table-block__footer {
   display: flex;
   align-items: center;

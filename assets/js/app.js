@@ -592,6 +592,113 @@
     });
   });
 
+  /* ── Quality Inspections list — Figma 514:38555 ──────────────────────── */
+
+  /* The page "View All Quality Inspections" leads to. Its own search, sort and
+     count, kept apart from the characteristics table above so the two tables
+     never share a sort state; only inspection 001 opens a screen. */
+  var insBody = document.querySelector('[data-inspections-body]');
+
+  if (insBody) (function () {
+    var insSearch = document.querySelector('[data-ins-search]');
+    var insCount = document.querySelector('[data-ins-count]');
+    var insSort = { key: null, dir: 1 };
+
+    function insById(id) {
+      return QC.inspections.filter(function (row) {
+        return String(row.id) === String(id);
+      })[0];
+    }
+
+    function statusPill(row) {
+      return (
+        '<span class="status-pill' + (row.tone ? ' status-pill--' + row.tone : '') + '">' +
+        esc(row.status) + '</span>'
+      );
+    }
+
+    function insRowHtml(row) {
+      return (
+        '<tr>' +
+        '<td><button class="link-button" type="button" data-ins-open="' + esc(row.id) + '">' +
+        esc(row.id) + '</button></td>' +
+        '<td>' + esc(row.itemName) + '</td>' +
+        '<td>' + esc(row.documentReference) + '</td>' +
+        '<td>' + esc(row.requestDate) + '</td>' +
+        '<td>' + esc(row.dueDate) + '</td>' +
+        '<td>' + esc(row.characteristics) + '</td>' +
+        '<td>' + statusPill(row) + '</td>' +
+        '<td class="col-actions">' +
+        '<button class="row-action" type="button" data-ins-open="' + esc(row.id) +
+        '" title="Open inspection">' +
+        '<img src="' + ICONS + 'open-external-outline.svg" alt="Open inspection"></button>' +
+        '</td></tr>'
+      );
+    }
+
+    function openInspection(id) {
+      var row = insById(id);
+      if (!row) return;
+      if (row.href) {
+        window.location.href = row.href;
+        return;
+      }
+      toast('Inspection ' + row.id + ' (' + row.itemName +
+        ') is not built out in this prototype.');
+    }
+
+    function insRows() {
+      var term = (insSearch && insSearch.value || '').trim().toLowerCase();
+      var rows = QC.inspections.filter(function (row) {
+        if (!term) return true;
+        return [
+          row.id, row.itemName, row.documentReference, row.requestDate,
+          row.dueDate, row.characteristics, row.status
+        ].join(' ').toLowerCase().indexOf(term) !== -1;
+      });
+
+      if (insSort.key) {
+        rows = rows.slice().sort(function (a, b) {
+          var x = a[insSort.key];
+          var y = b[insSort.key];
+          if (typeof x === 'number' && typeof y === 'number') return (x - y) * insSort.dir;
+          return String(x).localeCompare(String(y)) * insSort.dir;
+        });
+      }
+      return rows;
+    }
+
+    function renderInspections() {
+      var rows = insRows();
+      insBody.innerHTML = rows.length
+        ? rows.map(insRowHtml).join('')
+        : '<tr><td colspan="8" class="history__empty">No inspections match your search.</td></tr>';
+      if (insCount) {
+        insCount.textContent =
+          rows.length + ' of ' + QC.inspections.length + ' quality inspections';
+      }
+      insBody.querySelectorAll('[data-ins-open]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          openInspection(button.dataset.insOpen);
+        });
+      });
+    }
+
+    document.querySelectorAll('[data-ins-sort-key]').forEach(function (th) {
+      th.style.cursor = 'pointer';
+      th.addEventListener('click', function () {
+        var key = th.dataset.insSortKey;
+        insSort.dir = insSort.key === key ? -insSort.dir : 1;
+        insSort.key = key;
+        renderInspections();
+      });
+    });
+
+    if (insSearch) insSearch.addEventListener('input', renderInspections);
+
+    renderInspections();
+  })();
+
   /* ── Attachments Library — Figma 758:125789 ──────────────────────────── */
 
   var att = document.querySelector('[data-attachments]');

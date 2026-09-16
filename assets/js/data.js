@@ -31,6 +31,95 @@ QC.inspection = {
   }
 };
 
+/* The Quality Inspections list — Figma 514:38555. One row per inspection this
+   supplier has with Buyer Enterprises; the columns are the fields the detail
+   screen's Summary card shows, so a row and the screen it opens read the same.
+   `tone` drives the status pill. Only inspection 001 has a `href`: it is the one
+   this prototype builds out, so it opens the supplier screen and the rest toast. */
+QC.inspections = [
+  {
+    id: '001',
+    itemName: 'Performance Muffler XR-3',
+    documentReference: 'PO:EXTPO123/001',
+    requestDate: '05/01/25',
+    dueDate: '06/15/25',
+    characteristics: 8,
+    status: 'In Progress',
+    tone: 'info',
+    href: 'index.html'
+  },
+  {
+    id: '002',
+    itemName: 'Resonator R-90',
+    documentReference: 'PO:EXTPO123/002',
+    requestDate: '05/01/25',
+    dueDate: '06/20/25',
+    characteristics: 6,
+    status: 'In Buyer Review',
+    tone: 'info'
+  },
+  {
+    id: '003',
+    itemName: 'Cat-Back Exhaust Kit CB-455',
+    documentReference: 'PO:EXTPO124/001',
+    requestDate: '05/08/25',
+    dueDate: '06/22/25',
+    characteristics: 10,
+    status: 'Accepted',
+    tone: 'success'
+  },
+  {
+    id: '004',
+    itemName: 'Exhaust Tip ET-250 Polished',
+    documentReference: 'PO:EXTPO124/002',
+    requestDate: '05/08/25',
+    dueDate: '06/28/25',
+    characteristics: 4,
+    status: 'Sent Back to Supplier',
+    tone: 'warning'
+  },
+  {
+    id: '005',
+    itemName: 'Header Gasket Set HG-118',
+    documentReference: 'PO:EXTPO126/001',
+    requestDate: '05/15/25',
+    dueDate: '07/01/25',
+    characteristics: 5,
+    status: 'Open',
+    tone: ''
+  },
+  {
+    id: '006',
+    itemName: 'Mid-Pipe Assembly MP-320',
+    documentReference: 'PO:EXTPO126/002',
+    requestDate: '05/15/25',
+    dueDate: '07/03/25',
+    characteristics: 7,
+    status: 'Rejected',
+    tone: 'error'
+  },
+  {
+    id: '007',
+    itemName: 'Muffler Hanger Bracket MH-77',
+    documentReference: 'PO:EXTPO127/001',
+    requestDate: '05/22/25',
+    dueDate: '07/10/25',
+    characteristics: 3,
+    status: 'Accepted',
+    tone: 'success'
+  },
+  {
+    id: '008',
+    itemName: 'Tailpipe TP-512',
+    documentReference: 'PO:EXTPO127/002',
+    requestDate: '05/22/25',
+    dueDate: '07/12/25',
+    characteristics: 5,
+    status: 'In Progress',
+    tone: 'info'
+  }
+];
+
 /* Attachments Library — Figma "Attachment Library" section (node 758:125789).
    `kind` picks the doc-type icon, `actions` mirrors which row actions the design
    shows for that kind (images have no delete, URLs have no download).
