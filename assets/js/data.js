@@ -38,9 +38,8 @@ QC.inspection = {
 
    Header level holds the documents that govern the whole inspection; line level
    holds the evidence for one characteristic each, with `line` set to that
-   characteristic's ID. Every line-level file name also appears in the matching
-   row's `attachment` field below, so the table's Att column and the library
-   agree. */
+   characteristic's ID. That `line` value is the only link: the table's
+   Attachments column filters this list by row, so the two cannot drift. */
 QC.attachments = {
   header: [
     {
@@ -312,7 +311,6 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: '5 units checked, seams dye-penetrant tested',
-    attachment: 'Weld-visual-C1.pdf',
     hasNewComment: true
   },
   {
@@ -326,7 +324,6 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Ultrasonic gauge, 4 points per unit',
-    attachment: 'Wall-thickness-C2.pdf',
     hasNewComment: false
   },
   {
@@ -341,7 +338,6 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Re-measured on CMM; trending to upper limit',
-    attachment: 'CMM-dimensional-C3.pdf',
     hasNewComment: false
   },
   {
@@ -355,7 +351,6 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Flow bench at 500 CFM, ambient 22 °C',
-    attachment: 'Back-pressure-C4.pdf',
     hasNewComment: false
   },
   {
@@ -369,7 +364,6 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: '2 of 5 units above limit; packing density suspect',
-    attachment: 'Sound-level-J1169-C5.pdf',
     hasNewComment: false
   },
   {
@@ -383,7 +377,6 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Averaged over 1/3-octave bands',
-    attachment: 'Insertion-loss-J1400-C6.pdf',
     hasNewComment: false
   },
   {
@@ -397,7 +390,6 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'All 5 units submerged for 60 s',
-    attachment: 'Leak-test-C7.pdf',
     hasNewComment: false
   },
   {
@@ -411,7 +403,6 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Witness coupons from the same coil',
-    attachment: 'Salt-spray-B117-C8.pdf',
     hasNewComment: false
   }
 ];

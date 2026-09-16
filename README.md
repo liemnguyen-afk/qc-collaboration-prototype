@@ -31,9 +31,12 @@ insertion loss (SAE J1400), leak test, and salt spray (ASTM B117).
 
 The **attachments follow the characteristics**. Header level carries what governs the inspection — the
 program SOW, the inspection and test plan, the mill certificate for the 409 coil. Line level carries
-one evidence file per characteristic (`Sound-level-J1169-C5.pdf`, `CMM-dimensional-C3.pdf`,
-and so on), tagged with that characteristic's ID and named the same way in the table's Attachments
-column. Two of them open as real report pages in the preview pane.
+the evidence for each characteristic (`Sound-level-J1169-C5.pdf`, `CMM-dimensional-C3.pdf`, and so
+on), tagged with that characteristic's ID — and the table's **Attachments column is that list**,
+filtered to the row and shown by name, so the two can never disagree. Characteristic 1 carries two
+(the weld report and a seam photo) and characteristic 5 carries two (the sound report and the
+acoustic lab's certificate URL); the rest carry one. Two of them open as real report pages in the
+preview pane.
 
 The story the two screens tell: results are in for all 8, but **characteristic 5 fails** — 2 of 5
 units read 97 dB(A) against a 88 - 95 dB(A) ceiling, with low packing density as the suspected cause.
@@ -50,7 +53,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The two HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916c`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260916d`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -87,9 +90,13 @@ python3 -m http.server 8000
   locked** to the right edge (with a divider and drop shadow), so the row action is always reachable.
 - **Specification** and **Remarks** are clipped to their column width; hovering a clipped cell shows
   the full text in a tooltip. Cells that are not clipped show no tooltip.
-- **Views** opens a saved-views panel that renames the table heading.
-- Attachment icons, filter/more buttons, pagination, and page-size controls all respond (with toasts
-  where the target screen is outside this prototype’s scope).
+- The **Attachments** column lists the row’s own line-level attachments **by file name**, with the
+  same doc-type icon the library gives them (URLs in link blue). Clicking one expands the library,
+  switches to **Line Level**, pages to the file, selects it and renders its preview. A characteristic
+  with two attachments stacks them; one with none reads “—”. **Search in this view** matches file
+  names too.
+- Filter/more buttons, pagination, and page-size controls all respond (with toasts where the target
+  screen is outside this prototype’s scope).
 
 **Inline row editing** (supplier screen, Figma `507:44397`)
 - The row’s **edit pencil** turns that row into fields in place — **Result**, **Inspected By**,
@@ -199,6 +206,11 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   reference). That glyph reads as a destructive status marker rather than a control, so the button now
   uses Clarity's `Close` outline in the same `text.t1` dark grey as the other five actions. The
   behaviour is unchanged: it removes the attachment from the library.
+- **The Attachments column shows file names; the Figma frames show a single icon.** The design's Att
+  column is one page glyph per row with no name, which cannot show that characteristic 1 and
+  characteristic 5 each carry two attachments. The column now lists the row's line-level attachments by
+  name — which is also why it is wider than the design's, and why the two rows with two files are
+  taller than the rest.
 - **The inline edit row was not verified against Figma `507:44397`.** The Figma connection was not
   authorised in the session that built it, so the *interaction* is the one the design is named for —
   pencil turns the row into fields, the row action becomes save / cancel — but the **field set is
@@ -236,7 +248,9 @@ both attachment levels with the design's mix of `kind` values (word, pdf, image,
 per-kind action sets, and 11 history entries across the four actor filters. The **values** are the
 muffler example, so swapping in another item means keeping that shape and replacing the text.
 
-Line-level attachments carry `line` set to the ID of the characteristic they evidence, and each
-line-level file name is repeated in that row's `attachment` field — that is what keeps the table's Att
-column and the library in agreement. Header level holds what governs the whole inspection: the program
-SOW, the inspection and test plan, and the mill certificate for the shell coil.
+Line-level attachments carry `line` set to the ID of the characteristic they evidence, and that is the
+**only** link between the two: the table's Attachments column filters `QC.attachments.line` by row and
+renders whatever it finds, so the column and the library cannot drift. (Characteristic rows used to
+repeat the file name in an `attachment` field; that field is gone.) Header level holds what governs the
+whole inspection: the program SOW, the inspection and test plan, and the mill certificate for the shell
+coil.

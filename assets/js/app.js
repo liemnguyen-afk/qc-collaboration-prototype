@@ -6,6 +6,15 @@
   var role = document.body.dataset.role; // 'supplier' | 'buyer'
   var ICONS = 'assets/icons/';
 
+  /* Doc-type icons, shared by the Attachments Library rows and the table's
+     Attachments column so the same file looks the same in both. */
+  var DOC_ICONS = {
+    word: 'file-word-outline.svg',
+    pdf: 'file-pdf-outline.svg',
+    image: 'image-outline.svg',
+    url: 'link-outline.svg'
+  };
+
   /* ── helpers ─────────────────────────────────────────────────────────── */
 
   function esc(value) {
@@ -96,6 +105,34 @@
     })[0];
   }
 
+  /* The Attachments column is the line level of the library, filtered to this
+     row — not a copy of the file name. Add or delete a line-level attachment and
+     the cell follows. Assigned by the library so the table can open a file in it. */
+  var openInLibrary = null;
+
+  function lineAttachments(row) {
+    return QC.attachments.line.filter(function (item) {
+      return String(item.line) === String(row.id);
+    });
+  }
+
+  function attCell(row) {
+    var items = lineAttachments(row);
+    if (!items.length) {
+      return '<td class="col-att"><span class="att-cell__none" title="No attachment on this ' +
+        'characteristic">—</span></td>';
+    }
+    return '<td class="col-att"><span class="att-cell">' + items.map(function (item) {
+      return (
+        '<button class="att-cell__file' + (item.kind === 'url' ? ' att-cell__file--link' : '') +
+        '" type="button" data-attachment-id="' + esc(item.id) +
+        '" title="' + esc(item.name) + ' — open in the Attachments Library">' +
+        '<img src="' + ICONS + DOC_ICONS[item.kind] + '" alt="' + item.kind + '">' +
+        '<span>' + esc(item.name) + '</span></button>'
+      );
+    }).join('') + '</span></td>';
+  }
+
   /* The data carries MM/DD/YYYY; <input type="date"> needs YYYY-MM-DD. */
   function toInputDate(value) {
     var parts = String(value || '').split('/');
@@ -172,12 +209,7 @@
       cells.push('<td>' + editCell('inspectedBy') + '</td>');
       cells.push('<td>' + editCell('inspectionDate') + '</td>');
       cells.push('<td class="col-remarks">' + editCell('remarks') + '</td>');
-      cells.push(
-        '<td class="col-att"><button class="att-icon" type="button" data-attachment="' +
-        esc(row.attachment) +
-        '" title="' + esc(row.attachment) + '">' +
-        '<img src="' + ICONS + 'page-blank.svg" alt="Attachment"></button></td>'
-      );
+      cells.push(attCell(row));
       cells.push('<td class="col-actions">' + actionsCell(row) + '</td>');
       return '<tr class="is-editing">' + cells.join('') + '</tr>';
     }
@@ -196,12 +228,7 @@
       cells.push('<td>' + esc(row.inspectionDate) + '</td>');
       cells.push('<td class="col-remarks" data-tooltip="' + esc(row.remarks) + '">' +
         esc(row.remarks) + '</td>');
-      cells.push(
-        '<td class="col-att"><button class="att-icon" type="button" data-attachment="' +
-        esc(row.attachment) +
-        '" title="' + esc(row.attachment) + '">' +
-        '<img src="' + ICONS + 'page-blank.svg" alt="Attachment"></button></td>'
-      );
+      cells.push(attCell(row));
     }
     cells.push('<td class="col-actions">' + actionsCell(row) + '</td>');
     return '<tr>' + cells.join('') + '</tr>';
@@ -213,7 +240,9 @@
       if (!term) return true;
       return [
         row.id, row.characteristic, row.specification, row.range, row.result,
-        row.expectedResult, row.inspectedBy, row.inspectionDate, row.remarks
+        row.expectedResult, row.inspectedBy, row.inspectionDate, row.remarks,
+        /* the file names the Attachments column shows */
+        lineAttachments(row).map(function (item) { return item.name; }).join(' ')
       ].join(' ').toLowerCase().indexOf(term) !== -1;
     });
 
@@ -342,9 +371,9 @@
         }
       });
     });
-    tableBody.querySelectorAll('[data-attachment]').forEach(function (button) {
+    tableBody.querySelectorAll('[data-attachment-id]').forEach(function (button) {
       button.addEventListener('click', function () {
-        toast('Opening ' + button.dataset.attachment);
+        if (openInLibrary) openInLibrary(button.dataset.attachmentId);
       });
     });
   }
@@ -432,12 +461,6 @@
 
   if (att) (function () {
     var PAGE_SIZE = 10; // Figma "Line level - w/pagination" shows 10 rows a page.
-    var DOC_ICONS = {
-      word: 'file-word-outline.svg',
-      pdf: 'file-pdf-outline.svg',
-      image: 'image-outline.svg',
-      url: 'link-outline.svg'
-    };
     var PREVIEW_ACTIONS = [
       { key: 'zoom-out', icon: 'zoom-out-outline.svg', label: 'Zoom out' },
       { key: 'zoom-in', icon: 'zoom-in-outline.svg', label: 'Zoom in' },
@@ -646,7 +669,22 @@
       if (selected === id) selected = null;
       render();
       renderPreview();
+      renderTable(); // the table's Attachments column reads this list
     }
+
+    /* Opening a file from the table's Attachments column: expand the card, go to
+       the level and page the file is on, select it and scroll it into view. */
+    openInLibrary = function (id) {
+      var item = find(id);
+      if (!item) return;
+      att.classList.remove('is-collapsed');
+      att.querySelector('.card__header').setAttribute('aria-expanded', 'true');
+      var level = QC.attachments.header.indexOf(item) !== -1 ? 'header' : 'line';
+      if (tab !== level) att.querySelector('[data-att-tab="' + level + '"]').click();
+      page = Math.floor(QC.attachments[level].indexOf(item) / PAGE_SIZE) + 1;
+      select(id);
+      att.querySelector('.att__panes').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
 
     function nextLineNumber() {
       return QC.attachments.line.reduce(function (max, item) {
@@ -670,6 +708,7 @@
       if (!added.length) return;
       page = pageCount();
       render();
+      renderTable();
       toast(added.length === 1
         ? added[0].name + ' attached.'
         : added.length + ' files attached.');
@@ -841,6 +880,7 @@
       urlAdd.disabled = true;
       page = pageCount();
       render();
+      renderTable();
       toast(name + ' attached.');
     });
 

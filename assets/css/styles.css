@@ -776,7 +776,7 @@ button {
 /* Wider than the viewport on purpose: the data columns scroll sideways while
    the Actions column stays locked to the right edge. */
 .data-table {
-  --col-att-w: 124px;
+  --col-att-w: 244px; /* holds a file name at the library's 210px, plus its icon */
   --col-actions-w: 80px;
   width: max-content;
   min-width: 100%;
@@ -975,6 +975,54 @@ button {
   background: none;
   padding: 0;
   cursor: pointer;
+}
+
+/* Attachments column: the row's line-level files, named and styled like their
+   Attachments Library rows. A row with two files stacks them. */
+.att-cell {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  max-width: 100%;
+}
+
+.att-cell__file {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--cui-text-t1);
+  cursor: pointer;
+  text-align: left;
+}
+
+.att-cell__file--link {
+  color: var(--cui-text-link);
+}
+
+.att-cell__file img {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+
+.att-cell__file span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.att-cell__file:hover span {
+  text-decoration: underline;
+}
+
+.att-cell__none {
+  color: var(--cui-text-t3);
 }
 
 .result-pill {
