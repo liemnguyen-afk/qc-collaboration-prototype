@@ -31,92 +31,129 @@ QC.inspection = {
   }
 };
 
-/* The Quality Inspections list — Figma 514:38555. One row per inspection this
-   supplier has with Buyer Enterprises; the columns are the fields the detail
-   screen's Summary card shows, so a row and the screen it opens read the same.
-   `tone` drives the status pill. Only inspection 001 has a `href`: it is the one
-   this prototype builds out, so it opens the supplier screen and the rest toast. */
+/* The Inspections list — the columns, labels and link colours are transcribed
+   from the design's own list screen (Figma 514:38555, read from a screengrab of
+   that frame): Inspection ID, Document Reference, Requested By, Item, Supplier
+   Part Number, Buyer Part Number, Request Date, Due Date, Status, Resolution
+   Reason, Supplier, Created At. Status is plain text there, with the outcome
+   carried by Resolution Reason on the closed rows.
+
+   Only inspection 001 has a `href`: it is the one this prototype builds out, so
+   it opens the supplier screen and the rest toast. Its values are the ones the
+   detail screen's Summary card shows, so a row and the screen it opens agree. */
 QC.inspections = [
   {
     id: '001',
-    itemName: 'Performance Muffler XR-3',
     documentReference: 'PO:EXTPO123/001',
-    requestDate: '05/01/25',
-    dueDate: '06/15/25',
-    characteristics: 8,
+    requestedBy: 'Prasad T. (Quality Manager)',
+    itemName: 'Performance Muffler XR-3',
+    supplierPartNumber: 'XR3-300SS',
+    buyerPartNumber: 'EX-4471',
+    requestDate: '05/01/2025',
+    dueDate: '06/15/2025',
     status: 'In Progress',
-    tone: 'info',
+    resolutionReason: '',
+    supplier: 'Apex Exhaust Systems',
+    createdAt: '05/01/2025',
     href: 'index.html'
   },
   {
     id: '002',
-    itemName: 'Resonator R-90',
     documentReference: 'PO:EXTPO123/002',
-    requestDate: '05/01/25',
-    dueDate: '06/20/25',
-    characteristics: 6,
+    requestedBy: 'Prasad T. (Quality Manager)',
+    itemName: 'Resonator R-90',
+    supplierPartNumber: 'R90-409SS',
+    buyerPartNumber: 'EX-4472',
+    requestDate: '05/01/2025',
+    dueDate: '06/20/2025',
     status: 'In Buyer Review',
-    tone: 'info'
+    resolutionReason: '',
+    supplier: 'Apex Exhaust Systems',
+    createdAt: '05/01/2025'
   },
   {
     id: '003',
-    itemName: 'Cat-Back Exhaust Kit CB-455',
     documentReference: 'PO:EXTPO124/001',
-    requestDate: '05/08/25',
-    dueDate: '06/22/25',
-    characteristics: 10,
-    status: 'Accepted',
-    tone: 'success'
+    requestedBy: 'Prasad T. (Quality Manager)',
+    itemName: 'Cat-Back Exhaust Kit CB-455',
+    supplierPartNumber: 'CB455-KIT',
+    buyerPartNumber: 'EX-4488',
+    requestDate: '05/08/2025',
+    dueDate: '06/22/2025',
+    status: 'Closed',
+    resolutionReason: 'Accepted - All specifications satisfied',
+    supplier: 'Apex Exhaust Systems',
+    createdAt: '05/08/2025'
   },
   {
     id: '004',
-    itemName: 'Exhaust Tip ET-250 Polished',
     documentReference: 'PO:EXTPO124/002',
-    requestDate: '05/08/25',
-    dueDate: '06/28/25',
-    characteristics: 4,
-    status: 'Sent Back to Supplier',
-    tone: 'warning'
+    requestedBy: 'Prasad T. (Quality Manager)',
+    itemName: 'Exhaust Tip ET-250 Polished',
+    supplierPartNumber: 'ET250-POL',
+    buyerPartNumber: 'EX-4491',
+    requestDate: '05/08/2025',
+    dueDate: '06/28/2025',
+    status: 'In Progress',
+    resolutionReason: '',
+    supplier: 'Apex Exhaust Systems',
+    createdAt: '05/08/2025'
   },
   {
     id: '005',
-    itemName: 'Header Gasket Set HG-118',
     documentReference: 'PO:EXTPO126/001',
-    requestDate: '05/15/25',
-    dueDate: '07/01/25',
-    characteristics: 5,
+    requestedBy: 'Prasad T. (Quality Manager)',
+    itemName: 'Header Gasket Set HG-118',
+    supplierPartNumber: 'HG118-SET',
+    buyerPartNumber: 'EX-4503',
+    requestDate: '05/15/2025',
+    dueDate: '07/01/2025',
     status: 'Open',
-    tone: ''
+    resolutionReason: '',
+    supplier: 'Apex Exhaust Systems',
+    createdAt: '05/15/2025'
   },
   {
     id: '006',
-    itemName: 'Mid-Pipe Assembly MP-320',
     documentReference: 'PO:EXTPO126/002',
-    requestDate: '05/15/25',
-    dueDate: '07/03/25',
-    characteristics: 7,
-    status: 'Rejected',
-    tone: 'error'
+    requestedBy: 'Prasad T. (Quality Manager)',
+    itemName: 'Mid-Pipe Assembly MP-320',
+    supplierPartNumber: 'MP320-ASM',
+    buyerPartNumber: 'EX-4507',
+    requestDate: '05/15/2025',
+    dueDate: '07/03/2025',
+    status: 'Closed',
+    resolutionReason: "Rejected - Item doesn't meet specifications",
+    supplier: 'Apex Exhaust Systems',
+    createdAt: '05/15/2025'
   },
   {
     id: '007',
-    itemName: 'Muffler Hanger Bracket MH-77',
     documentReference: 'PO:EXTPO127/001',
-    requestDate: '05/22/25',
-    dueDate: '07/10/25',
-    characteristics: 3,
-    status: 'Accepted',
-    tone: 'success'
+    requestedBy: 'Prasad T. (Quality Manager)',
+    itemName: 'Muffler Hanger Bracket MH-77',
+    supplierPartNumber: 'MH77-BRK',
+    buyerPartNumber: 'EX-4512',
+    requestDate: '05/22/2025',
+    dueDate: '07/10/2025',
+    status: 'Closed',
+    resolutionReason: 'Accepted - All specifications satisfied',
+    supplier: 'Apex Exhaust Systems',
+    createdAt: '05/22/2025'
   },
   {
     id: '008',
-    itemName: 'Tailpipe TP-512',
     documentReference: 'PO:EXTPO127/002',
-    requestDate: '05/22/25',
-    dueDate: '07/12/25',
-    characteristics: 5,
-    status: 'In Progress',
-    tone: 'info'
+    requestedBy: 'Prasad T. (Quality Manager)',
+    itemName: 'Tailpipe TP-512',
+    supplierPartNumber: 'TP512-300',
+    buyerPartNumber: 'EX-4516',
+    requestDate: '05/22/2025',
+    dueDate: '07/12/2025',
+    status: 'Open',
+    resolutionReason: '',
+    supplier: 'Apex Exhaust Systems',
+    createdAt: '05/22/2025'
   }
 ];
 

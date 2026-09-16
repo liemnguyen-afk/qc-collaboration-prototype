@@ -1102,23 +1102,102 @@ button {
   border: 1px solid var(--cui-status-error);
 }
 
-/* ─── Quality Inspections list — Figma 514:38555 ───────────────────────── */
+/* ─── Inspections list — Figma 514:38555 ──────────────────────────────── */
 
-/* Widths chosen so this table fits the card at 1440px and does not scroll
-   sideways, unlike the characteristics table. */
-.data-table th[data-ins-sort-key='id'] { min-width: 120px; }
-.data-table th[data-ins-sort-key='itemName'] { min-width: 300px; }
-.data-table th[data-ins-sort-key='documentReference'] { min-width: 200px; }
-.data-table th[data-ins-sort-key='requestDate'] { min-width: 140px; }
-.data-table th[data-ins-sort-key='dueDate'] { min-width: 140px; }
-.data-table th[data-ins-sort-key='characteristics'] { min-width: 140px; }
-.data-table th[data-ins-sort-key='status'] { min-width: 200px; }
+/* The list screen's own title sizes: a lighter page title than the inspection
+   screens carry, a 20px section title, and a plain-text Views control. */
+.page-title--list h1 {
+  font-size: 28px;
+  font-weight: var(--cui-weight-regular);
+  line-height: 36px;
+}
+
+.table-block__title--list {
+  font-size: var(--cui-font-size-xl);
+  line-height: var(--cui-line-md);
+}
+
+.views-trigger--bare {
+  background: none;
+  padding-left: 0;
+  font-weight: var(--cui-weight-regular);
+}
+
+.views-trigger--bare img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Search with the magnifier after the field, as this screen draws it. */
+.table-search--trailing img {
+  opacity: 0.7;
+}
+
+/* All 12 columns are in frame in the design, so the table is laid out to the
+   card's width rather than scrolled sideways: fixed layout, allotted widths,
+   and cells that wrap. Rows align to the top so a wrapped cell does not shift
+   its neighbours' first line. */
+.data-table--list {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.data-table--list td,
+.data-table--list th {
+  white-space: normal;
+  vertical-align: top;
+}
+
+/* Only cell values may be broken mid-word; a column label never is. */
+.data-table--list td {
+  overflow-wrap: break-word;
+}
+
+.data-table--list .col-num {
+  text-align: right;
+}
+
+.data-table--list th.col-num {
+  text-align: left;
+}
+
+.data-table--list .col-nowrap {
+  white-space: nowrap;
+}
+
+/* Widths follow the content: the long free-text columns take the room, the
+   date columns take only what a date needs. */
+.data-table--list th[data-ins-sort-key='id'] { width: 100px; }
+.data-table--list th[data-ins-sort-key='documentReference'] { width: 152px; }
+.data-table--list th[data-ins-sort-key='requestedBy'] { width: 140px; }
+.data-table--list th[data-ins-sort-key='itemName'] { width: 142px; }
+.data-table--list th[data-ins-sort-key='supplierPartNumber'] { width: 114px; }
+.data-table--list th[data-ins-sort-key='buyerPartNumber'] { width: 100px; }
+.data-table--list th[data-ins-sort-key='requestDate'] { width: 100px; }
+.data-table--list th[data-ins-sort-key='dueDate'] { width: 100px; }
+.data-table--list th[data-ins-sort-key='status'] { width: 100px; }
+.data-table--list th[data-ins-sort-key='resolutionReason'] { width: 134px; }
+.data-table--list th[data-ins-sort-key='supplier'] { width: 116px; }
+.data-table--list th[data-ins-sort-key='createdAt'] { width: 100px; }
+
+/* Recoloured Figma caret: the sorted column is marked in the link blue. */
+.sort-caret {
+  width: 8px;
+  height: 5px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.sort-caret--asc {
+  transform: rotate(180deg);
+}
 
 .link-button {
   border: 0;
   padding: 0;
   background: none;
   font: inherit;
+  text-align: inherit;
   color: var(--cui-text-link);
   cursor: pointer;
 }
@@ -1127,33 +1206,37 @@ button {
   text-decoration: underline;
 }
 
-.status-pill {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: var(--cui-radii-2xl);
+/* "Per page 15 | 45 | 90" — the sizes other than the current one are links. */
+.table-block__footer--list {
+  justify-content: flex-start;
   font-size: var(--cui-font-size-sm);
-  background: var(--cui-surface-s4);
-  border: 1px solid var(--cui-border-neutral-minimal);
 }
 
-.status-pill--info {
-  background: var(--cui-light-blue-subtle-surface);
-  border-color: var(--cui-light-blue-subtle-border);
+.per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.status-pill--success {
-  background: var(--cui-green-subtle-surface);
-  border-color: var(--cui-green-subtle-border);
+.per-page button {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  color: var(--cui-text-link);
+  cursor: pointer;
 }
 
-.status-pill--warning {
-  background: var(--cui-orange-subtle-surface);
-  border-color: var(--cui-orange-subtle-border);
+.per-page button:hover {
+  text-decoration: underline;
 }
 
-.status-pill--error {
-  background: #fdecec;
-  border-color: var(--cui-status-error);
+.per-page button.is-current {
+  color: var(--cui-text-1);
+}
+
+.per-page__pipe {
+  color: var(--cui-text-t3);
 }
 
 .table-block__footer {

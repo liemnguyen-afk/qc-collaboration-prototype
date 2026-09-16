@@ -10,7 +10,7 @@ Three pages are implemented:
 | --- | --- | --- |
 | [`index.html`](index.html) | `3782:74663` — *Supplier - Item Inspection* | Coupa Supplier Portal (CSP) |
 | [`buyer.html`](buyer.html) | `3782:77297` — *Item Inspection* | Coupa core / buyer |
-| [`inspections.html`](inspections.html) | [`514:38555`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=514-38555) — the Quality Inspections list — see the fidelity note below | Coupa Supplier Portal (CSP) |
+| [`inspections.html`](inspections.html) | [`514:38555`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=514-38555) — *Inspections* (the list) — see the fidelity note below | Coupa Supplier Portal (CSP) |
 
 Two components on those screens are built from their own dedicated Figma sections:
 
@@ -55,7 +55,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The three HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916g`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260916h`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -68,7 +68,7 @@ python3 -m http.server 8000
 ## What is clickable
 
 **Cross-screen flow**
-- Supplier **View All Quality Inspections** → the inspections list (`inspections.html`); inspection
+- Supplier **View All Quality Inspections** → the Inspections list (`inspections.html`); inspection
   **001** in that list opens the supplier screen again.
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
 - Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in History) → returns to `index.html`.
@@ -126,19 +126,22 @@ python3 -m http.server 8000
   this row’s ID, so the cell, the library list, the level badge, the file/URL counts and the pager all
   follow immediately — and deleting it in the library updates the open editor.
 
-**Quality Inspections list** (`inspections.html`, Figma `514:38555`)
-- 8 inspections this supplier has with Buyer Enterprises, with the fields the detail screen’s
-  **Summary** card shows: Inspection ID, Item Name, Document Reference, Request Date, Due Date,
-  Characteristics and a **Status** pill (Open, In Progress, In Buyer Review, Sent Back to Supplier,
-  Accepted, Rejected).
-- The **ID link** opens the inspection; the list carries no Actions column. **001** is the muffler
-  inspection this prototype builds out, so it goes to `index.html`; the other seven toast, since there
-  is no second inspection behind them.
-- **Search in this view** matches every column and the count follows it; any header sorts
-  ascending/descending (Characteristics sorts as a number). The table fits 1440 px, so unlike the
-  characteristics table it does not scroll sideways.
-- Views, filter, more, page size and the pager behave as they do on the detail screen — highlight and
-  toast, with no second page of data behind them.
+**Inspections list** (`inspections.html`, Figma `514:38555`)
+- Titled **Inspections**, with **All Inspection Requests** as the saved view, and 12 columns in the
+  design's order: Inspection ID, Document Reference, Requested By, Item, Supplier Part Number, Buyer
+  Part Number, Request Date, Due Date, Status, Resolution Reason, Supplier, Created At. All 12 are in
+  frame — the table is laid out to the card's width and cells wrap rather than scrolling sideways.
+- **Status** and **Resolution Reason** are plain text, as the design draws them: the status carries
+  Open / In Progress / In Buyer Review / Closed, and a closed row says why in Resolution Reason
+  (*Accepted - All specifications satisfied*, *Rejected - Item doesn't meet specifications*).
+- Three columns are links, matching the blue text in the design: **Inspection ID**, **Item** and
+  **Supplier**. The ID opens the inspection — **001** is the muffler inspection this prototype builds
+  out, so it goes to `index.html`, and the other seven toast. Item and Supplier toast, since neither an
+  item page nor a supplier record is in scope.
+- **Search** matches every column; any header sorts ascending/descending, and the blue caret marks the
+  sorted one. The list opens newest first on Inspection ID.
+- **Views**, **filter** and the footer's **Per page 15 | 45 | 90** highlight and toast — there is no
+  second page of data behind them.
 
 **Attachments Library** (Figma `758:125789`)
 - **Header Level / Line Level** tabs switch the list; the badges count the attachments at each level.
@@ -169,7 +172,7 @@ python3 -m http.server 8000
 ```
 index.html            Supplier screen
 buyer.html            Buyer review screen
-inspections.html      Quality Inspections list
+inspections.html      Inspections list
 assets/css/tokens.css Clarity UI (CUI) design tokens, resolved from Figma variables
 assets/css/styles.css Component styling for both product chromes
 assets/js/data.js     Inspections list, characteristics, attachments + history content
@@ -261,21 +264,19 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   because deciding pass/fail from the specification text would be invented logic. The
   Inspection Date column was widened from 150 px to 166 px so the date field and its picker fit
   without the table resizing when a row opens.
-- **The Quality Inspections list was not verified against Figma `514:38555`.** The Figma connection
-  was not authorised in the session that built it, so the *page* is the one the design is named for —
-  the CSP chrome, a Views panel, the table block with search / filter / more, a status column and the
-  footer's page-size and pager — but the **column set is inferred**: it is the field list the detail
-  screen's Summary card shows, so a row and the screen it opens read the same. Check it against that
-  node; the rows are the `QC.inspections` array in [`assets/js/data.js`](assets/js/data.js). The eight
-  inspections other than 001 are invented content (other exhaust parts from the same supplier) to give
-  the list, its statuses and its search something to work on, and only 001 opens a screen. The six
-  status values and which pill colour each gets are also a decision, not the design.
-- **Two status-pill colours come from the Clarity token set, not from these Figma nodes.** No node in
-  the QC-History section uses a green or a light-blue subtle surface, so `--cui-green-subtle-surface` /
-  `--cui-green-subtle-border` (Accepted) and `--cui-light-blue-subtle-surface` (In Progress / In Buyer
-  Review) were taken from Clarity's own `color.greenSubtle.*` and `color.lightBlueSubtle.*` rather than
-  from `get_variable_defs`, and are marked as such in [`assets/css/tokens.css`](assets/css/tokens.css).
-  Sent Back to Supplier and Rejected reuse the amber and red already in the file from the result pills.
+- **The Inspections list was matched from a screengrab of Figma `514:38555`, not from the node.** The
+  Figma connection was not authorised in the sessions that built it, so the page title, the section
+  title, the 12 column labels and their order, the plain-text Status and Resolution Reason, the blue
+  Inspection ID / Item / Supplier links, the trailing-magnifier Search and the *Per page 15 | 45 | 90*
+  footer are transcribed from a screengrab the design owner supplied. What the screengrab cannot give
+  is measurement: **the column widths are ours.** They are solved to the card's width (they sum to the
+  1398 px scrollport) so that every column is in frame and no header and no cell needs more than two
+  lines — except **Resolution Reason**, whose longest sentence takes three, which makes the closed rows
+  taller than the open ones. If the node allows a wider table, re-measure there.
+- **The eight rows other than 001 are invented content.** They are other exhaust parts from the same
+  supplier, present to give the statuses, the resolution reasons and the search something to work on;
+  only 001 opens a screen. The rows are the `QC.inspections` array in
+  [`assets/js/data.js`](assets/js/data.js).
 - **Row action icons use the CUI outline set** (`download-outline`, `trash-outline`), as every
   component instance in the design does. The two *Add file* / *Add URL* frames (`829:93201`,
   `829:93994`) still use the older green/red `Icons/action/*` glyphs; that looked like drift in the

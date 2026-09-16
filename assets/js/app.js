@@ -595,17 +595,35 @@
     });
   });
 
-  /* ── Quality Inspections list — Figma 514:38555 ──────────────────────── */
+  /* ── Inspections list — Figma 514:38555 ──────────────────────────────── */
 
-  /* The page "View All Quality Inspections" leads to. Its own search, sort and
-     count, kept apart from the characteristics table above so the two tables
-     never share a sort state; only inspection 001 opens a screen. */
+  /* The page "View All Quality Inspections" leads to. Its own search and sort,
+     kept apart from the characteristics table above so the two tables never share
+     a sort state. Inspection ID, Item and Supplier are links, as the design draws
+     them; only the ID opens a screen, and only for 001. */
   var insBody = document.querySelector('[data-inspections-body]');
 
   if (insBody) (function () {
+    /* Every column, in the order the design lists them. `link` marks the cells the
+       design draws in blue; `numeric` is the right-aligned ID. */
+    var INS_COLUMNS = [
+      { key: 'id', link: 'open', numeric: true },
+      { key: 'documentReference' },
+      { key: 'requestedBy' },
+      { key: 'itemName', link: 'item' },
+      { key: 'supplierPartNumber' },
+      { key: 'buyerPartNumber' },
+      { key: 'requestDate', nowrap: true },
+      { key: 'dueDate', nowrap: true },
+      { key: 'status' },
+      { key: 'resolutionReason' },
+      { key: 'supplier', link: 'supplier' },
+      { key: 'createdAt', nowrap: true }
+    ];
+
     var insSearch = document.querySelector('[data-ins-search]');
-    var insCount = document.querySelector('[data-ins-count]');
-    var insSort = { key: null, dir: 1 };
+    /* The design shows the list newest first, marked on Inspection ID. */
+    var insSort = { key: 'id', dir: -1 };
 
     function insById(id) {
       return QC.inspections.filter(function (row) {
@@ -613,31 +631,36 @@
       })[0];
     }
 
-    function statusPill(row) {
+    function insCellHtml(row, column) {
+      var value = row[column.key];
+      var text = esc(value === '' || value == null ? '' : value);
+      /* A date reads as one token, so those columns are held on a single line. */
+      var classes = (column.numeric ? 'col-num ' : '') + (column.nowrap ? 'col-nowrap' : '');
+      var css = classes.trim() ? ' class="' + classes.trim() + '"' : '';
+      if (!column.link || !text) return '<td' + css + '>' + text + '</td>';
       return (
-        '<span class="status-pill' + (row.tone ? ' status-pill--' + row.tone : '') + '">' +
-        esc(row.status) + '</span>'
+        '<td' + css + '><button class="link-button" type="button" data-ins-link="' +
+        column.link + '" data-ins-id="' + esc(row.id) + '">' + text + '</button></td>'
       );
     }
 
     function insRowHtml(row) {
-      return (
-        '<tr>' +
-        '<td><button class="link-button" type="button" data-ins-open="' + esc(row.id) + '">' +
-        esc(row.id) + '</button></td>' +
-        '<td>' + esc(row.itemName) + '</td>' +
-        '<td>' + esc(row.documentReference) + '</td>' +
-        '<td>' + esc(row.requestDate) + '</td>' +
-        '<td>' + esc(row.dueDate) + '</td>' +
-        '<td>' + esc(row.characteristics) + '</td>' +
-        '<td>' + statusPill(row) + '</td>' +
-        '</tr>'
-      );
+      return '<tr>' + INS_COLUMNS.map(function (column) {
+        return insCellHtml(row, column);
+      }).join('') + '</tr>';
     }
 
-    function openInspection(id) {
+    function followLink(kind, id) {
       var row = insById(id);
       if (!row) return;
+      if (kind === 'item') {
+        toast('Item page for ' + row.itemName + ' is out of scope for this prototype.');
+        return;
+      }
+      if (kind === 'supplier') {
+        toast('Supplier record for ' + row.supplier + ' is out of scope for this prototype.');
+        return;
+      }
       if (row.href) {
         window.location.href = row.href;
         return;
@@ -650,10 +673,9 @@
       var term = (insSearch && insSearch.value || '').trim().toLowerCase();
       var rows = QC.inspections.filter(function (row) {
         if (!term) return true;
-        return [
-          row.id, row.itemName, row.documentReference, row.requestDate,
-          row.dueDate, row.characteristics, row.status
-        ].join(' ').toLowerCase().indexOf(term) !== -1;
+        return INS_COLUMNS.map(function (column) {
+          return row[column.key];
+        }).join(' ').toLowerCase().indexOf(term) !== -1;
       });
 
       if (insSort.key) {
@@ -667,18 +689,29 @@
       return rows;
     }
 
+    function renderInsHeaders() {
+      document.querySelectorAll('[data-ins-sort-key]').forEach(function (th) {
+        var caret = th.querySelector('.sort-caret');
+        if (caret) th.removeChild(caret);
+        if (th.dataset.insSortKey !== insSort.key) return;
+        var img = document.createElement('img');
+        img.className = 'sort-caret' + (insSort.dir === 1 ? ' sort-caret--asc' : '');
+        img.src = ICONS + 'caret-sort.svg';
+        img.alt = insSort.dir === 1 ? 'sorted ascending' : 'sorted descending';
+        th.appendChild(img);
+      });
+    }
+
     function renderInspections() {
       var rows = insRows();
       insBody.innerHTML = rows.length
         ? rows.map(insRowHtml).join('')
-        : '<tr><td colspan="7" class="history__empty">No inspections match your search.</td></tr>';
-      if (insCount) {
-        insCount.textContent =
-          rows.length + ' of ' + QC.inspections.length + ' quality inspections';
-      }
-      insBody.querySelectorAll('[data-ins-open]').forEach(function (button) {
+        : '<tr><td colspan="' + INS_COLUMNS.length +
+          '" class="history__empty">No inspection requests match your search.</td></tr>';
+      renderInsHeaders();
+      insBody.querySelectorAll('[data-ins-link]').forEach(function (button) {
         button.addEventListener('click', function () {
-          openInspection(button.dataset.insOpen);
+          followLink(button.dataset.insLink, button.dataset.insId);
         });
       });
     }

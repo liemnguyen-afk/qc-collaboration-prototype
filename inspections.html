@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1440">
-  <title>Quality Inspections — Supplier Portal</title>
+  <title>Inspections — Supplier Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/tokens.css?v=20260916g">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260916g">
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260916h">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260916h">
 </head>
 <body data-role="supplier">
 
@@ -60,76 +60,70 @@
     </div>
   </header>
 
-  <div class="page-title">
-    <h1>Quality Inspections</h1>
+  <div class="page-title page-title--list">
+    <h1>Inspections</h1>
   </div>
 
   <main class="content">
 
-    <!-- Quality Inspections list — Figma 514:38555 -->
+    <!-- Inspections list — Figma 514:38555 -->
     <section class="table-block">
       <div class="table-block__title-row">
-        <button class="views-trigger" type="button" data-views-trigger aria-haspopup="true">
+        <button class="views-trigger views-trigger--bare" type="button" data-views-trigger aria-haspopup="true">
           <img src="assets/icons/menu-hamburger.svg" alt="">
           Views
         </button>
-        <h2 class="table-block__title" data-view-name>All Quality Inspections</h2>
+        <h2 class="table-block__title table-block__title--list" data-view-name>All Inspection Requests</h2>
       </div>
 
       <div class="views-panel" data-views-panel>
         <p class="views-panel__title">SAVED VIEWS</p>
-        <button class="views-panel__item is-active" type="button">All Quality Inspections</button>
-        <button class="views-panel__item" type="button">Awaiting My Results</button>
-        <button class="views-panel__item" type="button">In Buyer Review</button>
+        <button class="views-panel__item is-active" type="button">All Inspection Requests</button>
+        <button class="views-panel__item" type="button">Open Requests</button>
+        <button class="views-panel__item" type="button">In Progress</button>
         <button class="views-panel__item" type="button">Closed</button>
       </div>
 
       <div class="table-block__toolbar">
-        <span class="table-search">
+        <span class="table-search table-search--trailing">
+          <input type="search" placeholder="Search" aria-label="Search inspection requests" data-ins-search>
           <img src="assets/icons/search-in-view.svg" alt="">
-          <input type="search" placeholder="Search in this view" aria-label="Search in this view" data-ins-search>
         </span>
         <button class="icon-button" type="button" data-toast="Filter panel is out of scope for this prototype.">
           <img src="assets/icons/filter.svg" alt="Filter">
         </button>
-        <button class="icon-button" type="button" data-toast="More table actions: export, manage columns.">
-          <img src="assets/icons/more-v.svg" alt="More actions">
-        </button>
       </div>
 
       <div class="table-scroll">
-        <table class="data-table">
+        <table class="data-table data-table--list">
           <thead>
             <tr>
-              <th data-ins-sort-key="id">Inspection ID</th>
-              <th data-ins-sort-key="itemName">Item Name</th>
+              <th class="col-num" data-ins-sort-key="id">Inspection ID</th>
               <th data-ins-sort-key="documentReference">Document Reference</th>
+              <th data-ins-sort-key="requestedBy">Requested By</th>
+              <th data-ins-sort-key="itemName">Item</th>
+              <th data-ins-sort-key="supplierPartNumber">Supplier Part Number</th>
+              <th data-ins-sort-key="buyerPartNumber">Buyer Part Number</th>
               <th data-ins-sort-key="requestDate">Request Date</th>
               <th data-ins-sort-key="dueDate">Due Date</th>
-              <th data-ins-sort-key="characteristics">Characteristics</th>
               <th data-ins-sort-key="status">Status</th>
+              <th data-ins-sort-key="resolutionReason">Resolution Reason</th>
+              <th data-ins-sort-key="supplier">Supplier</th>
+              <th data-ins-sort-key="createdAt">Created At</th>
             </tr>
           </thead>
           <tbody data-inspections-body></tbody>
         </table>
       </div>
 
-      <div class="table-block__footer">
-        <div class="page-size" data-page-size>
-          <span>Items per page:</span>
+      <div class="table-block__footer table-block__footer--list">
+        <div class="per-page" data-page-size>
+          <span>Per page</span>
           <button type="button" class="is-current">15</button>
+          <span class="per-page__pipe">|</span>
           <button type="button">45</button>
+          <span class="per-page__pipe">|</span>
           <button type="button">90</button>
-          <span data-ins-count></span>
-        </div>
-        <div class="pager" data-pager>
-          <button type="button">Prev</button>
-          <button type="button" class="is-current">1</button>
-          <button type="button">2</button>
-          <button type="button">3</button>
-          <span>...</span>
-          <button type="button">9</button>
-          <button type="button">Next</button>
         </div>
       </div>
     </section>
@@ -161,7 +155,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/data.js?v=20260916g"></script>
-<script src="assets/js/app.js?v=20260916g"></script>
+<script src="assets/js/data.js?v=20260916h"></script>
+<script src="assets/js/app.js?v=20260916h"></script>
 </body>
 </html>
