@@ -1,25 +1,31 @@
-/* Content transcribed from Figma:
+/* Layout and component behaviour transcribed from Figma:
    187 Quality Collaboration SCC/SCPL — "QC- History" (node 3782-77289).
-   Supplier screen: 3782:74663 · Buyer screen: 3782:77297 */
+   Supplier screen: 3782:74663 · Buyer screen: 3782:77297
+
+   The example content is an aftermarket performance muffler (Performance Muffler
+   XR-3, buyer part EX-4471) rather than the Figma file's "Synthetic Rubber"
+   sample. Row-by-row shape is preserved — same 8 characteristics, same blank
+   Range cells, same amber row 3 / red row 5, same 6 files + 1 URL — so the
+   screens still match the design. */
 
 window.QC = window.QC || {};
 
 QC.inspection = {
-  title: 'Quality Inspection #1 for Synthetic Rubber - PO #5001 / 0001',
+  title: 'Quality Inspection #1 for Performance Muffler XR-3 - PO #5001 / 0001',
   summary: {
     inspectionId: '001',
     requestDate: '05/01/25',
     documentReference: 'PO:EXTPO123/001',
     dueDate: '06/15/25',
     resolutionReason: '',
-    itemName: 'Synthetic Rubber',
-    itemDescription: 'A polymer that can stretch and return to its original shape',
-    supplier: 'Material Supply Industries',
-    buyerPartNumber: '0782',
+    itemName: 'Performance Muffler XR-3',
+    itemDescription: 'Straight-through aftermarket muffler, 409 stainless, 3 in inlet/outlet',
+    supplier: 'Apex Exhaust Systems',
+    buyerPartNumber: 'EX-4471',
     /* Third row, revealed by "Show more" — Figma 518:29199. */
-    supplierPartNumber: 'S-231',
+    supplierPartNumber: 'XR3-300SS',
     sampleSize: '5 each',
-    buyerBatchNumber: 'A-31'
+    buyerBatchNumber: 'B-2214'
   }
 };
 
@@ -32,68 +38,67 @@ QC.attachments = {
     {
       id: 'h1',
       kind: 'word',
-      name: 'Statement of Work.doc',
+      name: 'XR-3 Muffler Program SOW.doc',
       actions: ['download', 'trash'],
       preview: {
         type: 'doc',
         blocks: [
           { type: 'title', text: 'Statement of Work (SOW)' },
-          { type: 'meta', text: 'Project: ProjectX' },
-          { type: 'meta', text: 'Parties: Acme Supply and Buyer Enterprise' },
+          { type: 'meta', text: 'Program: XR-3 Performance Muffler (part EX-4471)' },
+          { type: 'meta', text: 'Parties: Apex Exhaust Systems and Buyer Enterprises' },
           { type: 'h', text: '1. Introduction' },
           {
             type: 'p',
             text:
-              'This Statement of Work (SOW) outlines the scope, objectives, deliverables, and ' +
-              'timeline for ProjectX, a strategic initiative jointly executed by Microsoft and ' +
-              'Coupa. The purpose of this engagement is to enhance procurement efficiency, improve ' +
-              'financial visibility, and drive digital transformation across Microsoft’s enterprise ' +
-              'spend operations.'
+              'This Statement of Work (SOW) outlines the scope, deliverables, and inspection ' +
+              'requirements for the XR-3 Performance Muffler program, jointly executed by Apex ' +
+              'Exhaust Systems and Buyer Enterprises. The purpose of this engagement is to qualify ' +
+              'and supply the XR-3 straight-through performance muffler into the aftermarket ' +
+              'channel at a consistent sound signature and flow rating.'
           },
           { type: 'h', text: '2. Project Scope' },
           {
             type: 'p',
             text:
-              'ProjectX will include the design, configuration, and implementation of Coupa’s ' +
-              'Business Spend Management (BSM) platform within Microsoft’s global procurement ' +
-              'infrastructure. The scope encompasses:'
+              'The program covers the forming, welding, packing, finishing and testing of XR-3 ' +
+              'muffler assemblies at the Apex Monterrey plant. The scope encompasses:'
           },
           {
             type: 'ul',
             items: [
-              'Spend analysis and categorization',
-              'Supplier onboarding and risk management',
-              'Contract lifecycle management integration',
-              'Workflow automation for procurement approvals',
-              'Seamless integration with Microsoft ERP systems'
+              'Shell forming and TIG welding of 409 stainless assemblies',
+              'Perforated core fabrication and fiberglass packing to 96 kg/m³',
+              'Flow bench and back pressure verification per SAE J1492',
+              'Sound level and insertion loss testing per SAE J1169 / J1400',
+              'Salt spray validation of shell and weld corrosion resistance'
             ]
           },
           {
             type: 'p',
-            text: 'The project will be delivered in phased rollouts by business unit and region.'
+            text: 'Production will ramp in phased lots by shell diameter and inlet configuration.'
           },
           { type: 'h', text: '3. Objectives' },
-          { type: 'p', text: 'The primary goals of ProjectX include:' },
+          { type: 'p', text: 'The primary goals of the XR-3 program include:' },
           {
             type: 'ul',
             items: [
-              'Streamlining Microsoft’s end-to-end procurement lifecycle',
-              'Increasing compliance and reducing maverick spend',
-              'Enabling real-time budget and spend visibility',
-              'Reducing manual processes and administrative overhead',
-              'Improving supplier collaboration and performance'
+              'Holding tailpipe sound level within 88 - 95 dB(A) across the model range',
+              'Keeping back pressure below 2.0 psi at 500 CFM',
+              'Achieving 240 h salt spray with no red rust on shell or welds',
+              'Reducing weld rework and scrap on the inlet and outlet seams',
+              'Establishing first article and lot inspection records in Coupa'
             ]
           },
           { type: 'h', text: '4. Deliverables' },
-          { type: 'p', text: 'Coupa will deliver the following as part of the engagement:' },
+          { type: 'p', text: 'Apex will deliver the following as part of the engagement:' },
           {
             type: 'ul',
             items: [
-              'A configured Coupa BSM platform tailored to Microsoft’s operational needs',
-              'User training modules and documentation',
-              'Integration connectors for Microsoft Dynamics and Azure-based analytics',
-              'Change management support and go-live assistance',
-              'Post-launch hypercare and ongoing technical support'
+              'First article inspection report for EX-4471 covering all 8 characteristics',
+              'Flow bench and back pressure data sheets for each production lot',
+              'Sound level and insertion loss reports per SAE J1169 / J1400',
+              'Material certificates for the 409 stainless coil and packing material',
+              'Weld operator certifications and dye-penetrant records'
             ]
           },
           {
@@ -106,187 +111,189 @@ QC.attachments = {
           {
             type: 'p',
             text:
-              'The total project duration is expected to be 9 months, beginning on June 1, 2025, ' +
+              'The total program duration is expected to be 9 months, beginning on June 1, 2025, ' +
               'with major milestones as follows:'
           },
           {
             type: 'ul',
             items: [
-              'Phase 1: Requirements Gathering & Design – June to July 2025',
-              'Phase 2: Configuration & Integration – August to October 2025',
-              'Phase 3: UAT, Training & Deployment – November to December 2025',
-              'Go-Live & Hypercare – January 2026'
+              'Phase 1: Tooling & First Article – June to July 2025',
+              'Phase 2: Pilot Lot & Sound Validation – August to October 2025',
+              'Phase 3: PPAP, Packaging & Launch Readiness – November to December 2025',
+              'Production Ramp & Warranty Monitoring – January 2026'
             ]
           },
           {
             type: 'p',
             text:
-              'Project adjustments will follow the formal change control process jointly agreed ' +
+              'Program adjustments will follow the formal change control process jointly agreed ' +
               'upon by both parties.'
           },
           { type: 'h', text: '6. Assumptions & Dependencies' },
           {
             type: 'p',
             text:
-              'Key assumptions include executive sponsorship from both sides, dedicated internal ' +
-              'project resources, and timely access to Microsoft’s infrastructure. Dependencies ' +
-              'include third-party system readiness and legal approvals for vendor agreements.'
+              'Key assumptions include coil supply from the approved 409 stainless mill, access to ' +
+              'a certified acoustic test cell, and dyno availability for drive-by verification. ' +
+              'Dependencies include packing material lead times and emissions documentation for ' +
+              'the applicable model years.'
           },
           { type: 'h', text: '7. Acceptance' },
           {
             type: 'p',
             text:
-              'This SOW will be considered approved upon formal sign-off by both Microsoft and ' +
-              'Coupa project leads and will serve as the guiding document for delivery and ' +
-              'performance measurement.'
+              'This SOW will be considered approved upon formal sign-off by both Apex Exhaust ' +
+              'Systems and Buyer Enterprises quality leads and will serve as the guiding document ' +
+              'for lot inspection and performance measurement.'
           }
         ]
       }
     },
-    { id: 'h2', kind: 'pdf', name: 'Checklist-items.pdf', actions: ['download', 'trash'] }
+    { id: 'h2', kind: 'pdf', name: 'Inspection-checklist-XR-3.pdf', actions: ['download', 'trash'] }
   ],
   line: [
     {
       id: 'l1',
       line: 1,
       kind: 'pdf',
-      name: 'Item-inspection-01.pdf',
+      name: 'Hanger-isolator-elastomer-report.pdf',
       actions: ['download', 'trash'],
       preview: {
         type: 'image',
         src: 'assets/img/item-inspection-01.png',
-        alt: 'Conclusions: results table for the rubber compound test report'
+        alt: 'Conclusions: results table from the hanger isolator elastomer test report'
       }
     },
-    { id: 'l2', line: 2, kind: 'word', name: 'Checklist-items.doc', actions: ['download', 'trash'] },
-    { id: 'l3', line: 3, kind: 'image', name: 'ImageUploaded(3).jpeg', actions: ['download'] },
-    { id: 'l4', line: 4, kind: 'image', name: 'ImageUploaded(4).jpeg', actions: ['download'] },
+    { id: 'l2', line: 2, kind: 'word', name: 'Sound-test-log-J1169.doc', actions: ['download', 'trash'] },
+    { id: 'l3', line: 3, kind: 'image', name: 'Weld-seam-inlet.jpeg', actions: ['download'] },
+    { id: 'l4', line: 4, kind: 'image', name: 'Shell-finish-outlet.jpeg', actions: ['download'] },
     {
       id: 'l5',
       line: 7,
       kind: 'url',
-      name: 'www.acmesupply.com',
-      url: 'https://www.acmesupply.com',
+      name: 'www.apexexhaust.com',
+      url: 'https://www.apexexhaust.com',
       actions: ['trash']
     }
   ]
 };
 
 /* One row per characteristic. `resultTone` drives the pill styling seen in the
-   Figma (row 3 amber, row 5 red outline). */
+   Figma (row 3 amber — length trending to the upper limit, row 5 red outline —
+   tailpipe sound level above the 95 dB(A) ceiling). */
 QC.characteristics = [
   {
     id: 1,
-    characteristic: 'Visual check, thickness, length',
+    characteristic: 'Visual and weld inspection',
     specification:
-      'Standard Flat Face Flanges: 3.2 mm gasket thickness ±0.2 mm; free from surface defects, cracks or blisters',
+      'Continuous TIG seams on shell, inlet and outlet; no burn-through, porosity or spatter; no dents or scratches deeper than 0.2 mm',
     range: '',
     result: 'No defects',
     resultTone: '',
-    expectedResult: 'Free from surface defect',
+    expectedResult: 'Free from weld and surface defects',
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
-    remarks: '5 samples measured, no flash',
-    attachment: 'File_name.doc',
+    remarks: '5 units checked, seams dye-penetrant tested',
+    attachment: 'Weld-seam-inlet.jpeg',
     hasNewComment: true
   },
   {
     id: 2,
-    characteristic: 'Hardness',
-    specification: '70 ± 10 IRHD, acceptable range 60 - 80, per ASTM D1415',
-    range: '60-80',
-    result: '78 IRHD',
+    characteristic: 'Shell wall thickness',
+    specification: '1.20 mm ± 0.10 mm, 409 stainless per ASTM A240',
+    range: '1.10-1.30',
+    result: '1.24 mm',
     resultTone: '',
-    expectedResult: '70 ± 10 IRHD',
+    expectedResult: '1.20 mm ± 0.10 mm',
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
-    remarks: 'Avg of 5 readings, 5 s dwell',
-    attachment: 'File_name.doc',
+    remarks: 'Ultrasonic gauge, 4 points per unit',
+    attachment: 'Wall-thickness-log.pdf',
     hasNewComment: false
   },
   {
     id: 3,
-    characteristic: 'Compression set',
+    characteristic: 'Body length and inlet/outlet OD',
     specification:
-      '60% expected, must stay below 85% after 22 h at 70 °C, per ASTM D395 Method B',
-    range: '<85%',
-    result: '55%',
+      'Body 356 mm ± 2 mm; inlet and outlet 76.2 mm OD +0 / -0.4 mm, per drawing EX-4471 rev. C',
+    range: '354-358',
+    result: '357.4 mm',
     resultTone: 'warning',
-    expectedResult: '60%',
+    expectedResult: '356 mm ± 2 mm',
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
-    remarks: 'Re-tested; read after 30 min',
-    attachment: 'File_name.doc',
+    remarks: 'Re-measured on CMM; trending to upper limit',
+    attachment: 'CMM-report-EX4471.pdf',
     hasNewComment: false
   },
   {
     id: 4,
-    characteristic: 'Side Flow under compression',
-    specification: 'No lateral flow or extrusion at 1.5× rated bolt load (34.5 MPa)',
+    characteristic: 'Back pressure',
+    specification: 'Max 2.0 psi at 500 CFM on flow bench, per SAE J1492',
     range: '',
-    result: 'None',
+    result: '1.6 psi',
     resultTone: '',
-    expectedResult: 'N/A',
+    expectedResult: '2.0 psi (max)',
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
-    remarks: 'No extrusion at 1.5× bolt load',
-    attachment: 'File_name.doc',
+    remarks: 'Flow bench at 500 CFM, ambient 22 °C',
+    attachment: 'Flow-bench-data.pdf',
     hasNewComment: false
   },
   {
     id: 5,
-    characteristic: 'Tensile strength',
-    specification: 'Min 1,550 kPa across grain, per ASTM F152',
+    characteristic: 'Tailpipe sound level',
+    specification: '88 - 95 dB(A) at 0.5 m, 45°, 3,000 rpm, per SAE J1169',
     range: '',
-    result: '2,080 kPa',
+    result: '97 dB(A)',
     resultTone: 'error',
-    expectedResult: '1,550 kPa (min)',
+    expectedResult: '88 - 95 dB(A)',
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
-    remarks: 'Across grain, lowest of 3',
-    attachment: 'File_name.doc',
+    remarks: '2 of 5 units above limit; packing density suspect',
+    attachment: 'Sound-test-log-J1169.doc',
     hasNewComment: false
   },
   {
     id: 6,
-    characteristic: 'Flexibility',
-    specification: 'No cracking when bent 180° over a 3.2 mm mandrel, per ASTM F147',
+    characteristic: 'Insertion loss',
+    specification: 'Min 18 dB(A) insertion loss over a 500 - 4,000 Hz sweep, per SAE J1400',
     range: '',
-    result: 'No cracking',
+    result: '21 dB(A)',
     resultTone: '',
-    expectedResult: 'No cracking on 180° bend',
+    expectedResult: '18 dB(A) min',
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
-    remarks: '180° bend, no cracking seen',
-    attachment: 'File_name.doc',
+    remarks: 'Averaged over 1/3-octave bands',
+    attachment: 'Insertion-loss-J1400.pdf',
     hasNewComment: false
   },
   {
     id: 7,
-    characteristic: 'Compressibility',
-    specification: '25 - 35% at 6.9 MPa preload, per ASTM F36 Method J',
+    characteristic: 'Leak test',
+    specification: 'No leakage at 34.5 kPa (5 psi) air, 60 s submersion',
     range: '',
-    result: '28%',
+    result: 'No leaks',
     resultTone: '',
-    expectedResult: '25-35%',
+    expectedResult: 'No leakage at 5 psi',
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
-    remarks: 'Measured at 6.9 MPa preload',
-    attachment: 'File_name.doc',
+    remarks: 'All 5 units submerged for 60 s',
+    attachment: 'Leak-test-record.pdf',
     hasNewComment: false
   },
   {
     id: 8,
-    characteristic: 'Recovery',
-    specification: 'Min 80% of original thickness, per ASTM F36 Method J',
-    range: '>80%',
-    result: '92%',
+    characteristic: 'Salt spray corrosion resistance',
+    specification: 'No red rust on shell or welds after 240 h neutral salt spray, per ASTM B117',
+    range: '>240 h',
+    result: '336 h',
     resultTone: '',
-    expectedResult: '80% min',
+    expectedResult: '240 h min',
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
-    remarks: 'Measured 1 min after unload',
-    attachment: 'File_name.doc',
+    remarks: 'Witness coupons from the same coil',
+    attachment: 'Salt-spray-B117.pdf',
     hasNewComment: false
   }
 ];
@@ -303,10 +310,10 @@ QC.history = [
     action: 'Requested ',
     link: 'Quality Inspection: 001 (PO #5001 / 0001)',
     lines: [
-      'Item: Synthetic Rubber',
+      'Item: Performance Muffler XR-3',
       'Characteristics requested: 8',
       'Due Date: 06/15/2025',
-      'Reason: New material qualification'
+      'Reason: First article inspection, new SKU'
     ],
     timestamp: 'May 01 - 9:12 AM',
     sortKey: '2025-05-01T09:12'
@@ -316,11 +323,11 @@ QC.history = [
     name: 'Prasad T.',
     initials: 'PT',
     action: 'Updated Specification on ',
-    link: 'Characteristic: 2 (Hardness)',
+    link: 'Characteristic: 2 (Shell wall thickness)',
     lines: [
-      'Item: Synthetic Rubber',
-      'Specification: 70 ± 10 IRHD (range 60 - 80)',
-      'Reason: Aligned to drawing rev. B'
+      'Item: Performance Muffler XR-3',
+      'Specification: 1.20 mm ± 0.10 mm (range 1.10 - 1.30)',
+      'Reason: Aligned to drawing EX-4471 rev. C'
     ],
     timestamp: 'May 20 - 2:40 PM',
     sortKey: '2025-05-20T14:40'
@@ -332,7 +339,7 @@ QC.history = [
     action: 'Recorded Results on ',
     link: 'Characteristics: 1 - 4',
     lines: [
-      'Item: Synthetic Rubber',
+      'Item: Performance Muffler XR-3',
       'Inspected By: Steven Neilson',
       'Inspection Date: 06/10/2025'
     ],
@@ -346,7 +353,7 @@ QC.history = [
     action: 'Recorded Results on ',
     link: 'Characteristics: 5 - 8',
     lines: [
-      'Item: Synthetic Rubber',
+      'Item: Performance Muffler XR-3',
       'Inspected By: Steven Neilson',
       'Inspection Date: 06/10/2025'
     ],
@@ -358,11 +365,11 @@ QC.history = [
     name: 'Steven Neilson',
     initials: 'SN',
     action: 'Revised Result on ',
-    link: 'Characteristic: 3 (Compression set)',
+    link: 'Characteristic: 3 (Body length and inlet/outlet OD)',
     lines: [
-      'Previous Result: 62%',
-      'Revised Result: 55%',
-      'Reason: Re-tested per ASTM D395 Method B'
+      'Previous Result: 359.1 mm',
+      'Revised Result: 357.4 mm',
+      'Reason: Re-fixtured and re-measured on the CMM'
     ],
     timestamp: 'Jun 10 - 11:05 AM',
     sortKey: '2025-06-10T11:05'
@@ -374,9 +381,9 @@ QC.history = [
     action: 'Synced inspection results after test completion',
     link: '',
     lines: [
-      'Characteristic 1 (Visual check, thickness, length)',
-      'Characteristic 2 (Hardness)',
-      'Characteristic 3 (Compression set)'
+      'Characteristic 1 (Visual and weld inspection)',
+      'Characteristic 2 (Shell wall thickness)',
+      'Characteristic 3 (Body length and inlet/outlet OD)'
     ],
     timestamp: 'Jun 10 - 12:10 PM',
     sortKey: '2025-06-10T12:10',
@@ -388,7 +395,7 @@ QC.history = [
     initials: 'NP',
     action: 'Added Attachments to ',
     link: 'Quality Inspection: 001',
-    lines: ['Item: Synthetic Rubber', 'Files: 8', 'URL: 1'],
+    lines: ['Item: Performance Muffler XR-3', 'Files: 8', 'URL: 1'],
     timestamp: 'Jun 10 - 1:15 PM',
     sortKey: '2025-06-10T13:15'
   },
@@ -399,7 +406,7 @@ QC.history = [
     action: 'Added a comment: ',
     link: '',
     lines: [
-      ' @Prasad T. All 8 characteristics have been inspected against the specifications on PO #5001 / 0001. Compression set was re-tested per ASTM D395 Method B and now reads 55%, within the 85% limit. Test reports and the durometer calibration certificate are attached. Please let me know if any additional data is needed before approval.'
+      ' @Prasad T. All 8 characteristics have been inspected against the specifications on PO #5001 / 0001. Back pressure came in at 1.6 psi and insertion loss at 21 dB(A), both comfortably inside spec. Characteristic 5 is the exception: 2 of the 5 units measured 97 dB(A) at the tailpipe against the 95 dB(A) ceiling, and we believe the packing density on that lot is low. Sound test logs, the flow bench data and the CMM report are attached. Advise whether you want the lot re-packed and re-tested before approval.'
     ],
     timestamp: 'Jun 10 - 1:20 PM',
     sortKey: '2025-06-10T13:20',
@@ -414,7 +421,7 @@ QC.history = [
     lines: [
       'Added a comment',
       'Added comment attachment URL https://master-proc.coupadev.com/quality_inspections/001/edit',
-      'Added comment attachment file QI-001-Test_Report-061025-080512.pdf',
+      'Added comment attachment file QI-001-Sound_Test-061025-080512.pdf',
       'Deleted a comment',
       'Removed comment attachment URL https://master-proc.coupadev.com/quality_inspections/001/edit'
     ],
@@ -427,8 +434,8 @@ QC.history = [
     name: 'ERP Sync',
     initials: 'ES',
     action: 'Failed to sync result for ',
-    link: 'Characteristic: 4 (Side flow under compression)',
-    lines: ['Item: Synthetic Rubber', 'Error: External system validation failed'],
+    link: 'Characteristic: 4 (Back pressure)',
+    lines: ['Item: Performance Muffler XR-3', 'Error: External system validation failed'],
     timestamp: 'Jun 11 - 9:02 AM',
     sortKey: '2025-06-11T09:02'
   },
@@ -439,7 +446,7 @@ QC.history = [
     action: 'Added a comment: ',
     link: '',
     lines: [
-      ' @Steven Neilson Thanks for submitting the results for PO #5001 / 0001. Compression set at 55% and tensile strength at 2,080 kPa are both within the agreed limits, so those look fine. Before I accept, please confirm the visual check on characteristic 1 was performed on all five samples and attach the surface finish photos.'
+      ' @Steven Neilson Thanks for submitting the results for PO #5001 / 0001. Back pressure at 1.6 psi and salt spray at 336 h both look good. The 97 dB(A) reading on characteristic 5 is a hard fail for this SKU, so please re-pack those units to 96 kg/m³ and re-test per SAE J1169. While you are in there, confirm the visual check on characteristic 1 covered all five samples and attach the weld seam photos.'
     ],
     timestamp: 'Jun 11 - 10:15 AM',
     sortKey: '2025-06-11T10:15',

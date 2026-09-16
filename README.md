@@ -18,6 +18,23 @@ Two components on those screens are built from their own dedicated Figma section
 | Attachments Library (11 states) | [`758:125789`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=758-125789) — *Attachment Library* |
 | Summary, expanded third row | [`518:28852`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=518-28852) — *Header Summary / Variant2* |
 
+## The example inspection
+
+The layout is the Figma design; the **content is an aftermarket performance muffler** — *Performance
+Muffler XR-3*, a straight-through 409 stainless muffler with 3 in inlet/outlet, buyer part `EX-4471`,
+supplied by *Apex Exhaust Systems* — rather than the Figma file’s generic “Synthetic Rubber” sample.
+
+The 8 characteristics are the ones a muffler is actually inspected against: weld and visual, shell
+wall thickness, body length / tube OD, back pressure (SAE J1492), tailpipe sound level (SAE J1169),
+insertion loss (SAE J1400), leak test, and salt spray (ASTM B117).
+
+The story the two screens tell: results are in for all 8, but **characteristic 5 fails** — 2 of 5
+units read 97 dB(A) against a 88 - 95 dB(A) ceiling, with low packing density as the suspected cause.
+Characteristic 3 is amber (357.4 mm, trending to the upper limit) after being re-measured, and the
+ERP sync failed on characteristic 4. So the buyer screen has a real reason to use **Send Back to
+Supplier**, and the *Out of Specification* and *Revised Results* saved views have something to point
+at.
+
 ## Live preview
 
 GitHub Pages serves the prototype from `main` / root:
@@ -35,7 +52,7 @@ python3 -m http.server 8000
 
 **Cross-screen flow**
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
-- Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the Figma history) → returns to `index.html`.
+- Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in History) → returns to `index.html`.
 - Buyer **Accept** / **Reject** → confirmation modals with toast feedback.
 - A small “View as” switcher (bottom-left) jumps between the two roles. It is a prototype aid and is *not* part of the Figma design.
 
@@ -64,8 +81,9 @@ python3 -m http.server 8000
 
 **Attachments Library** (Figma `758:125789`)
 - **Header Level / Line Level** tabs switch the list; the badges count the attachments at each level.
-- Clicking a row selects it and renders it in the **preview pane** — the Statement of Work as a
-  document, `Item-inspection-01.pdf` as its page image, a URL row as the *Link Attachment* card.
+- Clicking a row selects it and renders it in the **preview pane** — the program SOW as a
+  document, `Hanger-isolator-elastomer-report.pdf` as its page image, a URL row as the *Link
+  Attachment* card.
 - The preview **action set** works: zoom out / zoom in, expand to a full-screen sheet (`Esc` closes),
   rotate 90°, download (toast), and the red remove, which deletes the attachment from the library.
 - Row **download** icons toast; row **trash** icons delete the row, and the counts, badges and
@@ -92,7 +110,7 @@ index.html            Supplier screen
 buyer.html            Buyer review screen
 assets/css/tokens.css Clarity UI (CUI) design tokens, resolved from Figma variables
 assets/css/styles.css Component styling for both product chromes
-assets/js/data.js     Characteristics, attachments + history content transcribed from Figma
+assets/js/data.js     Characteristics, attachments + history content for the example inspection
 assets/js/app.js      Filtering, sorting, accordions, attachments, comments, modals, navigation
 assets/icons/         47 assets exported from the Figma file (SVG + one PNG flag)
 assets/img/           Document preview image exported from the Figma file
@@ -123,16 +141,23 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   further data in the design.
 - **Summary third row** comes from a different frame (`518:28852`) than the two screens
   (`3782:74670` / `3782:77332`), because the QC-History frames only show the collapsed state. That
-  frame also carries different values for two fields it shares with the screens — Status `Open` and
-  Buyer Part Number `0762`, against `In Progress` / `In Buyer Review` and `0782` on the screens. The
-  screens’ own values are kept; only the three new fields were taken from `518:28852`.
+  frame also carries a different Status value from the screens — `Open`, against `In Progress` /
+  `In Buyer Review`. The screens’ own values are kept; only the three new fields were taken from
+  `518:28852`.
+- **Buyer Part Number is filled on both screens.** The Figma buyer frame leaves that field blank while
+  the supplier frame fills it; both now read `EX-4471`, since a blank buyer part number on the buyer’s
+  own screen reads as a bug in a demo rather than as design intent.
 - **Attachment counts.** The QC-History frames say “8 Files | 1 URL”, but the Attachment Library
   component itemises 2 header-level plus 5 line-level attachments — 6 files and 1 URL. The itemised
   list wins, so the counts read “6 Files | 1 URL” and are computed from
   [`assets/js/data.js`](assets/js/data.js) (including in the Submit modal).
-- **Only two attachments have a designed preview**: `Statement of Work.doc` (its text) and
-  `Item-inspection-01.pdf` (a page image, exported to `assets/img/`). Selecting any other file shows
-  a note saying the design has no preview for it, rather than inventing one.
+- **Only two attachments have a designed preview**: the program SOW (its text) and one PDF (a page
+  image, exported to `assets/img/`). Selecting any other file shows a note saying the design has no
+  preview for it, rather than inventing one.
+- **The PDF preview image is reused, not re-rendered.** The exported page is an elastomer test report,
+  so it is attached as `Hanger-isolator-elastomer-report.pdf` — the rubber hanger isolator that ships
+  with the muffler — which is a plausible line-level attachment for this inspection. Replace
+  `assets/img/item-inspection-01.png` if you want a muffler-specific report page.
 - **Pagination in the library is real but idle.** The Figma *Line level - w/pagination* state shows
   35 line-level attachments over 7 pages; this inspection only has 5, so the pager stays hidden until
   you attach more files.
@@ -152,6 +177,11 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
 ## Data
 
 All content — the 8 characteristics with their specifications, ranges, results, expected results,
-remarks and attachments, the 7 library attachments, and the 11 history entries — is transcribed from
-the Figma frames and lives in [`assets/js/data.js`](assets/js/data.js). Editing that file updates
-both screens.
+remarks and attachments, the 7 library attachments, and the 11 history entries — lives in
+[`assets/js/data.js`](assets/js/data.js). Editing that file updates both screens.
+
+The **structure** of that data is transcribed from the Figma frames and is what the layout was built
+against: 8 characteristic rows with Range left blank on 5 of them, one amber and one red result pill,
+2 header-level plus 5 line-level attachments (6 files + 1 URL), and 11 history entries across the
+four actor filters. The **values** are the muffler example, so swapping in another item means keeping
+that shape and replacing the text.
