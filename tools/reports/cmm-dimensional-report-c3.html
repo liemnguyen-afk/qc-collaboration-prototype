@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+  @page { margin: 0 }
+  body {
+    margin: 0; width: 636px; height: 658px; box-sizing: border-box;
+    padding: 30px 34px; background: #fff; color: #000;
+    font: 9.5px/1.34 "Times New Roman", Times, serif;
+  }
+  .co { font-size: 10px; font-weight: bold; letter-spacing: .04em }
+  .co-sub { font-size: 8.5px; margin: 0 0 14px }
+  h1 { font-size: 13.5px; margin: 0 0 3px; letter-spacing: .01em }
+  .rpt { font-size: 8.5px; margin: 0 0 12px }
+  h2 {
+    font-size: 9.5px; margin: 13px 0 4px; text-decoration: underline;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  table { border-collapse: collapse; width: 100% }
+  .kv td { padding: 1px 0; vertical-align: top }
+  .kv td:first-child { width: 132px }
+  .kv td:nth-child(3) { width: 118px; padding-left: 18px }
+  .data { margin-top: 3px; font-size: 9px }
+  .data th {
+    text-align: right; border-bottom: 1px solid #000; padding: 3px 5px 2px; font-weight: bold;
+  }
+  .data th:first-child, .data th:nth-child(2) { text-align: left }
+  .data td { text-align: right; padding: 2.5px 5px; border-bottom: .5px solid #bbb }
+  .data td:first-child, .data td:nth-child(2) { text-align: left }
+  .data tr:last-child td { border-bottom: 1px solid #000 }
+  .near { font-weight: bold }
+  p { margin: 3px 0 }
+  ul { margin: 3px 0 3px 16px; padding: 0 }
+  li { margin: 1px 0 }
+  .sum { margin-top: 5px }
+  .sum td:first-child { width: 150px }
+  .rev { margin-top: 6px; padding: 6px 8px; border: 1px solid #000; font-size: 9px }
+  .rev b { text-decoration: underline }
+  .sign { margin-top: 14px; border-top: 1px solid #000; padding-top: 6px; font-size: 8.5px }
+  .foot { margin-top: 9px; font-size: 7px; line-height: 1.3; color: #222 }
+</style></head>
+<body>
+  <p class="co">APEX EXHAUST SYSTEMS &mdash; METROLOGY LABORATORY</p>
+  <p class="co-sub">Coordinate Measuring Room &middot; Monterrey, N.L., Mexico &middot; Temperature controlled 20 &plusmn; 1 &deg;C</p>
+
+  <h1>CMM DIMENSIONAL INSPECTION REPORT</h1>
+  <p class="rpt">Report No. QI-001-C3-061025 <b>(Rev. 1)</b> &nbsp;|&nbsp; Measurement date: June 10, 2025 &nbsp;|&nbsp; Page 1 of 1</p>
+
+  <table class="kv">
+    <tr><td>Part Number:</td><td>EX-4471 (Performance Muffler XR-3)</td><td>Purchase Order:</td><td>5001 / 0001</td></tr>
+    <tr><td>Supplier Part:</td><td>XR3-300SS</td><td>Lot / Batch:</td><td>B-2214</td></tr>
+    <tr><td>Quality Inspection:</td><td>001, Characteristic 3</td><td>Sample Size:</td><td>5 each</td></tr>
+    <tr><td>Drawing:</td><td>EX-4471 rev. C</td><td>Datum Scheme:</td><td>A-B-C</td></tr>
+    <tr><td>Specification:</td><td colspan="3">
+      Body length 356 mm &plusmn; 2 mm (354.00 &ndash; 358.00); inlet and outlet 76.2 mm OD +0 / &minus;0.4 (75.80 &ndash; 76.20)
+    </td></tr>
+  </table>
+
+  <h2>Equipment and Method</h2>
+  <ul>
+    <li>Bridge CMM, S/N CMM-0731, 2 mm ruby stylus &mdash; calibration due 12/2025</li>
+    <li>Body length taken between inlet and outlet end faces, 4 points per face, least-squares plane</li>
+    <li>Tube OD taken as a least-squares circle from 8 points, 10 mm inboard of each pipe end</li>
+    <li>Units soaked 4 h at 20 &deg;C before measurement</li>
+  </ul>
+
+  <h2>Results Table</h2>
+  <table class="data">
+    <thead><tr>
+      <th>Unit</th><th>Serial No.</th><th>Body length</th><th>Dev.</th>
+      <th>Inlet OD</th><th>Outlet OD</th><th>Result</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>1</td><td>XR3-0412</td><td>356.2</td><td>+0.2</td><td>76.05</td><td>76.02</td><td>PASS</td></tr>
+      <tr><td>2</td><td>XR3-0413</td><td class="near">357.4</td><td class="near">+1.4</td><td>76.11</td><td>75.97</td><td>PASS</td></tr>
+      <tr><td>3</td><td>XR3-0414</td><td>356.9</td><td>+0.9</td><td>75.94</td><td>76.10</td><td>PASS</td></tr>
+      <tr><td>4</td><td>XR3-0415</td><td>355.8</td><td>&minus;0.2</td><td>76.08</td><td>76.06</td><td>PASS</td></tr>
+      <tr><td>5</td><td>XR3-0416</td><td>357.1</td><td>+1.1</td><td>76.00</td><td>75.99</td><td>PASS</td></tr>
+    </tbody>
+  </table>
+
+  <table class="kv sum">
+    <tr><td>Lot maximum:</td><td>357.4 mm &mdash; reported result</td><td>Lot mean:</td><td>356.7 mm</td></tr>
+    <tr><td>Lot range:</td><td>1.6 mm</td><td>Cpk (upper):</td><td>0.67</td></tr>
+  </table>
+
+  <div class="rev">
+    <b>Revision note (Rev. 1)</b> &mdash; The initial run on 06/10/2025 reported 359.1 mm on unit
+    XR3-0413, outside the 358.00 mm upper limit. During verification, fixture datum B was found
+    shifted by 1.7 mm. All five units were re-fixtured and re-measured. The values above supersede
+    the initial run and are the basis of the revised result recorded against characteristic 3.
+  </div>
+
+  <h2>Conclusion</h2>
+  <p>
+    All five units <b>conform</b> to the body length and tube OD requirements of drawing EX-4471
+    rev. C. Body length is biased toward the upper tolerance limit &mdash; the lot mean sits 0.7 mm
+    above nominal and Cpk on the upper side is 0.67, below the 1.33 target &mdash; so the process is
+    capable but not centred.
+  </p>
+  <p>
+    Recommendation: adjust the shell cut length by &minus;0.7 mm and re-verify on the first 5 units of
+    the next lot. Fixture datum B has been re-shimmed and added to the daily gauge check sheet.
+  </p>
+
+  <div class="sign">
+    Measured by: L. Arreola, Metrology Technician &nbsp;&nbsp;|&nbsp;&nbsp;
+    Reviewed by: Steven Neilson, Quality Technician &nbsp;&nbsp;|&nbsp;&nbsp; Signed: 06/10/2025
+  </div>
+  <p class="foot">
+    All dimensions in millimetres. Measurement uncertainty for length is &plusmn; 0.02 mm and for
+    diameter &plusmn; 0.01 mm at a 95% confidence level. This report supersedes QI-001-C3-061025 Rev. 0
+    in full.
+  </p>
+</body></html>

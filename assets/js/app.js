@@ -122,7 +122,7 @@
       cells.push('<td class="col-remarks" data-tooltip="' + esc(row.remarks) + '">' +
         esc(row.remarks) + '</td>');
       cells.push(
-        '<td><button class="att-icon" type="button" data-attachment="' +
+        '<td class="col-att"><button class="att-icon" type="button" data-attachment="' +
         esc(row.attachment) +
         '" title="' + esc(row.attachment) + '">' +
         '<img src="' + ICONS + 'page-blank.svg" alt="Attachment"></button></td>'
@@ -438,7 +438,7 @@
       } else if (item.preview && item.preview.type === 'doc') {
         body = docHtml(item.preview);
       } else {
-        body = '<p class="att__note">The Figma design does not include a preview for ' +
+        body = '<p class="att__note">This prototype does not include a preview for ' +
           esc(item.name) + '.</p>';
       }
 

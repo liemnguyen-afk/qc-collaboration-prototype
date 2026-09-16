@@ -28,6 +28,12 @@ The 8 characteristics are the ones a muffler is actually inspected against: weld
 wall thickness, body length / tube OD, back pressure (SAE J1492), tailpipe sound level (SAE J1169),
 insertion loss (SAE J1400), leak test, and salt spray (ASTM B117).
 
+The **attachments follow the characteristics**. Header level carries what governs the inspection — the
+program SOW, the inspection and test plan, the mill certificate for the 409 coil. Line level carries
+one evidence file per characteristic (`Sound-level-J1169-C5.pdf`, `CMM-dimensional-C3.pdf`,
+and so on), tagged with that characteristic's ID and named the same way in the table's Att column. Two
+of them open as real report pages in the preview pane.
+
 The story the two screens tell: results are in for all 8, but **characteristic 5 fails** — 2 of 5
 units read 97 dB(A) against a 88 - 95 dB(A) ceiling, with low packing density as the suspected cause.
 Characteristic 3 is amber (357.4 mm, trending to the upper limit) after being re-measured, and the
@@ -71,8 +77,9 @@ python3 -m http.server 8000
 **Characteristics table**
 - **Search in this view** filters the 8 rows; the count next to “Items per page” updates.
 - Any column header sorts ascending/descending.
-- The data columns **scroll horizontally** while the **Actions column stays locked** to the right
-  edge (with a divider and drop shadow), so the row action is always reachable.
+- The **Att and Actions columns stay locked** to the right edge (with a divider and drop shadow), so
+  the attachment and the row action are always reachable. The supplier table fits inside 1440 px; the
+  buyer table has two more columns, so its data columns **scroll horizontally** under the locked pair.
 - **Specification** and **Remarks** are clipped to their column width; hovering a clipped cell shows
   the full text in a tooltip. Cells that are not clipped show no tooltip.
 - **Views** opens a saved-views panel that renames the table heading.
@@ -81,9 +88,9 @@ python3 -m http.server 8000
 
 **Attachments Library** (Figma `758:125789`)
 - **Header Level / Line Level** tabs switch the list; the badges count the attachments at each level.
-- Clicking a row selects it and renders it in the **preview pane** — the program SOW as a
-  document, `Hanger-isolator-elastomer-report.pdf` as its page image, a URL row as the *Link
-  Attachment* card.
+- Clicking a row selects it and renders it in the **preview pane** — the SOW and the inspection plan
+  as documents, the sound level and CMM reports as page images, a URL row as the *Link Attachment*
+  card. Files without a preview say so rather than showing an invented page.
 - The preview **action set** works: zoom out / zoom in, expand to a full-screen sheet (`Esc` closes),
   rotate 90°, download (toast), and the red remove, which deletes the attachment from the library.
 - Row **download** icons toast; row **trash** icons delete the row, and the counts, badges and
@@ -94,8 +101,8 @@ python3 -m http.server 8000
 - Either add mode also shows **Enter Comment** / **Add Comment**, which posts to History.
 - **Pagination** appears once a level holds more than 10 attachments (the Figma
   *Line level - w/pagination* state); add enough files with Browse to see it.
-- The “6 Files | 1 URL” links expand the card and jump to the list; the URL link selects the URL.
-- The **“Attachments: 6 Files | 1 URL” line stays visible when the card is collapsed** (the Figma
+- The “12 Files | 1 URL” links expand the card and jump to the list; the URL link selects the URL.
+- The **“Attachments: 12 Files | 1 URL” line stays visible when the card is collapsed** (the Figma
   collapsed state), so the counts read without expanding — and the links still expand and jump.
 
 **Cards**
@@ -113,7 +120,8 @@ assets/css/styles.css Component styling for both product chromes
 assets/js/data.js     Characteristics, attachments + history content for the example inspection
 assets/js/app.js      Filtering, sorting, accordions, attachments, comments, modals, navigation
 assets/icons/         47 assets exported from the Figma file (SVG + one PNG flag)
-assets/img/           Document preview image exported from the Figma file
+assets/img/           Report page images used as attachment previews
+tools/reports/        HTML sources those page images are rendered from
 ```
 
 Every icon is the asset exported from Figma — none are hand-drawn — so glyphs match the design
@@ -130,12 +138,16 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   (`Jun 10 - 1:20 PM`), the ERP comment-activity entry (`Jun 10 - 3:00 PM`), and Prasad T.’s comment
   (`Jun 11 - 10:15 AM`). They are flagged with `timestampInferred: true` in
   [`assets/js/data.js`](assets/js/data.js).
-- **Horizontal scroll and the locked Actions column are additions.** The Figma frames draw the table
-  at full width with no scroller. To keep long Specification and Remarks text readable at 1440 px, the
-  data columns are given explicit minimum widths — which makes the table wider than the card — and
-  the Actions column is pinned with `position: sticky; right: 0`. The hover tooltip on truncated
-  Specification / Remarks cells is likewise not in the design; the frames simply show the text cut
-  with an ellipsis.
+- **Horizontal scroll and the locked columns are additions.** The Figma frames draw the table at full
+  width with no scroller. The data columns are given explicit minimum widths so long Specification and
+  Remarks text stays readable, and the Att and Actions columns are pinned with `position: sticky`
+  (`right: var(--col-actions-w)` and `right: 0`). The supplier column widths add up to the 1440 px
+  card, so that table does not scroll and its Att column is always in view; the buyer table carries
+  Range and Expected Result as well, so it scrolls under the pinned pair. The scroll container
+  deliberately has **no horizontal padding** — a padded scrollport leaves a strip at the right edge
+  that the pinned columns cannot cover, and scrolled cells show through it — so the 16 px inset is on
+  the first and last cells instead. The hover tooltip on truncated Specification / Remarks cells is
+  likewise not in the design; the frames simply show the text cut with an ellipsis.
 - **Pagination is chrome only.** The Figma pager shows “Prev 1 2 3 … 17 Next” over a table that
   contains 8 rows of real data. The controls highlight and toast but do not page, because there is no
   further data in the design.
@@ -147,20 +159,23 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
 - **Buyer Part Number is filled on both screens.** The Figma buyer frame leaves that field blank while
   the supplier frame fills it; both now read `EX-4471`, since a blank buyer part number on the buyer’s
   own screen reads as a bug in a demo rather than as design intent.
-- **Attachment counts.** The QC-History frames say “8 Files | 1 URL”, but the Attachment Library
-  component itemises 2 header-level plus 5 line-level attachments — 6 files and 1 URL. The itemised
-  list wins, so the counts read “6 Files | 1 URL” and are computed from
-  [`assets/js/data.js`](assets/js/data.js) (including in the Submit modal).
-- **Only two attachments have a designed preview**: the program SOW (its text) and one PDF (a page
-  image, exported to `assets/img/`). Selecting any other file shows a note saying the design has no
-  preview for it, rather than inventing one.
-- **The PDF preview image is reused, not re-rendered.** The exported page is an elastomer test report,
-  so it is attached as `Hanger-isolator-elastomer-report.pdf` — the rubber hanger isolator that ships
-  with the muffler — which is a plausible line-level attachment for this inspection. Replace
-  `assets/img/item-inspection-01.png` if you want a muffler-specific report page.
+- **Attachment counts are computed, not drawn.** The Figma frames say “8 Files | 1 URL” and the
+  Attachment Library component itemises 7 attachments; neither number is hard-coded. The counts,
+  badges and the Submit modal all read from [`assets/js/data.js`](assets/js/data.js), so they follow
+  the 12 files and 1 URL this inspection carries — and keep following as you add or delete rows.
+- **Four attachments have a preview; the rest say they do not.** The Figma design draws two preview
+  states — a document and a page image — so two of each are filled in: the SOW and the inspection plan
+  render as text, and the sound level and CMM reports render as page images. Selecting any other file
+  shows a short note instead of an invented page.
+- **The two page images are generated, not exported from Figma.** The Figma export was an elastomer
+  test report, which belongs to the old “Synthetic Rubber” example; it was replaced with two muffler
+  reports rendered from the HTML in [`tools/reports/`](tools/reports/) (see that folder's README for
+  the one-line Chrome command). Their numbers match `data.js` — the sound report's 97.1 dB(A) lot
+  maximum is characteristic 5's result, and the CMM report's revision note is the *Revised Result*
+  history entry.
 - **Pagination in the library is real but idle.** The Figma *Line level - w/pagination* state shows
-  35 line-level attachments over 7 pages; this inspection only has 5, so the pager stays hidden until
-  you attach more files.
+  35 line-level attachments over 7 pages at 10 a page; this inspection has exactly 10 at line level,
+  so the pager stays hidden until you attach one more file.
 - **Row action icons use the CUI outline set** (`download-outline`, `trash-outline`), as every
   component instance in the design does. The two *Add file* / *Add URL* frames (`829:93201`,
   `829:93994`) still use the older green/red `Icons/action/*` glyphs; that looked like drift in the
@@ -177,11 +192,16 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
 ## Data
 
 All content — the 8 characteristics with their specifications, ranges, results, expected results,
-remarks and attachments, the 7 library attachments, and the 11 history entries — lives in
+remarks and attachments, the 13 library attachments, and the 11 history entries — lives in
 [`assets/js/data.js`](assets/js/data.js). Editing that file updates both screens.
 
 The **structure** of that data is transcribed from the Figma frames and is what the layout was built
 against: 8 characteristic rows with Range left blank on 5 of them, one amber and one red result pill,
-2 header-level plus 5 line-level attachments (6 files + 1 URL), and 11 history entries across the
-four actor filters. The **values** are the muffler example, so swapping in another item means keeping
-that shape and replacing the text.
+both attachment levels with the design's mix of `kind` values (word, pdf, image, url) and its
+per-kind action sets, and 11 history entries across the four actor filters. The **values** are the
+muffler example, so swapping in another item means keeping that shape and replacing the text.
+
+Line-level attachments carry `line` set to the ID of the characteristic they evidence, and each
+line-level file name is repeated in that row's `attachment` field — that is what keeps the table's Att
+column and the library in agreement. Header level holds what governs the whole inspection: the program
+SOW, the inspection and test plan, and the mill certificate for the shell coil.

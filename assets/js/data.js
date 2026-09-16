@@ -5,8 +5,10 @@
    The example content is an aftermarket performance muffler (Performance Muffler
    XR-3, buyer part EX-4471) rather than the Figma file's "Synthetic Rubber"
    sample. Row-by-row shape is preserved — same 8 characteristics, same blank
-   Range cells, same amber row 3 / red row 5, same 6 files + 1 URL — so the
-   screens still match the design. */
+   Range cells, same amber row 3 / red row 5, same two attachment levels and
+   `kind` mix — so the screens still match the design. The library holds more
+   files than the design itemises, because each characteristic now carries its
+   own evidence. */
 
 window.QC = window.QC || {};
 
@@ -32,7 +34,13 @@ QC.inspection = {
 /* Attachments Library — Figma "Attachment Library" section (node 758:125789).
    `kind` picks the doc-type icon, `actions` mirrors which row actions the design
    shows for that kind (images have no delete, URLs have no download).
-   The "Attachments: 6 Files | 1 URL" line is counted from these two lists. */
+   The "Attachments: 12 Files | 1 URL" line is counted from these two lists.
+
+   Header level holds the documents that govern the whole inspection; line level
+   holds the evidence for one characteristic each, with `line` set to that
+   characteristic's ID. Every line-level file name also appears in the matching
+   row's `attachment` field below, so the table's Att column and the library
+   agree. */
 QC.attachments = {
   header: [
     {
@@ -149,31 +157,141 @@ QC.attachments = {
         ]
       }
     },
-    { id: 'h2', kind: 'pdf', name: 'Inspection-checklist-XR-3.pdf', actions: ['download', 'trash'] }
+    {
+      id: 'h2',
+      kind: 'pdf',
+      name: 'Inspection-plan-EX-4471.pdf',
+      actions: ['download', 'trash'],
+      preview: {
+        type: 'doc',
+        blocks: [
+          { type: 'title', text: 'Inspection and Test Plan' },
+          { type: 'meta', text: 'Part: EX-4471 (Performance Muffler XR-3), drawing rev. C' },
+          { type: 'meta', text: 'Lot / Batch: B-2214 · Sample size: 5 each · Issued 05/01/2025' },
+          { type: 'h', text: 'Scope' },
+          {
+            type: 'p',
+            text:
+              'Every production lot of EX-4471 is inspected against the eight characteristics below ' +
+              'before shipment. Five units are drawn at random from each lot. A single ' +
+              'non-conforming characteristic holds the whole lot.'
+          },
+          { type: 'h', text: 'Characteristics and Acceptance Criteria' },
+          {
+            type: 'ul',
+            items: [
+              '1. Visual and weld inspection — continuous TIG seams, no burn-through, porosity or spatter; dye penetrant on inlet and outlet seams',
+              '2. Shell wall thickness — 1.20 mm ± 0.10 mm, 409 stainless per ASTM A240; ultrasonic gauge, 4 points per unit',
+              '3. Body length and inlet/outlet OD — 356 mm ± 2 mm; 76.2 mm OD +0 / -0.4 mm; CMM in a 20 ± 1 °C room',
+              '4. Back pressure — max 2.0 psi at 500 CFM on the flow bench, per SAE J1492',
+              '5. Tailpipe sound level — 88 - 95 dB(A) at 0.5 m, 45°, 3,000 rpm, per SAE J1169',
+              '6. Insertion loss — min 18 dB(A) over a 500 - 4,000 Hz sweep, per SAE J1400',
+              '7. Leak test — no leakage at 34.5 kPa (5 psi) air, 60 s submersion',
+              '8. Salt spray corrosion resistance — no red rust on shell or welds after 240 h, per ASTM B117'
+            ]
+          },
+          { type: 'h', text: 'Records' },
+          {
+            type: 'p',
+            text:
+              'One report per characteristic is attached at line level in Coupa, named for the ' +
+              'characteristic it covers. Photographs are required for characteristic 1, one per unit ' +
+              'inspected. Reports must carry the operator, the equipment serial number and its ' +
+              'calibration due date.'
+          },
+          { type: 'h', text: 'Non-conformance Handling' },
+          {
+            type: 'p',
+            text:
+              'A failing characteristic is recorded with the measured value, not marked as a pass ' +
+              'with a note. The buyer decides between rework, re-test and rejection; results may ' +
+              'only be revised when a measurement error is identified, and the revision must state ' +
+              'the cause.'
+          }
+        ]
+      }
+    },
+    {
+      id: 'h3',
+      kind: 'pdf',
+      name: 'Mill-cert-409-coil.pdf',
+      actions: ['download', 'trash']
+    }
   ],
+  /* One evidence file per characteristic — `line` is the characteristic ID. */
   line: [
     {
       id: 'l1',
       line: 1,
       kind: 'pdf',
-      name: 'Hanger-isolator-elastomer-report.pdf',
+      name: 'Weld-visual-C1.pdf',
+      actions: ['download', 'trash']
+    },
+    { id: 'l2', line: 1, kind: 'image', name: 'Weld-seam-unit1.jpeg', actions: ['download'] },
+    {
+      id: 'l3',
+      line: 2,
+      kind: 'pdf',
+      name: 'Wall-thickness-C2.pdf',
+      actions: ['download', 'trash']
+    },
+    {
+      id: 'l4',
+      line: 3,
+      kind: 'pdf',
+      name: 'CMM-dimensional-C3.pdf',
       actions: ['download', 'trash'],
       preview: {
         type: 'image',
-        src: 'assets/img/item-inspection-01.png',
-        alt: 'Conclusions: results table from the hanger isolator elastomer test report'
+        src: 'assets/img/cmm-dimensional-report-c3.png',
+        alt:
+          'CMM dimensional inspection report, rev. 1: body length and tube OD for 5 units, ' +
+          'lot maximum 357.4 mm, with the fixture datum revision note'
       }
     },
-    { id: 'l2', line: 2, kind: 'word', name: 'Sound-test-log-J1169.doc', actions: ['download', 'trash'] },
-    { id: 'l3', line: 3, kind: 'image', name: 'Weld-seam-inlet.jpeg', actions: ['download'] },
-    { id: 'l4', line: 4, kind: 'image', name: 'Shell-finish-outlet.jpeg', actions: ['download'] },
     {
       id: 'l5',
-      line: 7,
+      line: 4,
+      kind: 'pdf',
+      name: 'Back-pressure-C4.pdf',
+      actions: ['download', 'trash']
+    },
+    {
+      id: 'l6',
+      line: 5,
+      kind: 'pdf',
+      name: 'Sound-level-J1169-C5.pdf',
+      actions: ['download', 'trash'],
+      preview: {
+        type: 'image',
+        src: 'assets/img/sound-level-report-c5.png',
+        alt:
+          'Tailpipe sound level test report per SAE J1169: 5 units over 3 runs, 2 units failing ' +
+          'the 95 dB(A) limit at 97.1 and 96.8 dB(A)'
+      }
+    },
+    {
+      id: 'l7',
+      line: 5,
       kind: 'url',
-      name: 'www.apexexhaust.com',
-      url: 'https://www.apexexhaust.com',
+      name: 'acoustic-lab-mx.com/C5-cert',
+      url: 'https://www.acoustic-lab-mx.com/cert/QI-001-C5',
       actions: ['trash']
+    },
+    {
+      id: 'l8',
+      line: 6,
+      kind: 'pdf',
+      name: 'Insertion-loss-J1400-C6.pdf',
+      actions: ['download', 'trash']
+    },
+    { id: 'l9', line: 7, kind: 'pdf', name: 'Leak-test-C7.pdf', actions: ['download', 'trash'] },
+    {
+      id: 'l10',
+      line: 8,
+      kind: 'pdf',
+      name: 'Salt-spray-B117-C8.pdf',
+      actions: ['download', 'trash']
     }
   ]
 };
@@ -194,7 +312,7 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: '5 units checked, seams dye-penetrant tested',
-    attachment: 'Weld-seam-inlet.jpeg',
+    attachment: 'Weld-visual-C1.pdf',
     hasNewComment: true
   },
   {
@@ -208,7 +326,7 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Ultrasonic gauge, 4 points per unit',
-    attachment: 'Wall-thickness-log.pdf',
+    attachment: 'Wall-thickness-C2.pdf',
     hasNewComment: false
   },
   {
@@ -223,7 +341,7 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Re-measured on CMM; trending to upper limit',
-    attachment: 'CMM-report-EX4471.pdf',
+    attachment: 'CMM-dimensional-C3.pdf',
     hasNewComment: false
   },
   {
@@ -237,7 +355,7 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Flow bench at 500 CFM, ambient 22 °C',
-    attachment: 'Flow-bench-data.pdf',
+    attachment: 'Back-pressure-C4.pdf',
     hasNewComment: false
   },
   {
@@ -251,7 +369,7 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: '2 of 5 units above limit; packing density suspect',
-    attachment: 'Sound-test-log-J1169.doc',
+    attachment: 'Sound-level-J1169-C5.pdf',
     hasNewComment: false
   },
   {
@@ -265,7 +383,7 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Averaged over 1/3-octave bands',
-    attachment: 'Insertion-loss-J1400.pdf',
+    attachment: 'Insertion-loss-J1400-C6.pdf',
     hasNewComment: false
   },
   {
@@ -279,7 +397,7 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'All 5 units submerged for 60 s',
-    attachment: 'Leak-test-record.pdf',
+    attachment: 'Leak-test-C7.pdf',
     hasNewComment: false
   },
   {
@@ -293,7 +411,7 @@ QC.characteristics = [
     inspectedBy: 'Steven Neilson',
     inspectionDate: '06/10/2025',
     remarks: 'Witness coupons from the same coil',
-    attachment: 'Salt-spray-B117.pdf',
+    attachment: 'Salt-spray-B117-C8.pdf',
     hasNewComment: false
   }
 ];
@@ -395,7 +513,7 @@ QC.history = [
     initials: 'NP',
     action: 'Added Attachments to ',
     link: 'Quality Inspection: 001',
-    lines: ['Item: Performance Muffler XR-3', 'Files: 8', 'URL: 1'],
+    lines: ['Item: Performance Muffler XR-3', 'Files: 12', 'URL: 1'],
     timestamp: 'Jun 10 - 1:15 PM',
     sortKey: '2025-06-10T13:15'
   },
@@ -446,7 +564,7 @@ QC.history = [
     action: 'Added a comment: ',
     link: '',
     lines: [
-      ' @Steven Neilson Thanks for submitting the results for PO #5001 / 0001. Back pressure at 1.6 psi and salt spray at 336 h both look good. The 97 dB(A) reading on characteristic 5 is a hard fail for this SKU, so please re-pack those units to 96 kg/m³ and re-test per SAE J1169. While you are in there, confirm the visual check on characteristic 1 covered all five samples and attach the weld seam photos.'
+      ' @Steven Neilson Thanks for submitting the results for PO #5001 / 0001. Back pressure at 1.6 psi and salt spray at 336 h both look good. The 97 dB(A) reading on characteristic 5 is a hard fail for this SKU, so please re-pack those units to 96 kg/m³ and re-test per SAE J1169. The plan also calls for a weld seam photo of every unit inspected and only XR3-0412 is attached, so please add the remaining four.'
     ],
     timestamp: 'Jun 11 - 10:15 AM',
     sortKey: '2025-06-11T10:15',

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+  @page { margin: 0 }
+  body {
+    margin: 0; width: 636px; height: 686px; box-sizing: border-box;
+    padding: 30px 34px; background: #fff; color: #000;
+    font: 9.5px/1.34 "Times New Roman", Times, serif;
+  }
+  .co { font-size: 10px; font-weight: bold; letter-spacing: .04em }
+  .co-sub { font-size: 8.5px; margin: 0 0 14px }
+  h1 { font-size: 13.5px; margin: 0 0 3px; letter-spacing: .01em }
+  .rpt { font-size: 8.5px; margin: 0 0 12px }
+  h2 {
+    font-size: 9.5px; margin: 13px 0 4px; text-decoration: underline;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  table { border-collapse: collapse; width: 100% }
+  .kv td { padding: 1px 0; vertical-align: top }
+  .kv td:first-child { width: 132px; color: #000 }
+  .kv td:nth-child(3) { width: 118px; padding-left: 18px }
+  .data { margin-top: 3px; font-size: 9px }
+  .data th {
+    text-align: right; border-bottom: 1px solid #000; padding: 3px 5px 2px;
+    font-weight: bold;
+  }
+  .data th:first-child, .data th:nth-child(2) { text-align: left }
+  .data td { text-align: right; padding: 2.5px 5px; border-bottom: .5px solid #bbb }
+  .data td:first-child, .data td:nth-child(2) { text-align: left }
+  .data tr:last-child td { border-bottom: 1px solid #000 }
+  .fail { font-weight: bold }
+  p { margin: 3px 0 }
+  ul { margin: 3px 0 3px 16px; padding: 0 }
+  li { margin: 1px 0 }
+  .sum { margin-top: 5px; border-top: none }
+  .sum td { padding: 1px 0 }
+  .sum td:first-child { width: 150px }
+  .sign { margin-top: 16px; border-top: 1px solid #000; padding-top: 6px; font-size: 8.5px }
+  .foot { margin-top: 10px; font-size: 7px; line-height: 1.3; color: #222 }
+</style></head>
+<body>
+  <p class="co">APEX EXHAUST SYSTEMS &mdash; QUALITY LABORATORY</p>
+  <p class="co-sub">Acoustic Test Cell 2 &middot; Monterrey, N.L., Mexico &middot; ISO/IEC 17025 scope A-2291</p>
+
+  <h1>TAILPIPE SOUND LEVEL TEST REPORT</h1>
+  <p class="rpt">Report No. QI-001-C5-061025 &nbsp;|&nbsp; Test date: June 10, 2025 &nbsp;|&nbsp; Page 1 of 1</p>
+
+  <table class="kv">
+    <tr><td>Part Number:</td><td>EX-4471 (Performance Muffler XR-3)</td><td>Purchase Order:</td><td>5001 / 0001</td></tr>
+    <tr><td>Supplier Part:</td><td>XR3-300SS</td><td>Lot / Batch:</td><td>B-2214</td></tr>
+    <tr><td>Quality Inspection:</td><td>001, Characteristic 5</td><td>Sample Size:</td><td>5 each</td></tr>
+    <tr><td>Test Standard:</td><td>SAE J1169</td><td>Drawing Rev.:</td><td>C</td></tr>
+    <tr><td>Specification:</td><td colspan="3">88 &ndash; 95 dB(A) at 0.5 m, 45&deg; to tailpipe axis, 3,000 rpm</td></tr>
+  </table>
+
+  <h2>Test Conditions</h2>
+  <ul>
+    <li>Ambient 22 &deg;C, barometric pressure 101.0 kPa, relative humidity 44%, wind &lt; 2 m/s</li>
+    <li>Background noise 41 dB(A), at least 10 dB below the lowest measured level</li>
+    <li>Microphone at 0.5 m from the tailpipe outlet, 45&deg; to axis, 0.2 m above pipe centreline</li>
+    <li>Engine speed held at 3,000 &plusmn; 50 rpm, transmission in neutral, three runs per unit</li>
+  </ul>
+
+  <h2>Results Table</h2>
+  <table class="data">
+    <thead><tr>
+      <th>Unit</th><th>Serial No.</th><th>Run 1</th><th>Run 2</th><th>Run 3</th>
+      <th>Max dB(A)</th><th>Limit</th><th>Result</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>1</td><td>XR3-0412</td><td>93.1</td><td>93.4</td><td>93.2</td><td>93.4</td><td>95.0</td><td>PASS</td></tr>
+      <tr><td>2</td><td>XR3-0413</td><td>96.9</td><td>97.1</td><td>96.8</td><td class="fail">97.1</td><td>95.0</td><td class="fail">FAIL</td></tr>
+      <tr><td>3</td><td>XR3-0414</td><td>94.0</td><td>94.2</td><td>93.8</td><td>94.2</td><td>95.0</td><td>PASS</td></tr>
+      <tr><td>4</td><td>XR3-0415</td><td>96.6</td><td>96.8</td><td>96.5</td><td class="fail">96.8</td><td>95.0</td><td class="fail">FAIL</td></tr>
+      <tr><td>5</td><td>XR3-0416</td><td>93.7</td><td>93.9</td><td>93.6</td><td>93.9</td><td>95.0</td><td>PASS</td></tr>
+    </tbody>
+  </table>
+
+  <table class="kv sum">
+    <tr><td>Lot maximum:</td><td>97.1 dB(A) &mdash; reported as 97 dB(A)</td><td>Lot mean:</td><td>95.1 dB(A)</td></tr>
+    <tr><td>Std. deviation (n-1):</td><td>1.73 dB(A)</td><td>Units out of spec:</td><td>2 of 5</td></tr>
+  </table>
+
+  <h2>Equipment and Calibration</h2>
+  <ul>
+    <li>Sound level meter, Class 1, S/N SLM-2214 &mdash; calibration due 11/2025</li>
+    <li>Acoustic calibrator 94.0 dB at 1 kHz, verified before and after each run, drift &le; 0.2 dB</li>
+    <li>Optical tachometer, S/N TAC-118 &mdash; calibration due 09/2025</li>
+  </ul>
+
+  <h2>Conclusion</h2>
+  <p>
+    Two of the five units (S/N XR3-0413 and XR3-0415) exceed the 95 dB(A) upper limit, so lot
+    B-2214 is <b>non-conforming</b> to characteristic 5. Teardown of XR3-0413 measured fiberglass
+    packing density at 78 kg/m&sup3; against the 96 kg/m&sup3; specification, which is consistent
+    with the elevated tailpipe level and with the insertion loss margin recorded on characteristic 6.
+  </p>
+  <p>
+    Recommendation: re-pack the affected lot to 96 kg/m&sup3; and re-test all five units per
+    SAE J1169 before shipment. No shell, weld or dimensional cause was identified.
+  </p>
+
+  <div class="sign">
+    Inspected by: Steven Neilson, Quality Technician &nbsp;&nbsp;|&nbsp;&nbsp;
+    Approved by: R. Okonkwo, Quality Manager &nbsp;&nbsp;|&nbsp;&nbsp; Signed: 06/10/2025
+  </div>
+  <p class="foot">
+    This report relates only to the units identified above and may not be reproduced in part without
+    the written approval of the Apex Exhaust Systems quality laboratory. Measurement uncertainty for
+    sound pressure level is &plusmn; 0.5 dB(A) at a 95% confidence level.
+  </p>
+</body></html>

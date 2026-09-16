@@ -751,9 +751,11 @@ button {
   height: 20px;
 }
 
+/* No horizontal padding here on purpose: a padded scrollport leaves a strip at
+   the right edge that the locked columns cannot cover, and scrolled cells show
+   through it. The 16px inset lives on the edge cells instead. */
 .table-scroll {
   overflow-x: auto;
-  padding: 0 16px;
   scrollbar-width: thin;
   scrollbar-color: var(--cui-scrollbar-rest) transparent;
 }
@@ -774,6 +776,8 @@ button {
 /* Wider than the viewport on purpose: the data columns scroll sideways while
    the Actions column stays locked to the right edge. */
 .data-table {
+  --col-att-w: 56px;
+  --col-actions-w: 80px;
   width: max-content;
   min-width: 100%;
   border-collapse: collapse;
@@ -783,15 +787,24 @@ button {
   white-space: nowrap;
 }
 
-.data-table th[data-sort-key='id'] { min-width: 48px; }
-.data-table th[data-sort-key='characteristic'] { min-width: 240px; }
-.data-table th[data-sort-key='specification'] { min-width: 420px; }
+/* Supplier columns are sized so the whole table fits inside 1440px — including
+   the Att column, which is the last data column and would otherwise sit under
+   the locked Actions column until you scrolled all the way right. */
+.data-table th[data-sort-key='id'] { min-width: 56px; }
+.data-table th[data-sort-key='characteristic'] { min-width: 200px; }
+.data-table th[data-sort-key='specification'] { min-width: 340px; }
 .data-table th[data-sort-key='range'] { min-width: 150px; }
 .data-table th[data-sort-key='result'] { min-width: 120px; }
 .data-table th[data-sort-key='expectedResult'] { min-width: 200px; }
-.data-table th[data-sort-key='inspectedBy'] { min-width: 160px; }
+.data-table th[data-sort-key='inspectedBy'] { min-width: 140px; }
 .data-table th[data-sort-key='inspectionDate'] { min-width: 150px; }
-.data-table th[data-sort-key='remarks'] { min-width: 300px; }
+.data-table th[data-sort-key='remarks'] { min-width: 220px; }
+
+/* The 16px inset the scroller used to carry */
+.data-table th:first-child,
+.data-table td:first-child {
+  padding-left: 16px;
+}
 
 .data-table th {
   text-align: left;
@@ -814,34 +827,59 @@ button {
 }
 
 .data-table .col-spec {
-  max-width: 420px;
+  max-width: 340px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .data-table .col-remarks {
-  max-width: 300px;
+  max-width: 220px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Locked Actions column */
+/* Locked Att + Actions columns: the attachment and the row action both stay
+   reachable, and together they cover the right edge of the scrollport. */
+.data-table .col-att,
+.data-table th.col-att,
 .data-table .col-actions,
 .data-table th.col-actions {
   position: sticky;
-  right: 0;
-  min-width: 76px;
   background: #ffffff;
-  border-left: 1px solid var(--cui-border-b2);
-  box-shadow: -4px 0 5px rgba(0, 0, 0, 0.08);
   text-align: center;
   z-index: 2;
 }
 
+.data-table .col-att,
+.data-table th.col-att {
+  right: var(--col-actions-w);
+  width: var(--col-att-w);
+  min-width: var(--col-att-w);
+  border-left: 1px solid var(--cui-border-b2);
+  box-shadow: -4px 0 5px rgba(0, 0, 0, 0.08);
+}
+
+.data-table .col-actions,
+.data-table th.col-actions {
+  right: 0;
+  width: var(--col-actions-w);
+  min-width: var(--col-actions-w);
+  padding-right: 16px;
+  border-left: 1px solid var(--cui-border-b2);
+  box-shadow: -4px 0 5px rgba(0, 0, 0, 0.08);
+}
+
+/* One shadow for the locked pair, cast by whichever column leads it */
+.data-table .col-att + .col-actions {
+  box-shadow: none;
+}
+
+.data-table th.col-att,
 .data-table th.col-actions {
   z-index: 3;
 }
 
+.data-table tbody tr:hover td.col-att,
 .data-table tbody tr:hover td.col-actions {
   background: var(--cui-surface-s2);
 }
