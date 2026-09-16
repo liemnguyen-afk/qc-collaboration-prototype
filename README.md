@@ -18,6 +18,7 @@ Two components on those screens are built from their own dedicated Figma section
 | Attachments Library (11 states) | [`758:125789`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=758-125789) — *Attachment Library* |
 | Summary, expanded third row | [`518:28852`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=518-28852) — *Header Summary / Variant2* |
 | Inline row edit | [`507:44397`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=507-44397) — see the fidelity note below |
+| Attachments in an editing row | [`642:203899`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=642-203899) — see the fidelity note below |
 
 ## The example inspection
 
@@ -53,7 +54,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The two HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916d`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260916e`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -109,6 +110,13 @@ python3 -m http.server 8000
 - **Cancel** discards. A blank Result is refused with a toast, since that is the cell the row exists
   for. One row edits at a time: clicking another pencil closes the open editor without saving.
 - Typed values are held in a draft, so sorting or searching mid-edit keeps them.
+- **Attachments while editing** (Figma `642:203899`) — the row’s **existing attachments stay listed
+  and clickable**, and under them the library’s own **Add File | URL** affordance attaches more *to
+  that characteristic*: **File** opens a real picker (the doc-type icon comes from the extension),
+  **URL** opens a *Type URL here* field where `Enter` or **Add** attaches it and `Esc` closes just the
+  field, not the row. Either way the file lands in the Attachments Library at line level tagged with
+  this row’s ID, so the cell, the library list, the level badge, the file/URL counts and the pager all
+  follow immediately — and deleting it in the library updates the open editor.
 
 **Attachments Library** (Figma `758:125789`)
 - **Header Level / Line Level** tabs switch the list; the badges count the attachments at each level.
@@ -200,7 +208,13 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   history entry.
 - **Pagination in the library is real but idle.** The Figma *Line level - w/pagination* state shows
   35 line-level attachments over 7 pages at 10 a page; this inspection has exactly 10 at line level,
-  so the pager stays hidden until you attach one more file.
+  so the pager stays hidden until you attach one more file — from the library's **Add File**, or from
+  a row's own **Add File | URL** in inline edit.
+- **Add File / Add URL in the library still lands on a new line number.** Files attached from the
+  library's own controls at line level get `line` = the next number up (9, 10, …), which is not one of
+  the 8 characteristics, so they appear in the library but in no table row. Attaching from a row in
+  inline edit is what ties a file to a characteristic. The design does not show how the library picks
+  a line, so this was left as it was rather than guessed at.
 - **The preview's remove action uses Clarity's Close icon, not the design's red minus.** The Figma
   preview bar ends with a red circled minus (`remove-circle-outline`, still in `assets/icons/` for
   reference). That glyph reads as a destructive status marker rather than a control, so the button now
@@ -211,8 +225,9 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   characteristic 5 each carry two attachments. The column now lists the row's line-level attachments by
   name — which is also why it is wider than the design's, and why the two rows with two files are
   taller than the rest.
-- **The inline edit row was not verified against Figma `507:44397`.** The Figma connection was not
-  authorised in the session that built it, so the *interaction* is the one the design is named for —
+- **The inline edit row was not verified against Figma `507:44397` or `642:203899`.** The Figma
+  connection was not authorised in the session that built it, so the *interaction* is the one the
+  design is named for —
   pencil turns the row into fields, the row action becomes save / cancel — but the **field set is
   inferred** from the supplier’s own columns: the four result columns are editable, and ID /
   Characteristic / Specification / Attachments are not. Check it against that node; the field list is

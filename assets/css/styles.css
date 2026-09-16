@@ -1025,6 +1025,66 @@ button {
   color: var(--cui-text-t3);
 }
 
+/* Editing a row: its attachments stay clickable and the library's own
+   "Add File | URL" affordance attaches more to this characteristic. */
+.att-cell--editing {
+  gap: 6px;
+  width: 100%;
+}
+
+.att-cell__add {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--coupa-chrome-font);
+  font-size: 13px;
+  color: var(--cui-text-1);
+}
+
+.att-cell__add button {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--coupa-primary);
+  cursor: pointer;
+}
+
+.att-cell__add button:hover {
+  text-decoration: underline;
+}
+
+.att-cell__add button.is-active {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.att-cell__url {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.att-cell__url-add {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+  border: 0;
+  border-radius: var(--cui-radii-xs);
+  background: var(--cui-text-link);
+  font-family: inherit;
+  font-size: var(--cui-font-size-2xs);
+  font-weight: var(--cui-weight-semibold);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.att-cell__url-add:disabled {
+  background: var(--cui-surface-s4);
+  color: var(--cui-text-t3);
+  cursor: default;
+}
+
 .result-pill {
   display: inline-block;
   padding: 2px 10px;

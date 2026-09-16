@@ -91,6 +91,8 @@
      lose them. */
   var editingId = null;
   var editDraft = null;
+  var urlAddOpen = false; // the editing row's "Add URL" field
+  var urlDraft = '';
 
   var EDIT_FIELDS = [
     { key: 'result', label: 'Result', type: 'text' },
@@ -116,21 +118,49 @@
     });
   }
 
+  function attFileHtml(item) {
+    return (
+      '<button class="att-cell__file' + (item.kind === 'url' ? ' att-cell__file--link' : '') +
+      '" type="button" data-attachment-id="' + esc(item.id) +
+      '" title="' + esc(item.name) + ' — open in the Attachments Library">' +
+      '<img src="' + ICONS + DOC_ICONS[item.kind] + '" alt="' + item.kind + '">' +
+      '<span>' + esc(item.name) + '</span></button>'
+    );
+  }
+
   function attCell(row) {
     var items = lineAttachments(row);
     if (!items.length) {
       return '<td class="col-att"><span class="att-cell__none" title="No attachment on this ' +
         'characteristic">—</span></td>';
     }
-    return '<td class="col-att"><span class="att-cell">' + items.map(function (item) {
-      return (
-        '<button class="att-cell__file' + (item.kind === 'url' ? ' att-cell__file--link' : '') +
-        '" type="button" data-attachment-id="' + esc(item.id) +
-        '" title="' + esc(item.name) + ' — open in the Attachments Library">' +
-        '<img src="' + ICONS + DOC_ICONS[item.kind] + '" alt="' + item.kind + '">' +
-        '<span>' + esc(item.name) + '</span></button>'
-      );
-    }).join('') + '</span></td>';
+    return '<td class="col-att"><span class="att-cell">' +
+      items.map(attFileHtml).join('') + '</span></td>';
+  }
+
+  /* Editing a row: the attachments it already has stay clickable, and the
+     library's own "Add File | URL" affordance attaches more to this row.
+     Figma 642:203899. */
+  function attEditCell(row) {
+    var items = lineAttachments(row);
+    return (
+      '<td class="col-att"><span class="att-cell att-cell--editing">' +
+      items.map(attFileHtml).join('') +
+      '<span class="att-cell__add">Add ' +
+      '<button type="button" data-att-add-file="' + row.id + '">File</button>' +
+      '<span class="att__pipe">|</span>' +
+      '<button type="button" data-att-add-url="' + row.id + '"' +
+      (urlAddOpen ? ' class="is-active"' : '') + '>URL</button></span>' +
+      (urlAddOpen
+        ? '<span class="att-cell__url">' +
+          '<input class="cell-input" type="text" placeholder="Type URL here"' +
+          ' aria-label="URL to attach to this characteristic" value="' + esc(urlDraft) + '"' +
+          ' size="1" data-att-url-field="' + row.id + '">' +
+          '<button class="att-cell__url-add" type="button" data-att-url-commit="' + row.id + '"' +
+          (urlDraft.trim() ? '' : ' disabled') + '>Add</button></span>'
+        : '') +
+      '</span></td>'
+    );
   }
 
   /* The data carries MM/DD/YYYY; <input type="date"> needs YYYY-MM-DD. */
@@ -209,7 +239,7 @@
       cells.push('<td>' + editCell('inspectedBy') + '</td>');
       cells.push('<td>' + editCell('inspectionDate') + '</td>');
       cells.push('<td class="col-remarks">' + editCell('remarks') + '</td>');
-      cells.push(attCell(row));
+      cells.push(attEditCell(row));
       cells.push('<td class="col-actions">' + actionsCell(row) + '</td>');
       return '<tr class="is-editing">' + cells.join('') + '</tr>';
     }
@@ -270,10 +300,73 @@
     bindRowActions();
   }
 
+  /* Attaching from the row being edited. The file lands in the Attachments
+     Library at line level, tagged with this characteristic's ID, so it shows up
+     in the row's cell, in the library list and in the counts at once. */
+  var rowPicker = document.createElement('input');
+  rowPicker.type = 'file';
+  rowPicker.multiple = true;
+  rowPicker.hidden = true;
+  document.body.appendChild(rowPicker);
+
+  function kindOfName(name) {
+    if (/\.(docx?|rtf)$/i.test(name)) return 'word';
+    if (/\.pdf$/i.test(name)) return 'pdf';
+    if (/\.(png|jpe?g|gif|webp|bmp|tiff?)$/i.test(name)) return 'image';
+    return 'pdf';
+  }
+
+  var refreshLibrary = null; // assigned by the Attachments Library below
+
+  function attachToLine(lineId, item) {
+    item.line = Number(lineId);
+    QC.attachments.line.push(item);
+    renderTable();
+    if (refreshLibrary) refreshLibrary(item);
+  }
+
+  rowPicker.addEventListener('change', function () {
+    var lineId = rowPicker.dataset.line;
+    var added = [];
+    Array.prototype.forEach.call(rowPicker.files, function (file) {
+      var kind = kindOfName(file.name);
+      attachToLine(lineId, {
+        id: 'a' + Date.now() + '-' + added.length,
+        kind: kind,
+        name: file.name,
+        actions: kind === 'image' ? ['download'] : ['download', 'trash']
+      });
+      added.push(file.name);
+    });
+    rowPicker.value = '';
+    if (!added.length) return;
+    toast(added.length === 1
+      ? added[0] + ' attached to characteristic ' + lineId + '.'
+      : added.length + ' files attached to characteristic ' + lineId + '.');
+  });
+
+  function addUrlToRow(lineId) {
+    var value = urlDraft.trim();
+    if (!value) return;
+    var name = value.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+    urlDraft = '';
+    urlAddOpen = false;
+    attachToLine(lineId, {
+      id: 'u' + Date.now(),
+      kind: 'url',
+      name: name,
+      url: /^https?:\/\//i.test(value) ? value : 'https://' + value,
+      actions: ['trash']
+    });
+    toast(name + ' attached to characteristic ' + lineId + '.');
+  }
+
   function startEdit(id) {
     var row = rowById(id);
     if (!row) return;
     editingId = row.id;
+    urlAddOpen = false;
+    urlDraft = '';
     editDraft = {};
     EDIT_FIELDS.forEach(function (field) {
       editDraft[field.key] = row[field.key] || '';
@@ -289,6 +382,8 @@
   function cancelEdit() {
     editingId = null;
     editDraft = null;
+    urlAddOpen = false;
+    urlDraft = '';
     renderTable();
   }
 
@@ -374,6 +469,48 @@
     tableBody.querySelectorAll('[data-attachment-id]').forEach(function (button) {
       button.addEventListener('click', function () {
         if (openInLibrary) openInLibrary(button.dataset.attachmentId);
+      });
+    });
+
+    /* The editing row's "Add File | URL" */
+    tableBody.querySelectorAll('[data-att-add-file]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        rowPicker.dataset.line = button.dataset.attAddFile;
+        rowPicker.click();
+      });
+    });
+    tableBody.querySelectorAll('[data-att-add-url]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        urlAddOpen = !urlAddOpen;
+        if (!urlAddOpen) urlDraft = '';
+        renderTable();
+        var field = tableBody.querySelector('[data-att-url-field]');
+        if (field) field.focus();
+      });
+    });
+    tableBody.querySelectorAll('[data-att-url-field]').forEach(function (field) {
+      field.addEventListener('input', function () {
+        urlDraft = field.value;
+        var add = tableBody.querySelector('[data-att-url-commit]');
+        if (add) add.disabled = !urlDraft.trim();
+      });
+      field.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          event.stopPropagation(); // Enter here adds the URL, it does not save the row
+          addUrlToRow(field.dataset.attUrlField);
+        } else if (event.key === 'Escape') {
+          event.preventDefault();
+          event.stopPropagation(); // Esc here closes the URL field, it does not cancel the row
+          urlAddOpen = false;
+          urlDraft = '';
+          renderTable();
+        }
+      });
+    });
+    tableBody.querySelectorAll('[data-att-url-commit]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        addUrlToRow(button.dataset.attUrlCommit);
       });
     });
   }
@@ -671,6 +808,16 @@
       renderPreview();
       renderTable(); // the table's Attachments column reads this list
     }
+
+    /* Attaching from a row in inline edit re-renders the list, counts and pager,
+       and pages the line level to the file that was just added. */
+    refreshLibrary = function (item) {
+      if (item && tab === 'line') {
+        page = Math.floor(QC.attachments.line.indexOf(item) / PAGE_SIZE) + 1;
+      }
+      render();
+      renderPreview();
+    };
 
     /* Opening a file from the table's Attachments column: expand the card, go to
        the level and page the file is on, select it and scroll it into view. */
