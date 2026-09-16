@@ -31,8 +31,8 @@ insertion loss (SAE J1400), leak test, and salt spray (ASTM B117).
 The **attachments follow the characteristics**. Header level carries what governs the inspection — the
 program SOW, the inspection and test plan, the mill certificate for the 409 coil. Line level carries
 one evidence file per characteristic (`Sound-level-J1169-C5.pdf`, `CMM-dimensional-C3.pdf`,
-and so on), tagged with that characteristic's ID and named the same way in the table's Att column. Two
-of them open as real report pages in the preview pane.
+and so on), tagged with that characteristic's ID and named the same way in the table's Attachments
+column. Two of them open as real report pages in the preview pane.
 
 The story the two screens tell: results are in for all 8, but **characteristic 5 fails** — 2 of 5
 units read 97 dB(A) against a 88 - 95 dB(A) ceiling, with low packing density as the suspected cause.
