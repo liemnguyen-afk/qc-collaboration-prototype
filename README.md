@@ -68,8 +68,9 @@ python3 -m http.server 8000
 ## What is clickable
 
 **Cross-screen flow**
-- Supplier **View All Quality Inspections** → the Inspections list (`inspections.html`); inspection
-  **001** in that list opens the supplier screen again.
+- **View All Quality Inspections** (bottom-left of both the supplier and the buyer screen) → the
+  Inspections list (`inspections.html`); inspection **001** in that list opens the supplier screen
+  again.
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
 - Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in History) → returns to `index.html`.
 - Buyer **Accept** / **Reject** → confirmation modals with toast feedback.
