@@ -17,6 +17,7 @@ Two components on those screens are built from their own dedicated Figma section
 | --- | --- |
 | Attachments Library (11 states) | [`758:125789`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=758-125789) — *Attachment Library* |
 | Summary, expanded third row | [`518:28852`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=518-28852) — *Header Summary / Variant2* |
+| Inline row edit | [`507:44397`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=507-44397) — see the fidelity note below |
 
 ## The example inspection
 
@@ -49,7 +50,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The two HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916b`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260916c`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -87,8 +88,20 @@ python3 -m http.server 8000
 - **Specification** and **Remarks** are clipped to their column width; hovering a clipped cell shows
   the full text in a tooltip. Cells that are not clipped show no tooltip.
 - **Views** opens a saved-views panel that renames the table heading.
-- Row action icons, attachment icons, filter/more buttons, pagination, and page-size controls all
-  respond (with toasts where the target screen is outside this prototype’s scope).
+- Attachment icons, filter/more buttons, pagination, and page-size controls all respond (with toasts
+  where the target screen is outside this prototype’s scope).
+
+**Inline row editing** (supplier screen, Figma `507:44397`)
+- The row’s **edit pencil** turns that row into fields in place — **Result**, **Inspected By**,
+  **Inspection Date** (a real date picker) and **Remarks**. ID, Characteristic and Specification are
+  the buyer’s request, so they stay read-only, and the row keeps its own columns and height.
+- The row action swaps the pencil for **save (✓)** and **cancel (×)**. `Enter` saves, `Esc` cancels.
+- **Save** writes into `QC.characteristics`, so the new values survive sorting, searching and
+  submitting — and posts an *Updated Results on Characteristic: N* entry to **History** listing only
+  the fields that actually changed. Saving an unchanged row posts nothing.
+- **Cancel** discards. A blank Result is refused with a toast, since that is the cell the row exists
+  for. One row edits at a time: clicking another pencil closes the open editor without saving.
+- Typed values are held in a draft, so sorting or searching mid-edit keeps them.
 
 **Attachments Library** (Figma `758:125789`)
 - **Header Level / Line Level** tabs switch the list; the badges count the attachments at each level.
@@ -123,14 +136,14 @@ assets/css/tokens.css Clarity UI (CUI) design tokens, resolved from Figma variab
 assets/css/styles.css Component styling for both product chromes
 assets/js/data.js     Characteristics, attachments + history content for the example inspection
 assets/js/app.js      Filtering, sorting, accordions, attachments, comments, modals, navigation
-assets/icons/         48 assets: 47 exported from the Figma file (SVG + one PNG flag) + Clarity's Close
+assets/icons/         49 assets: 47 from the Figma file (SVG + one PNG flag) + Clarity's Close and Check
 assets/img/           Report page images used as attachment previews
 tools/reports/        HTML sources those page images are rendered from
 ```
 
-Every icon is a real asset — none are hand-drawn — so glyphs match the design exactly. All but one are
-Figma exports; `close-outline.svg` is Clarity's own `Close` outline path, taken from
-`@coupa/clarity-ui-icons`. Colours, spacing, radii, and type come from `get_variable_defs` on the Figma nodes and are
+Every icon is a real asset — none are hand-drawn — so glyphs match the design exactly. All but two are
+Figma exports; `close-outline.svg` and `check-outline.svg` are Clarity's own `Close` and `Check`
+outline paths, taken from `@coupa/clarity-ui-icons`. Colours, spacing, radii, and type come from `get_variable_defs` on the Figma nodes and are
 declared once in `tokens.css`.
 
 ## Fidelity notes
@@ -186,6 +199,18 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   reference). That glyph reads as a destructive status marker rather than a control, so the button now
   uses Clarity's `Close` outline in the same `text.t1` dark grey as the other five actions. The
   behaviour is unchanged: it removes the attachment from the library.
+- **The inline edit row was not verified against Figma `507:44397`.** The Figma connection was not
+  authorised in the session that built it, so the *interaction* is the one the design is named for —
+  pencil turns the row into fields, the row action becomes save / cancel — but the **field set is
+  inferred** from the supplier’s own columns: the four result columns are editable, and ID /
+  Characteristic / Specification / Attachments are not. Check it against that node; the field list is
+  the `EDIT_FIELDS` array at the top of the table section in [`assets/js/app.js`](assets/js/app.js).
+  Two details there are decisions, not the design: **Remarks edits in a single-line field** (so the
+  row keeps its height, with long text scrolling inside the field), and **saving a Result does not
+  re-evaluate its pass/fail pill** — editing characteristic 5 to a passing number leaves the red pill,
+  because deciding pass/fail from the specification text would be invented logic. The
+  Inspection Date column was widened from 150 px to 166 px so the date field and its picker fit
+  without the table resizing when a row opens.
 - **Row action icons use the CUI outline set** (`download-outline`, `trash-outline`), as every
   component instance in the design does. The two *Add file* / *Add URL* frames (`829:93201`,
   `829:93994`) still use the older green/red `Icons/action/*` glyphs; that looked like drift in the

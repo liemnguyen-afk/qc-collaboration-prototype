@@ -76,6 +76,51 @@
   var tableCount = document.querySelector('[data-table-count]');
   var sortState = { key: null, dir: 1 };
 
+  /* Inline row editing — Figma 507:44397. The pencil turns the row's own cells
+     into fields; the row action swaps to save / cancel. One row at a time, and
+     the typed values live in `editDraft` so a sort or a search mid-edit does not
+     lose them. */
+  var editingId = null;
+  var editDraft = null;
+
+  var EDIT_FIELDS = [
+    { key: 'result', label: 'Result', type: 'text' },
+    { key: 'inspectedBy', label: 'Inspected By', type: 'text' },
+    { key: 'inspectionDate', label: 'Inspection Date', type: 'date' },
+    { key: 'remarks', label: 'Remarks', type: 'text' }
+  ];
+
+  function rowById(id) {
+    return QC.characteristics.filter(function (row) {
+      return String(row.id) === String(id);
+    })[0];
+  }
+
+  /* The data carries MM/DD/YYYY; <input type="date"> needs YYYY-MM-DD. */
+  function toInputDate(value) {
+    var parts = String(value || '').split('/');
+    if (parts.length !== 3) return '';
+    return parts[2] + '-' + parts[0] + '-' + parts[1];
+  }
+
+  function fromInputDate(value) {
+    var parts = String(value || '').split('-');
+    if (parts.length !== 3) return '';
+    return parts[1] + '/' + parts[2] + '/' + parts[0];
+  }
+
+  function editCell(key) {
+    var field = EDIT_FIELDS.filter(function (item) { return item.key === key; })[0];
+    var value = field.type === 'date' ? toInputDate(editDraft[key]) : editDraft[key];
+    /* size="1" keeps the input from contributing its default 20-character
+       intrinsic width to the column, which would widen the table on edit. */
+    return (
+      '<input class="cell-input" type="' + field.type + '" data-edit-field="' + key + '"' +
+      (field.type === 'text' ? ' size="1"' : '') +
+      ' value="' + esc(value) + '" aria-label="' + field.label + '">'
+    );
+  }
+
   function resultCell(row) {
     if (!row.resultTone) return esc(row.result);
     return (
@@ -85,6 +130,18 @@
 
   function actionsCell(row) {
     if (role === 'supplier') {
+      if (editingId === row.id) {
+        return (
+          '<span class="row-edit-actions">' +
+          '<button class="row-action row-action--bare" type="button" data-row-save="' + row.id +
+          '" title="Save">' +
+          '<img src="' + ICONS + 'check-outline.svg" alt="Save"></button>' +
+          '<button class="row-action row-action--bare" type="button" data-row-cancel="' + row.id +
+          '" title="Cancel">' +
+          '<img src="' + ICONS + 'close-outline.svg" alt="Cancel"></button>' +
+          '</span>'
+        );
+      }
       return (
         '<button class="row-action" type="button" data-row-edit="' +
         row.id +
@@ -103,9 +160,27 @@
   }
 
   function rowHtml(row) {
+    var editing = editingId === row.id;
     var cells = ['<td>' + row.id + '</td>', '<td>' + esc(row.characteristic) + '</td>',
       '<td class="col-spec" data-tooltip="' + esc(row.specification) + '">' +
       esc(row.specification) + '</td>'];
+
+    /* ID, Characteristic and Specification are the buyer's request, so they stay
+       read-only; the supplier edits its own four result columns. */
+    if (editing) {
+      cells.push('<td>' + editCell('result') + '</td>');
+      cells.push('<td>' + editCell('inspectedBy') + '</td>');
+      cells.push('<td>' + editCell('inspectionDate') + '</td>');
+      cells.push('<td class="col-remarks">' + editCell('remarks') + '</td>');
+      cells.push(
+        '<td class="col-att"><button class="att-icon" type="button" data-attachment="' +
+        esc(row.attachment) +
+        '" title="' + esc(row.attachment) + '">' +
+        '<img src="' + ICONS + 'page-blank.svg" alt="Attachment"></button></td>'
+      );
+      cells.push('<td class="col-actions">' + actionsCell(row) + '</td>');
+      return '<tr class="is-editing">' + cells.join('') + '</tr>';
+    }
 
     if (role === 'buyer') {
       cells.push('<td>' + esc(row.range) + '</td>');
@@ -166,11 +241,94 @@
     bindRowActions();
   }
 
+  function startEdit(id) {
+    var row = rowById(id);
+    if (!row) return;
+    editingId = row.id;
+    editDraft = {};
+    EDIT_FIELDS.forEach(function (field) {
+      editDraft[field.key] = row[field.key] || '';
+    });
+    renderTable();
+    var first = tableBody.querySelector('.is-editing .cell-input');
+    if (first) {
+      first.focus();
+      first.select();
+    }
+  }
+
+  function cancelEdit() {
+    editingId = null;
+    editDraft = null;
+    renderTable();
+  }
+
+  function saveEdit() {
+    var row = rowById(editingId);
+    if (!row) return cancelEdit();
+
+    if (!String(editDraft.result).trim()) {
+      var resultInput = tableBody.querySelector('[data-edit-field="result"]');
+      if (resultInput) resultInput.focus();
+      toast('Enter a result before saving.');
+      return;
+    }
+
+    var changes = EDIT_FIELDS.filter(function (field) {
+      return String(editDraft[field.key]).trim() !== String(row[field.key] || '');
+    });
+
+    changes.forEach(function (field) {
+      row[field.key] = String(editDraft[field.key]).trim();
+    });
+
+    var characteristic = row.characteristic;
+    var id = row.id;
+    cancelEdit();
+
+    if (!changes.length) return;
+
+    /* Same shape as the design's "Revised Result" history entries. */
+    addHistoryEntry({
+      action: 'Updated Results on ',
+      link: 'Characteristic: ' + id + ' (' + characteristic + ')',
+      lines: ['Item: ' + QC.inspection.summary.itemName].concat(
+        changes.map(function (field) {
+          return field.label + ': ' + (row[field.key] || '—');
+        })
+      ),
+      scroll: false
+    });
+    toast('Characteristic ' + id + ' updated.');
+  }
+
   function bindRowActions() {
     tableBody.querySelectorAll('[data-row-edit]').forEach(function (button) {
       button.addEventListener('click', function () {
-        var row = QC.characteristics[button.dataset.rowEdit - 1];
-        toast('Editing results for characteristic ' + row.id + ' — ' + row.characteristic);
+        startEdit(button.dataset.rowEdit);
+      });
+    });
+    tableBody.querySelectorAll('[data-row-save]').forEach(function (button) {
+      button.addEventListener('click', saveEdit);
+    });
+    tableBody.querySelectorAll('[data-row-cancel]').forEach(function (button) {
+      button.addEventListener('click', cancelEdit);
+    });
+    tableBody.querySelectorAll('[data-edit-field]').forEach(function (input) {
+      input.addEventListener('input', function () {
+        editDraft[input.dataset.editField] = input.type === 'date'
+          ? fromInputDate(input.value)
+          : input.value;
+      });
+      input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          saveEdit();
+        } else if (event.key === 'Escape') {
+          event.preventDefault();
+          event.stopPropagation(); // the global Escape closes modals
+          cancelEdit();
+        }
       });
     });
     tableBody.querySelectorAll('[data-row-comment]').forEach(function (button) {
@@ -801,17 +959,18 @@
     };
   }
 
-  /* Shared by the Comments card and the Attachments Library comment box. */
-  function addHistoryComment(text) {
+  /* Posts an entry as the current role, expands History and scrolls to it.
+     Shared by the comment boxes and by saving an inline row edit. */
+  function addHistoryEntry(entry) {
     var stamp = nowStamp();
-    entries.forEach(function (entry) { entry.isNew = false; });
+    entries.forEach(function (other) { other.isNew = false; });
     entries.push({
       actor: me.actor,
       name: me.name,
       initials: me.initials,
-      action: 'Added a comment: ',
-      link: '',
-      lines: [' ' + text],
+      action: entry.action,
+      link: entry.link || '',
+      lines: entry.lines,
       timestamp: stamp.label,
       sortKey: stamp.key,
       isNew: true
@@ -819,7 +978,15 @@
     var history = document.querySelector('.history');
     if (history) history.classList.remove('is-collapsed');
     renderHistory();
-    if (historyList) historyList.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    /* A saved row edit does not scroll away from the table it was made in. */
+    if (historyList && entry.scroll !== false) {
+      historyList.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  /* Shared by the Comments card and the Attachments Library comment box. */
+  function addHistoryComment(text) {
+    addHistoryEntry({ action: 'Added a comment: ', link: '', lines: [' ' + text] });
   }
 
   if (commentSubmit && commentInput) {

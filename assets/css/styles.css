@@ -796,7 +796,9 @@ button {
 .data-table th[data-sort-key='result'] { min-width: 120px; }
 .data-table th[data-sort-key='expectedResult'] { min-width: 200px; }
 .data-table th[data-sort-key='inspectedBy'] { min-width: 160px; }
-.data-table th[data-sort-key='inspectionDate'] { min-width: 150px; }
+/* 166px so the date field and its picker fit without the column resizing
+   when a row goes into inline edit. */
+.data-table th[data-sort-key='inspectionDate'] { min-width: 166px; }
 .data-table th[data-sort-key='remarks'] { min-width: 300px; }
 
 /* The 16px inset the scroller used to carry */
@@ -865,6 +867,51 @@ button {
 
 .data-table tbody tr:hover td.col-actions {
   background: var(--cui-surface-s2);
+}
+
+/* Inline row editing — Figma 507:44397. The row keeps its columns; the four
+   supplier-owned cells swap their text for fields. */
+/* 11px keeps the edited row the same height as its neighbours. */
+.data-table tbody tr.is-editing td {
+  padding-top: 11px;
+  padding-bottom: 11px;
+  background: var(--cui-surface-s3);
+  white-space: normal;
+}
+
+.data-table tbody tr.is-editing td.col-actions {
+  background: var(--cui-surface-s3);
+}
+
+.cell-input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 5px 8px;
+  border: 1px solid var(--cui-border-input);
+  border-radius: var(--cui-radii-xs);
+  background: #ffffff;
+  font-family: inherit;
+  font-size: var(--cui-font-size-sm);
+  line-height: var(--cui-line-xs);
+  color: var(--cui-text-1);
+}
+
+.cell-input:focus {
+  outline: 2px solid var(--cui-light-blue-subtle-border);
+  outline-offset: -1px;
+}
+
+/* Two buttons where the pencil was, without widening the locked column. */
+.row-edit-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.row-edit-actions .row-action {
+  width: 24px;
+  height: 24px;
 }
 
 /* Full text for the cells the columns clip */
