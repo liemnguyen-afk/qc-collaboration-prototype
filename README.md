@@ -77,9 +77,9 @@ python3 -m http.server 8000
 **Characteristics table**
 - **Search in this view** filters the 8 rows; the count next to “Items per page” updates.
 - Any column header sorts ascending/descending.
-- The **Att and Actions columns stay locked** to the right edge (with a divider and drop shadow), so
-  the attachment and the row action are always reachable. The supplier table fits inside 1440 px; the
-  buyer table has two more columns, so its data columns **scroll horizontally** under the locked pair.
+- The data columns **scroll horizontally** while the **Attachments and Actions columns stay locked**
+  to the right edge (with a divider and drop shadow), so the attachment and the row action are always
+  reachable.
 - **Specification** and **Remarks** are clipped to their column width; hovering a clipped cell shows
   the full text in a tooltip. Cells that are not clipped show no tooltip.
 - **Views** opens a saved-views panel that renames the table heading.
@@ -139,15 +139,16 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   (`Jun 11 - 10:15 AM`). They are flagged with `timestampInferred: true` in
   [`assets/js/data.js`](assets/js/data.js).
 - **Horizontal scroll and the locked columns are additions.** The Figma frames draw the table at full
-  width with no scroller. The data columns are given explicit minimum widths so long Specification and
-  Remarks text stays readable, and the Att and Actions columns are pinned with `position: sticky`
-  (`right: var(--col-actions-w)` and `right: 0`). The supplier column widths add up to the 1440 px
-  card, so that table does not scroll and its Att column is always in view; the buyer table carries
-  Range and Expected Result as well, so it scrolls under the pinned pair. The scroll container
-  deliberately has **no horizontal padding** — a padded scrollport leaves a strip at the right edge
-  that the pinned columns cannot cover, and scrolled cells show through it — so the 16 px inset is on
-  the first and last cells instead. The hover tooltip on truncated Specification / Remarks cells is
-  likewise not in the design; the frames simply show the text cut with an ellipsis.
+  width with no scroller. To keep long Specification and Remarks text readable at 1440 px, the data
+  columns are given explicit minimum widths — which makes the table wider than the card — and both the
+  Attachments and Actions columns are pinned with `position: sticky`, so neither the attachment nor the
+  row action can scroll out of reach. Two details that look arbitrary but are not: the scroll container
+  has **no horizontal padding** (a padded scrollport leaves a strip at the right edge the pinned
+  columns cannot cover, and scrolled cells show through it, so the 16 px inset is on the first and last
+  cells instead), and the pinned pair **overlaps by 1 px** (a sub-pixel seam between them leaks a
+  sliver of the scrolled Remarks text). The pair carries one divider and one shadow, on the leading
+  column, so it reads as a single locked group. The hover tooltip on truncated Specification / Remarks
+  cells is likewise not in the design; the frames simply show the text cut with an ellipsis.
 - **Pagination is chrome only.** The Figma pager shows “Prev 1 2 3 … 17 Next” over a table that
   contains 8 rows of real data. The controls highlight and toast but do not page, because there is no
   further data in the design.

@@ -776,7 +776,7 @@ button {
 /* Wider than the viewport on purpose: the data columns scroll sideways while
    the Actions column stays locked to the right edge. */
 .data-table {
-  --col-att-w: 56px;
+  --col-att-w: 124px;
   --col-actions-w: 80px;
   width: max-content;
   min-width: 100%;
@@ -787,18 +787,17 @@ button {
   white-space: nowrap;
 }
 
-/* Supplier columns are sized so the whole table fits inside 1440px — including
-   the Att column, which is the last data column and would otherwise sit under
-   the locked Actions column until you scrolled all the way right. */
+/* Generous column widths: the table is wider than the card and scrolls sideways,
+   while Attachments and Actions stay pinned to the right edge. */
 .data-table th[data-sort-key='id'] { min-width: 56px; }
-.data-table th[data-sort-key='characteristic'] { min-width: 200px; }
-.data-table th[data-sort-key='specification'] { min-width: 340px; }
+.data-table th[data-sort-key='characteristic'] { min-width: 240px; }
+.data-table th[data-sort-key='specification'] { min-width: 420px; }
 .data-table th[data-sort-key='range'] { min-width: 150px; }
 .data-table th[data-sort-key='result'] { min-width: 120px; }
 .data-table th[data-sort-key='expectedResult'] { min-width: 200px; }
-.data-table th[data-sort-key='inspectedBy'] { min-width: 140px; }
+.data-table th[data-sort-key='inspectedBy'] { min-width: 160px; }
 .data-table th[data-sort-key='inspectionDate'] { min-width: 150px; }
-.data-table th[data-sort-key='remarks'] { min-width: 220px; }
+.data-table th[data-sort-key='remarks'] { min-width: 300px; }
 
 /* The 16px inset the scroller used to carry */
 .data-table th:first-child,
@@ -827,19 +826,20 @@ button {
 }
 
 .data-table .col-spec {
-  max-width: 340px;
+  max-width: 420px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .data-table .col-remarks {
-  max-width: 220px;
+  max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Locked Att + Actions columns: the attachment and the row action both stay
-   reachable, and together they cover the right edge of the scrollport. */
+/* Locked Attachments + Actions columns: the attachment and the row action both
+   stay reachable while the data columns scroll, and together they cover the right
+   edge of the scrollport. */
 .data-table .col-att,
 .data-table th.col-att,
 .data-table .col-actions,
@@ -850,9 +850,12 @@ button {
   z-index: 2;
 }
 
+/* The 1px overlap closes the seam between the two locked cells — a sub-pixel gap
+   there lets a sliver of the scrolled Remarks text show through. Actions paints
+   after Attachments, so its divider is unaffected. */
 .data-table .col-att,
 .data-table th.col-att {
-  right: var(--col-actions-w);
+  right: calc(var(--col-actions-w) - 1px);
   width: var(--col-att-w);
   min-width: var(--col-att-w);
   border-left: 1px solid var(--cui-border-b2);
@@ -869,8 +872,10 @@ button {
   box-shadow: -4px 0 5px rgba(0, 0, 0, 0.08);
 }
 
-/* One shadow for the locked pair, cast by whichever column leads it */
+/* The locked pair reads as one group: the leading column carries the divider and
+   the shadow, so no line is drawn between Attachments and Actions. */
 .data-table .col-att + .col-actions {
+  border-left: 0;
   box-shadow: none;
 }
 
