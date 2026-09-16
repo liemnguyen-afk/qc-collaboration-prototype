@@ -252,6 +252,9 @@
       cells.push('<td>' + esc(row.inspectionDate) + '</td>');
       cells.push('<td class="col-remarks" data-tooltip="' + esc(row.remarks) + '">' +
         esc(row.remarks) + '</td>');
+      /* The buyer reviews against the evidence, so the same cell is here — the
+         supplier attaches from a row, the buyer opens what a row carries. */
+      cells.push(attCell(row));
     } else {
       cells.push('<td>' + resultCell(row) + '</td>');
       cells.push('<td>' + esc(row.inspectedBy) + '</td>');
@@ -628,11 +631,7 @@
         '<td>' + esc(row.dueDate) + '</td>' +
         '<td>' + esc(row.characteristics) + '</td>' +
         '<td>' + statusPill(row) + '</td>' +
-        '<td class="col-actions">' +
-        '<button class="row-action" type="button" data-ins-open="' + esc(row.id) +
-        '" title="Open inspection">' +
-        '<img src="' + ICONS + 'open-external-outline.svg" alt="Open inspection"></button>' +
-        '</td></tr>'
+        '</tr>'
       );
     }
 
@@ -672,7 +671,7 @@
       var rows = insRows();
       insBody.innerHTML = rows.length
         ? rows.map(insRowHtml).join('')
-        : '<tr><td colspan="8" class="history__empty">No inspections match your search.</td></tr>';
+        : '<tr><td colspan="7" class="history__empty">No inspections match your search.</td></tr>';
       if (insCount) {
         insCount.textContent =
           rows.length + ' of ' + QC.inspections.length + ' quality inspections';

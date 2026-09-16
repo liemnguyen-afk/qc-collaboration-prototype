@@ -55,7 +55,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The three HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916f`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260916g`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -99,6 +99,11 @@ python3 -m http.server 8000
   switches to **Line Level**, pages to the file, selects it and renders its preview. A characteristic
   with two attachments stacks them; one with none reads “—”. **Search in this view** matches file
   names too.
+- That column is on **both screens**, since the evidence is what the buyer reviews the result against:
+  the supplier attaches to a row while editing it, and the buyer gets the same cell read-only — clicking
+  a name opens that file in the library’s preview, where the download and expand actions are. So the
+  buyer’s table is wider than the supplier’s (it also carries Range and Expected Result) and scrolls
+  further.
 - Filter/more buttons, pagination, and page-size controls all respond (with toasts where the target
   screen is outside this prototype’s scope).
 
@@ -126,7 +131,7 @@ python3 -m http.server 8000
   **Summary** card shows: Inspection ID, Item Name, Document Reference, Request Date, Due Date,
   Characteristics and a **Status** pill (Open, In Progress, In Buyer Review, Sent Back to Supplier,
   Accepted, Rejected).
-- The **ID link** and the row’s **open action** both open the inspection. **001** is the muffler
+- The **ID link** opens the inspection; the list carries no Actions column. **001** is the muffler
   inspection this prototype builds out, so it goes to `index.html`; the other seven toast, since there
   is no second inspection behind them.
 - **Search in this view** matches every column and the count follows it; any header sorts
