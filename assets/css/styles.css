@@ -837,54 +837,32 @@ button {
   text-overflow: ellipsis;
 }
 
-/* Locked Attachments + Actions columns: the attachment and the row action both
-   stay reachable while the data columns scroll, and together they cover the right
-   edge of the scrollport. */
+/* Attachments scrolls with the data columns; only Actions is locked. */
 .data-table .col-att,
-.data-table th.col-att,
+.data-table th.col-att {
+  width: var(--col-att-w);
+  min-width: var(--col-att-w);
+}
+
+/* Locked Actions column */
 .data-table .col-actions,
 .data-table th.col-actions {
   position: sticky;
-  background: #ffffff;
-  text-align: center;
-  z-index: 2;
-}
-
-/* The 1px overlap closes the seam between the two locked cells — a sub-pixel gap
-   there lets a sliver of the scrolled Remarks text show through. Actions paints
-   after Attachments, so its divider is unaffected. */
-.data-table .col-att,
-.data-table th.col-att {
-  right: calc(var(--col-actions-w) - 1px);
-  width: var(--col-att-w);
-  min-width: var(--col-att-w);
-  border-left: 1px solid var(--cui-border-b2);
-  box-shadow: -4px 0 5px rgba(0, 0, 0, 0.08);
-}
-
-.data-table .col-actions,
-.data-table th.col-actions {
   right: 0;
   width: var(--col-actions-w);
   min-width: var(--col-actions-w);
   padding-right: 16px;
+  background: #ffffff;
   border-left: 1px solid var(--cui-border-b2);
   box-shadow: -4px 0 5px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  z-index: 2;
 }
 
-/* The locked pair reads as one group: the leading column carries the divider and
-   the shadow, so no line is drawn between Attachments and Actions. */
-.data-table .col-att + .col-actions {
-  border-left: 0;
-  box-shadow: none;
-}
-
-.data-table th.col-att,
 .data-table th.col-actions {
   z-index: 3;
 }
 
-.data-table tbody tr:hover td.col-att,
 .data-table tbody tr:hover td.col-actions {
   background: var(--cui-surface-s2);
 }
