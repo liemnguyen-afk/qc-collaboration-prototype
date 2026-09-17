@@ -15,7 +15,7 @@ window.QC = window.QC || {};
 QC.inspection = {
   title: 'Quality Inspection #1 for Performance Muffler XR-3 - PO #5001 / 0001',
   summary: {
-    inspectionId: '001',
+    inspectionId: '008',
     requestDate: '05/01/25',
     documentReference: 'PO:EXTPO123/001',
     dueDate: '06/15/25',
@@ -38,17 +38,16 @@ QC.inspection = {
    Reason, Supplier, Created At. Status is plain text there, with the outcome
    carried by Resolution Reason on the closed rows.
 
-   Only inspection 001 has a `href`: it is the one this prototype builds out, so
+   Only inspection 008 has a `href`: it is the one this prototype builds out, so
    it opens the supplier screen and the rest toast. Its values are the ones the
-   detail screen's Summary card shows, so a row and the screen it opens agree —
-   which fixes it as 001, requested 05/01/2025.
+   detail screen's Summary card shows, so a row and the screen it opens agree.
 
-   001 is also the most recent request, so the other seven are dated behind it
-   and their purchase orders numbered behind it: recency runs down the page, and
-   the list opens on Inspection ID ascending with the muffler at the top. */
+   008 is the most recent request, and the IDs run with time — the newest carries
+   the highest number, the rows behind it are dated and PO-numbered in step — so
+   the list opens on Inspection ID descending with the muffler at the top. */
 QC.inspections = [
   {
-    id: '001',
+    id: '008',
     documentReference: 'PO:EXTPO123/001',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Performance Muffler XR-3',
@@ -63,7 +62,7 @@ QC.inspections = [
     href: 'index.html'
   },
   {
-    id: '002',
+    id: '007',
     documentReference: 'PO:EXTPO122/002',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Resonator R-90',
@@ -77,7 +76,7 @@ QC.inspections = [
     createdAt: '04/28/2025'
   },
   {
-    id: '003',
+    id: '006',
     documentReference: 'PO:EXTPO122/001',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Cat-Back Exhaust Kit CB-455',
@@ -91,7 +90,7 @@ QC.inspections = [
     createdAt: '04/28/2025'
   },
   {
-    id: '004',
+    id: '005',
     documentReference: 'PO:EXTPO121/002',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Exhaust Tip ET-250 Polished',
@@ -105,7 +104,7 @@ QC.inspections = [
     createdAt: '04/21/2025'
   },
   {
-    id: '005',
+    id: '004',
     documentReference: 'PO:EXTPO121/001',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Header Gasket Set HG-118',
@@ -119,7 +118,7 @@ QC.inspections = [
     createdAt: '04/21/2025'
   },
   {
-    id: '006',
+    id: '003',
     documentReference: 'PO:EXTPO120/002',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Mid-Pipe Assembly MP-320',
@@ -133,7 +132,7 @@ QC.inspections = [
     createdAt: '04/14/2025'
   },
   {
-    id: '007',
+    id: '002',
     documentReference: 'PO:EXTPO120/001',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Muffler Hanger Bracket MH-77',
@@ -147,7 +146,7 @@ QC.inspections = [
     createdAt: '04/14/2025'
   },
   {
-    id: '008',
+    id: '001',
     documentReference: 'PO:EXTPO119/001',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Tailpipe TP-512',
@@ -405,7 +404,7 @@ QC.attachments = {
       line: 5,
       kind: 'url',
       name: 'acoustic-lab-mx.com/C5-cert',
-      url: 'https://www.acoustic-lab-mx.com/cert/QI-001-C5',
+      url: 'https://www.acoustic-lab-mx.com/cert/QI-008-C5',
       actions: ['trash']
     },
     {
@@ -548,7 +547,7 @@ QC.history = [
     name: 'Prasad T.',
     initials: 'PT',
     action: 'Requested ',
-    link: 'Quality Inspection: 001 (PO #5001 / 0001)',
+    link: 'Quality Inspection: 008 (PO #5001 / 0001)',
     lines: [
       'Item: Performance Muffler XR-3',
       'Characteristics requested: 8',
@@ -634,7 +633,7 @@ QC.history = [
     name: 'Niles Parker',
     initials: 'NP',
     action: 'Added Attachments to ',
-    link: 'Quality Inspection: 001',
+    link: 'Quality Inspection: 008',
     lines: ['Item: Performance Muffler XR-3', 'Files: 12', 'URL: 1'],
     timestamp: 'Jun 10 - 1:15 PM',
     sortKey: '2025-06-10T13:15'
@@ -660,10 +659,10 @@ QC.history = [
     link: '',
     lines: [
       'Added a comment',
-      'Added comment attachment URL https://master-proc.coupadev.com/quality_inspections/001/edit',
-      'Added comment attachment file QI-001-Sound_Test-061025-080512.pdf',
+      'Added comment attachment URL https://master-proc.coupadev.com/quality_inspections/008/edit',
+      'Added comment attachment file QI-008-Sound_Test-061025-080512.pdf',
       'Deleted a comment',
-      'Removed comment attachment URL https://master-proc.coupadev.com/quality_inspections/001/edit'
+      'Removed comment attachment URL https://master-proc.coupadev.com/quality_inspections/008/edit'
     ],
     timestamp: 'Jun 10 - 3:00 PM',
     sortKey: '2025-06-10T15:00',
