@@ -40,7 +40,12 @@ QC.inspection = {
 
    Only inspection 001 has a `href`: it is the one this prototype builds out, so
    it opens the supplier screen and the rest toast. Its values are the ones the
-   detail screen's Summary card shows, so a row and the screen it opens agree. */
+   detail screen's Summary card shows, so a row and the screen it opens agree —
+   which fixes it as 001, requested 05/01/2025.
+
+   001 is also the most recent request, so the other seven are dated behind it
+   and their purchase orders numbered behind it: recency runs down the page, and
+   the list opens on Inspection ID ascending with the muffler at the top. */
 QC.inspections = [
   {
     id: '001',
@@ -59,101 +64,101 @@ QC.inspections = [
   },
   {
     id: '002',
-    documentReference: 'PO:EXTPO123/002',
+    documentReference: 'PO:EXTPO122/002',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Resonator R-90',
     supplierPartNumber: 'R90-409SS',
     buyerPartNumber: 'EX-4472',
-    requestDate: '05/01/2025',
-    dueDate: '06/20/2025',
+    requestDate: '04/28/2025',
+    dueDate: '06/10/2025',
     status: 'In Buyer Review',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '05/01/2025'
+    createdAt: '04/28/2025'
   },
   {
     id: '003',
-    documentReference: 'PO:EXTPO124/001',
+    documentReference: 'PO:EXTPO122/001',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Cat-Back Exhaust Kit CB-455',
     supplierPartNumber: 'CB455-KIT',
     buyerPartNumber: 'EX-4488',
-    requestDate: '05/08/2025',
-    dueDate: '06/22/2025',
+    requestDate: '04/28/2025',
+    dueDate: '06/06/2025',
     status: 'Closed',
     resolutionReason: 'Accepted - All specifications satisfied',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '05/08/2025'
+    createdAt: '04/28/2025'
   },
   {
     id: '004',
-    documentReference: 'PO:EXTPO124/002',
+    documentReference: 'PO:EXTPO121/002',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Exhaust Tip ET-250 Polished',
     supplierPartNumber: 'ET250-POL',
     buyerPartNumber: 'EX-4491',
-    requestDate: '05/08/2025',
-    dueDate: '06/28/2025',
+    requestDate: '04/21/2025',
+    dueDate: '06/02/2025',
     status: 'In Progress',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '05/08/2025'
+    createdAt: '04/21/2025'
   },
   {
     id: '005',
-    documentReference: 'PO:EXTPO126/001',
+    documentReference: 'PO:EXTPO121/001',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Header Gasket Set HG-118',
     supplierPartNumber: 'HG118-SET',
     buyerPartNumber: 'EX-4503',
-    requestDate: '05/15/2025',
-    dueDate: '07/01/2025',
+    requestDate: '04/21/2025',
+    dueDate: '05/30/2025',
     status: 'Open',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '05/15/2025'
+    createdAt: '04/21/2025'
   },
   {
     id: '006',
-    documentReference: 'PO:EXTPO126/002',
+    documentReference: 'PO:EXTPO120/002',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Mid-Pipe Assembly MP-320',
     supplierPartNumber: 'MP320-ASM',
     buyerPartNumber: 'EX-4507',
-    requestDate: '05/15/2025',
-    dueDate: '07/03/2025',
+    requestDate: '04/14/2025',
+    dueDate: '05/26/2025',
     status: 'Closed',
     resolutionReason: "Rejected - Item doesn't meet specifications",
     supplier: 'Apex Exhaust Systems',
-    createdAt: '05/15/2025'
+    createdAt: '04/14/2025'
   },
   {
     id: '007',
-    documentReference: 'PO:EXTPO127/001',
+    documentReference: 'PO:EXTPO120/001',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Muffler Hanger Bracket MH-77',
     supplierPartNumber: 'MH77-BRK',
     buyerPartNumber: 'EX-4512',
-    requestDate: '05/22/2025',
-    dueDate: '07/10/2025',
+    requestDate: '04/14/2025',
+    dueDate: '05/23/2025',
     status: 'Closed',
     resolutionReason: 'Accepted - All specifications satisfied',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '05/22/2025'
+    createdAt: '04/14/2025'
   },
   {
     id: '008',
-    documentReference: 'PO:EXTPO127/002',
+    documentReference: 'PO:EXTPO119/001',
     requestedBy: 'Prasad T. (Quality Manager)',
     itemName: 'Tailpipe TP-512',
     supplierPartNumber: 'TP512-300',
     buyerPartNumber: 'EX-4516',
-    requestDate: '05/22/2025',
-    dueDate: '07/12/2025',
+    requestDate: '04/07/2025',
+    dueDate: '05/19/2025',
     status: 'Open',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '05/22/2025'
+    createdAt: '04/07/2025'
   }
 ];
 

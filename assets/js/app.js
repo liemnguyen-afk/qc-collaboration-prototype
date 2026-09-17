@@ -622,8 +622,10 @@
     ];
 
     var insSearch = document.querySelector('[data-ins-search]');
-    /* The design shows the list newest first, marked on Inspection ID. */
-    var insSort = { key: 'id', dir: -1 };
+    /* The design shows the list newest first, marked on Inspection ID — and 001,
+       the inspection this prototype builds out, is the most recent one, so the
+       list opens on Inspection ID ascending to put it at the top. */
+    var insSort = { key: 'id', dir: 1 };
 
     function insById(id) {
       return QC.inspections.filter(function (row) {

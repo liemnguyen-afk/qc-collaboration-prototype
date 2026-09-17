@@ -55,7 +55,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The three HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916h`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260916i`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -140,7 +140,9 @@ python3 -m http.server 8000
   out, so it goes to `index.html`, and the other seven toast. Item and Supplier toast, since neither an
   item page nor a supplier record is in scope.
 - **Search** matches every column; any header sorts ascending/descending, and the blue caret marks the
-  sorted one. The list opens newest first on Inspection ID.
+  sorted one. The list opens newest first, with **001 — Performance Muffler XR-3**, the inspection this
+  prototype builds out, at the top. Because the detail screen fixes that inspection as 001, the other
+  seven are dated behind it, so newest-first *is* Inspection ID ascending.
 - **Views**, **filter** and the footer's **Per page 15 | 45 | 90** highlight and toast — there is no
   second page of data behind them.
 
@@ -274,10 +276,14 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   1398 px scrollport) so that every column is in frame and no header and no cell needs more than two
   lines — except **Resolution Reason**, whose longest sentence takes three, which makes the closed rows
   taller than the open ones. If the node allows a wider table, re-measure there.
-- **The eight rows other than 001 are invented content.** They are other exhaust parts from the same
+- **The seven rows other than 001 are invented content.** They are other exhaust parts from the same
   supplier, present to give the statuses, the resolution reasons and the search something to work on;
-  only 001 opens a screen. The rows are the `QC.inspections` array in
-  [`assets/js/data.js`](assets/js/data.js).
+  only 001 opens a screen. Their request, due and created dates and their PO numbers all sit *behind*
+  001's, so that the inspection this prototype builds out is the most recent one and sorts to the top.
+  That makes the ID sequence run opposite to time — 001 is both the lowest number and the newest —
+  which the design's own numbering may not do; 001 is fixed by the detail screen's Summary card
+  (`Inspection ID 001`, requested `05/01/2025`), so it could not simply be renumbered. The rows are the
+  `QC.inspections` array in [`assets/js/data.js`](assets/js/data.js).
 - **Row action icons use the CUI outline set** (`download-outline`, `trash-outline`), as every
   component instance in the design does. The two *Add file* / *Add URL* frames (`829:93201`,
   `829:93994`) still use the older green/red `Icons/action/*` glyphs; that looked like drift in the
