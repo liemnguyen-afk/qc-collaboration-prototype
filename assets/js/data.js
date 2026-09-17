@@ -13,12 +13,12 @@
 window.QC = window.QC || {};
 
 QC.inspection = {
-  title: 'Quality Inspection #1 for Performance Muffler XR-3 - PO #5001 / 0001',
+  title: 'Quality Inspection #8 for Performance Muffler XR-3 - PO #5001 / 0008',
   summary: {
     inspectionId: '008',
-    requestDate: '05/01/25',
+    requestDate: '05/01/26',
     documentReference: 'PO:EXTPO123/001',
-    dueDate: '06/15/25',
+    dueDate: '06/15/26',
     resolutionReason: '',
     itemName: 'Performance Muffler XR-3',
     itemDescription: 'Straight-through aftermarket muffler, 409 stainless, 3 in inlet/outlet',
@@ -46,9 +46,9 @@ QC.inspection = {
    the highest number, the rows behind it are dated and PO-numbered in step — so
    the list opens on Inspection ID descending with the muffler at the top.
 
-   Created At is 2026; Request Date and Due Date stay on the design's 2025 dates,
-   which the detail screen's Summary card fixes for 008 (05/01/25 and 06/15/25).
-   So a row reads as created a year after it was requested. */
+   Every date on the prototype sits in 2026, so Created At matches Request Date
+   on each row and the detail screen's Summary card for 008 (05/01/26 requested,
+   06/15/26 due) agrees with the row that opens it. */
 QC.inspections = [
   {
     id: '008',
@@ -57,8 +57,8 @@ QC.inspections = [
     itemName: 'Performance Muffler XR-3',
     supplierPartNumber: 'XR3-300SS',
     buyerPartNumber: 'EX-4471',
-    requestDate: '05/01/2025',
-    dueDate: '06/15/2025',
+    requestDate: '05/01/2026',
+    dueDate: '06/15/2026',
     status: 'In Progress',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
@@ -72,8 +72,8 @@ QC.inspections = [
     itemName: 'Resonator R-90',
     supplierPartNumber: 'R90-409SS',
     buyerPartNumber: 'EX-4472',
-    requestDate: '04/28/2025',
-    dueDate: '06/10/2025',
+    requestDate: '04/28/2026',
+    dueDate: '06/10/2026',
     status: 'In Buyer Review',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
@@ -86,8 +86,8 @@ QC.inspections = [
     itemName: 'Cat-Back Exhaust Kit CB-455',
     supplierPartNumber: 'CB455-KIT',
     buyerPartNumber: 'EX-4488',
-    requestDate: '04/28/2025',
-    dueDate: '06/06/2025',
+    requestDate: '04/28/2026',
+    dueDate: '06/06/2026',
     status: 'Closed',
     resolutionReason: 'Accepted - All specifications satisfied',
     supplier: 'Apex Exhaust Systems',
@@ -100,8 +100,8 @@ QC.inspections = [
     itemName: 'Exhaust Tip ET-250 Polished',
     supplierPartNumber: 'ET250-POL',
     buyerPartNumber: 'EX-4491',
-    requestDate: '04/21/2025',
-    dueDate: '06/02/2025',
+    requestDate: '04/21/2026',
+    dueDate: '06/02/2026',
     status: 'In Progress',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
@@ -114,8 +114,8 @@ QC.inspections = [
     itemName: 'Header Gasket Set HG-118',
     supplierPartNumber: 'HG118-SET',
     buyerPartNumber: 'EX-4503',
-    requestDate: '04/21/2025',
-    dueDate: '05/30/2025',
+    requestDate: '04/21/2026',
+    dueDate: '05/30/2026',
     status: 'Open',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
@@ -128,8 +128,8 @@ QC.inspections = [
     itemName: 'Mid-Pipe Assembly MP-320',
     supplierPartNumber: 'MP320-ASM',
     buyerPartNumber: 'EX-4507',
-    requestDate: '04/14/2025',
-    dueDate: '05/26/2025',
+    requestDate: '04/14/2026',
+    dueDate: '05/26/2026',
     status: 'Closed',
     resolutionReason: "Rejected - Item doesn't meet specifications",
     supplier: 'Apex Exhaust Systems',
@@ -142,8 +142,8 @@ QC.inspections = [
     itemName: 'Muffler Hanger Bracket MH-77',
     supplierPartNumber: 'MH77-BRK',
     buyerPartNumber: 'EX-4512',
-    requestDate: '04/14/2025',
-    dueDate: '05/23/2025',
+    requestDate: '04/14/2026',
+    dueDate: '05/23/2026',
     status: 'Closed',
     resolutionReason: 'Accepted - All specifications satisfied',
     supplier: 'Apex Exhaust Systems',
@@ -156,8 +156,8 @@ QC.inspections = [
     itemName: 'Tailpipe TP-512',
     supplierPartNumber: 'TP512-300',
     buyerPartNumber: 'EX-4516',
-    requestDate: '04/07/2025',
-    dueDate: '05/19/2025',
+    requestDate: '04/07/2026',
+    dueDate: '05/19/2026',
     status: 'Open',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
@@ -252,15 +252,15 @@ QC.attachments = {
           {
             type: 'p',
             text:
-              'The total program duration is expected to be 9 months, beginning on June 1, 2025, ' +
+              'The total program duration is expected to be 9 months, beginning on June 1, 2026, ' +
               'with major milestones as follows:'
           },
           {
             type: 'ul',
             items: [
-              'Phase 1: Tooling & First Article – June to July 2025',
-              'Phase 2: Pilot Lot & Sound Validation – August to October 2025',
-              'Phase 3: PPAP, Packaging & Launch Readiness – November to December 2025',
+              'Phase 1: Tooling & First Article – June to July 2026',
+              'Phase 2: Pilot Lot & Sound Validation – August to October 2026',
+              'Phase 3: PPAP, Packaging & Launch Readiness – November to December 2026',
               'Production Ramp & Warranty Monitoring – January 2026'
             ]
           },
@@ -300,7 +300,7 @@ QC.attachments = {
         blocks: [
           { type: 'title', text: 'Inspection and Test Plan' },
           { type: 'meta', text: 'Part: EX-4471 (Performance Muffler XR-3), drawing rev. C' },
-          { type: 'meta', text: 'Lot / Batch: B-2214 · Sample size: 5 each · Issued 05/01/2025' },
+          { type: 'meta', text: 'Lot / Batch: B-2214 · Sample size: 5 each · Issued 05/01/2026' },
           { type: 'h', text: 'Scope' },
           {
             type: 'p',
@@ -443,7 +443,7 @@ QC.characteristics = [
     resultTone: '',
     expectedResult: 'Free from weld and surface defects',
     inspectedBy: 'Steven Neilson',
-    inspectionDate: '06/10/2025',
+    inspectionDate: '06/10/2026',
     remarks: '5 units checked, seams dye-penetrant tested',
     hasNewComment: true
   },
@@ -456,7 +456,7 @@ QC.characteristics = [
     resultTone: '',
     expectedResult: '1.20 mm ± 0.10 mm',
     inspectedBy: 'Steven Neilson',
-    inspectionDate: '06/10/2025',
+    inspectionDate: '06/10/2026',
     remarks: 'Ultrasonic gauge, 4 points per unit',
     hasNewComment: false
   },
@@ -470,7 +470,7 @@ QC.characteristics = [
     resultTone: 'warning',
     expectedResult: '356 mm ± 2 mm',
     inspectedBy: 'Steven Neilson',
-    inspectionDate: '06/10/2025',
+    inspectionDate: '06/10/2026',
     remarks: 'Re-measured on CMM; trending to upper limit',
     hasNewComment: false
   },
@@ -483,7 +483,7 @@ QC.characteristics = [
     resultTone: '',
     expectedResult: '2.0 psi (max)',
     inspectedBy: 'Steven Neilson',
-    inspectionDate: '06/10/2025',
+    inspectionDate: '06/10/2026',
     remarks: 'Flow bench at 500 CFM, ambient 22 °C',
     hasNewComment: false
   },
@@ -496,7 +496,7 @@ QC.characteristics = [
     resultTone: 'error',
     expectedResult: '88 - 95 dB(A)',
     inspectedBy: 'Steven Neilson',
-    inspectionDate: '06/10/2025',
+    inspectionDate: '06/10/2026',
     remarks: '2 of 5 units above limit; packing density suspect',
     hasNewComment: false
   },
@@ -509,7 +509,7 @@ QC.characteristics = [
     resultTone: '',
     expectedResult: '18 dB(A) min',
     inspectedBy: 'Steven Neilson',
-    inspectionDate: '06/10/2025',
+    inspectionDate: '06/10/2026',
     remarks: 'Averaged over 1/3-octave bands',
     hasNewComment: false
   },
@@ -522,7 +522,7 @@ QC.characteristics = [
     resultTone: '',
     expectedResult: 'No leakage at 5 psi',
     inspectedBy: 'Steven Neilson',
-    inspectionDate: '06/10/2025',
+    inspectionDate: '06/10/2026',
     remarks: 'All 5 units submerged for 60 s',
     hasNewComment: false
   },
@@ -535,7 +535,7 @@ QC.characteristics = [
     resultTone: '',
     expectedResult: '240 h min',
     inspectedBy: 'Steven Neilson',
-    inspectionDate: '06/10/2025',
+    inspectionDate: '06/10/2026',
     remarks: 'Witness coupons from the same coil',
     hasNewComment: false
   }
@@ -551,15 +551,15 @@ QC.history = [
     name: 'Prasad T.',
     initials: 'PT',
     action: 'Requested ',
-    link: 'Quality Inspection: 008 (PO #5001 / 0001)',
+    link: 'Quality Inspection: 008 (PO #5001 / 0008)',
     lines: [
       'Item: Performance Muffler XR-3',
       'Characteristics requested: 8',
-      'Due Date: 06/15/2025',
+      'Due Date: 06/15/2026',
       'Reason: First article inspection, new SKU'
     ],
     timestamp: 'May 01 - 9:12 AM',
-    sortKey: '2025-05-01T09:12'
+    sortKey: '2026-05-01T09:12'
   },
   {
     actor: 'buyer',
@@ -573,7 +573,7 @@ QC.history = [
       'Reason: Aligned to drawing EX-4471 rev. C'
     ],
     timestamp: 'May 20 - 2:40 PM',
-    sortKey: '2025-05-20T14:40'
+    sortKey: '2026-05-20T14:40'
   },
   {
     actor: 'supplier',
@@ -584,10 +584,10 @@ QC.history = [
     lines: [
       'Item: Performance Muffler XR-3',
       'Inspected By: Steven Neilson',
-      'Inspection Date: 06/10/2025'
+      'Inspection Date: 06/10/2026'
     ],
     timestamp: 'Jun 10 - 8:05 AM',
-    sortKey: '2025-06-10T08:05'
+    sortKey: '2026-06-10T08:05'
   },
   {
     actor: 'supplier',
@@ -598,10 +598,10 @@ QC.history = [
     lines: [
       'Item: Performance Muffler XR-3',
       'Inspected By: Steven Neilson',
-      'Inspection Date: 06/10/2025'
+      'Inspection Date: 06/10/2026'
     ],
     timestamp: 'Jun 10 - 10:32 AM',
-    sortKey: '2025-06-10T10:32'
+    sortKey: '2026-06-10T10:32'
   },
   {
     actor: 'supplier',
@@ -615,7 +615,7 @@ QC.history = [
       'Reason: Re-fixtured and re-measured on the CMM'
     ],
     timestamp: 'Jun 10 - 11:05 AM',
-    sortKey: '2025-06-10T11:05'
+    sortKey: '2026-06-10T11:05'
   },
   {
     actor: 'system',
@@ -629,7 +629,7 @@ QC.history = [
       'Characteristic 3 (Body length and inlet/outlet OD)'
     ],
     timestamp: 'Jun 10 - 12:10 PM',
-    sortKey: '2025-06-10T12:10',
+    sortKey: '2026-06-10T12:10',
     timestampInferred: true
   },
   {
@@ -640,7 +640,7 @@ QC.history = [
     link: 'Quality Inspection: 008',
     lines: ['Item: Performance Muffler XR-3', 'Files: 12', 'URL: 1'],
     timestamp: 'Jun 10 - 1:15 PM',
-    sortKey: '2025-06-10T13:15'
+    sortKey: '2026-06-10T13:15'
   },
   {
     actor: 'supplier',
@@ -649,10 +649,10 @@ QC.history = [
     action: 'Added a comment: ',
     link: '',
     lines: [
-      ' @Prasad T. All 8 characteristics have been inspected against the specifications on PO #5001 / 0001. Back pressure came in at 1.6 psi and insertion loss at 21 dB(A), both comfortably inside spec. Characteristic 5 is the exception: 2 of the 5 units measured 97 dB(A) at the tailpipe against the 95 dB(A) ceiling, and we believe the packing density on that lot is low. Sound test logs, the flow bench data and the CMM report are attached. Advise whether you want the lot re-packed and re-tested before approval.'
+      ' @Prasad T. All 8 characteristics have been inspected against the specifications on PO #5001 / 0008. Back pressure came in at 1.6 psi and insertion loss at 21 dB(A), both comfortably inside spec. Characteristic 5 is the exception: 2 of the 5 units measured 97 dB(A) at the tailpipe against the 95 dB(A) ceiling, and we believe the packing density on that lot is low. Sound test logs, the flow bench data and the CMM report are attached. Advise whether you want the lot re-packed and re-tested before approval.'
     ],
     timestamp: 'Jun 10 - 1:20 PM',
-    sortKey: '2025-06-10T13:20',
+    sortKey: '2026-06-10T13:20',
     timestampInferred: true
   },
   {
@@ -664,12 +664,12 @@ QC.history = [
     lines: [
       'Added a comment',
       'Added comment attachment URL https://master-proc.coupadev.com/quality_inspections/008/edit',
-      'Added comment attachment file QI-008-Sound_Test-061025-080512.pdf',
+      'Added comment attachment file QI-008-Sound_Test-061026-080512.pdf',
       'Deleted a comment',
       'Removed comment attachment URL https://master-proc.coupadev.com/quality_inspections/008/edit'
     ],
     timestamp: 'Jun 10 - 3:00 PM',
-    sortKey: '2025-06-10T15:00',
+    sortKey: '2026-06-10T15:00',
     timestampInferred: true
   },
   {
@@ -680,7 +680,7 @@ QC.history = [
     link: 'Characteristic: 4 (Back pressure)',
     lines: ['Item: Performance Muffler XR-3', 'Error: External system validation failed'],
     timestamp: 'Jun 11 - 9:02 AM',
-    sortKey: '2025-06-11T09:02'
+    sortKey: '2026-06-11T09:02'
   },
   {
     actor: 'buyer',
@@ -689,10 +689,10 @@ QC.history = [
     action: 'Added a comment: ',
     link: '',
     lines: [
-      ' @Steven Neilson Thanks for submitting the results for PO #5001 / 0001. Back pressure at 1.6 psi and salt spray at 336 h both look good. The 97 dB(A) reading on characteristic 5 is a hard fail for this SKU, so please re-pack those units to 96 kg/m³ and re-test per SAE J1169. The plan also calls for a weld seam photo of every unit inspected and only XR3-0412 is attached, so please add the remaining four.'
+      ' @Steven Neilson Thanks for submitting the results for PO #5001 / 0008. Back pressure at 1.6 psi and salt spray at 336 h both look good. The 97 dB(A) reading on characteristic 5 is a hard fail for this SKU, so please re-pack those units to 96 kg/m³ and re-test per SAE J1169. The plan also calls for a weld seam photo of every unit inspected and only XR3-0412 is attached, so please add the remaining four.'
     ],
     timestamp: 'Jun 11 - 10:15 AM',
-    sortKey: '2025-06-11T10:15',
+    sortKey: '2026-06-11T10:15',
     timestampInferred: true
   }
 ];

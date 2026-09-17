@@ -55,7 +55,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The three HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916k`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260916l`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -69,7 +69,7 @@ python3 -m http.server 8000
 
 **Cross-screen flow**
 - **View All Quality Inspections** (bottom-left of both the supplier and the buyer screen) → the
-  Inspections list (`inspections.html`); inspection **001** in that list opens the supplier screen
+  Inspections list (`inspections.html`); inspection **008** in that list opens the supplier screen
   again.
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
 - Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in History) → returns to `index.html`.
@@ -136,7 +136,7 @@ python3 -m http.server 8000
   Open / In Progress / In Buyer Review / Closed, and a closed row says why in Resolution Reason
   (*Accepted - All specifications satisfied*, *Rejected - Item doesn't meet specifications*).
 - Three columns are links, matching the blue text in the design: **Inspection ID**, **Item** and
-  **Supplier**. The ID opens the inspection — **001** is the muffler inspection this prototype builds
+  **Supplier**. The ID opens the inspection — **008** is the muffler inspection this prototype builds
   out, so it goes to `index.html`, and the other seven toast. Item and Supplier toast, since neither an
   item page nor a supplier record is in scope.
 - **Search** matches every column; any header sorts ascending/descending, and the blue caret marks the
@@ -280,19 +280,21 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   only 008 opens a screen. Their dates and PO numbers sit *behind* 008's, so the IDs run with time —
   the newest request carries the highest number — and Inspection ID descending is newest first. The
   rows are the `QC.inspections` array in [`assets/js/data.js`](assets/js/data.js).
-- **Created At is dated 2026, while Request Date and Due Date are the design's 2025 dates.** The
-  Created At column was moved to 2026 on request; Request Date and Due Date were left alone because the
-  detail screen's Summary card fixes them for 008 (`05/01/25` requested, `06/15/25` due) and a row and
-  the screen it opens should agree. The side effect is that every row reads as created a year after it
-  was requested. Moving the request and due dates to 2026 as well would mean changing those Summary
-  values on both detail screens.
+- **Every date in the prototype sits in 2026, where the design's dates are 2025.** The year was moved
+  on request, and moved everywhere rather than column by column, so nothing reads as a year out of step:
+  the list's Request / Due / Created At dates, the Summary cards on both detail screens (`05/01/26`
+  requested, `06/15/26` due), the inspection plan and statement-of-work prose, the per-characteristic
+  inspection dates, the History entries and their sort keys, and the two lab report page images —
+  including the `061026` date stamps in their report numbers and in the attachment file name. Only the
+  year moved; the month and day are the design's.
 - **The inspection this prototype builds out is numbered `008`, where the design's detail screen shows
   `001`.** Numbering it 008 is what puts it at the top of a list sorted newest-first on Inspection ID.
-  The ID is not only in the list: the Summary card, the submit / accept / reject modals, the buyer's
-  toasts and the History entries' own strings (the record URL, the certificate ID `QI-008-C5`, the
-  attachment file name) all carry it, so all of them were moved to 008 together. Nothing else about
-  that inspection changed — it is still `PO:EXTPO123/001`, requested `05/01/2025` and due `06/15/2025`,
-  as the design's Summary card has it.
+  The ID is not only in the list: the page title and `<h1>` (*Quality Inspection #8 … PO #5001 / 0008*),
+  the Summary card, the submit / accept / reject modals, the buyer's toasts, the History entries' own
+  strings (the record URL, the certificate ID `QI-008-C5`, the attachment file name) and the two lab
+  reports' headers all carry it, so all of them were moved to 008 together. Nothing else about that
+  inspection changed — it is still `PO:EXTPO123/001` on the same month and day the design's Summary
+  card has.
 - **Row action icons use the CUI outline set** (`download-outline`, `trash-outline`), as every
   component instance in the design does. The two *Add file* / *Add URL* frames (`829:93201`,
   `829:93994`) still use the older green/red `Icons/action/*` glyphs; that looked like drift in the
