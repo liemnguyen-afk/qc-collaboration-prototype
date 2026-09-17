@@ -55,7 +55,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The three HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916j`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260916k`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -280,6 +280,12 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   only 008 opens a screen. Their dates and PO numbers sit *behind* 008's, so the IDs run with time —
   the newest request carries the highest number — and Inspection ID descending is newest first. The
   rows are the `QC.inspections` array in [`assets/js/data.js`](assets/js/data.js).
+- **Created At is dated 2026, while Request Date and Due Date are the design's 2025 dates.** The
+  Created At column was moved to 2026 on request; Request Date and Due Date were left alone because the
+  detail screen's Summary card fixes them for 008 (`05/01/25` requested, `06/15/25` due) and a row and
+  the screen it opens should agree. The side effect is that every row reads as created a year after it
+  was requested. Moving the request and due dates to 2026 as well would mean changing those Summary
+  values on both detail screens.
 - **The inspection this prototype builds out is numbered `008`, where the design's detail screen shows
   `001`.** Numbering it 008 is what puts it at the top of a list sorted newest-first on Inspection ID.
   The ID is not only in the list: the Summary card, the submit / accept / reject modals, the buyer's

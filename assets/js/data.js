@@ -44,7 +44,11 @@ QC.inspection = {
 
    008 is the most recent request, and the IDs run with time — the newest carries
    the highest number, the rows behind it are dated and PO-numbered in step — so
-   the list opens on Inspection ID descending with the muffler at the top. */
+   the list opens on Inspection ID descending with the muffler at the top.
+
+   Created At is 2026; Request Date and Due Date stay on the design's 2025 dates,
+   which the detail screen's Summary card fixes for 008 (05/01/25 and 06/15/25).
+   So a row reads as created a year after it was requested. */
 QC.inspections = [
   {
     id: '008',
@@ -58,7 +62,7 @@ QC.inspections = [
     status: 'In Progress',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '05/01/2025',
+    createdAt: '05/01/2026',
     href: 'index.html'
   },
   {
@@ -73,7 +77,7 @@ QC.inspections = [
     status: 'In Buyer Review',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '04/28/2025'
+    createdAt: '04/28/2026'
   },
   {
     id: '006',
@@ -87,7 +91,7 @@ QC.inspections = [
     status: 'Closed',
     resolutionReason: 'Accepted - All specifications satisfied',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '04/28/2025'
+    createdAt: '04/28/2026'
   },
   {
     id: '005',
@@ -101,7 +105,7 @@ QC.inspections = [
     status: 'In Progress',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '04/21/2025'
+    createdAt: '04/21/2026'
   },
   {
     id: '004',
@@ -115,7 +119,7 @@ QC.inspections = [
     status: 'Open',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '04/21/2025'
+    createdAt: '04/21/2026'
   },
   {
     id: '003',
@@ -129,7 +133,7 @@ QC.inspections = [
     status: 'Closed',
     resolutionReason: "Rejected - Item doesn't meet specifications",
     supplier: 'Apex Exhaust Systems',
-    createdAt: '04/14/2025'
+    createdAt: '04/14/2026'
   },
   {
     id: '002',
@@ -143,7 +147,7 @@ QC.inspections = [
     status: 'Closed',
     resolutionReason: 'Accepted - All specifications satisfied',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '04/14/2025'
+    createdAt: '04/14/2026'
   },
   {
     id: '001',
@@ -157,7 +161,7 @@ QC.inspections = [
     status: 'Open',
     resolutionReason: '',
     supplier: 'Apex Exhaust Systems',
-    createdAt: '04/07/2025'
+    createdAt: '04/07/2026'
   }
 ];
 
