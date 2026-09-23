@@ -1352,30 +1352,19 @@
       return entry.action.indexOf('Requested') === 0;
     })[0] || { name: '', lines: [] };
 
-    function requestLine(label) {
-      var prefix = label + ': ';
-      var line = requestEntry.lines.filter(function (text) {
-        return text.indexOf(prefix) === 0;
-      })[0];
-      return line ? line.slice(prefix.length) : '';
-    }
-
-    var mailRow = QC.inspections.filter(function (row) {
-      return row.id === mail.inspectionId;
-    })[0] || {};
+    /* "PO #5001 / 0008" — the second half of the inspection's own title, so the
+       subject line, the paragraph and the screens cannot disagree. */
+    var poReference = (QC.inspection.title.split(' - ')[1] || '').trim();
 
     var MAIL_FIELDS = {
       itemName: mail.itemName,
       supplier: mail.supplier,
-      requestDate: mail.requestDate,
       dueDate: mail.dueDate,
-      requestedBy: mailRow.requestedBy || requestEntry.name,
-      requesterShortName: requestEntry.name,
-      requestReason: requestLine('Reason'),
       characteristicCount: String(QC.characteristics.length),
-      /* "PO #5001 / 0008" — the second half of the inspection's own title, so
-         the subject line and the paragraph cannot disagree. */
-      poReference: (QC.inspection.title.split(' - ')[1] || '').trim()
+      poReference: poReference,
+      /* The subject line names the order only: "PO #5001". */
+      poNumber: poReference.split(' / ')[0].replace('PO ', ''),
+      requestedByLine: requestEntry.name + ', Buyer Enterprises'
     };
 
     Object.keys(MAIL_FIELDS).forEach(function (key) {
@@ -1384,40 +1373,26 @@
       });
     });
 
-    var MAIL_DETAILS = [
+    /* The Summary card is the design's seven fields, four to a row. Document
+       Reference and Item Name are links there, as they are in the list. */
+    var MAIL_SUMMARY = [
       ['Inspection ID', mail.inspectionId],
-      ['Document Reference', mail.documentReference],
-      ['Item', mail.itemName, mail.itemDescription],
+      ['Document Reference', mail.documentReference, 'Purchase orders are out of scope for this prototype.'],
+      ['Due Date', mail.dueDate],
+      ['Item Name', mail.itemName, 'Item pages are out of scope for this prototype.'],
+      ['Item Description', mail.itemDescription],
       ['Supplier Part Number', mail.supplierPartNumber],
-      ['Buyer Part Number', mail.buyerPartNumber],
-      ['Buyer Batch Number', mail.buyerBatchNumber],
-      ['Sample Size', mail.sampleSize],
-      ['Requested By', mailRow.requestedBy || requestEntry.name],
-      ['Request Date', mail.requestDate],
-      ['Due Date', mail.dueDate]
+      ['Manufacturer Part Number', mail.buyerPartNumber]
     ];
 
-    emailRoot.querySelector('[data-email-details]').innerHTML =
-      MAIL_DETAILS.map(function (detail) {
-        return '<tr><th>' + esc(detail[0]) + '</th><td>' + esc(detail[1]) +
-          (detail[2] ? '<span class="email__details-sub">' + esc(detail[2]) + '</span>' : '') +
-          '</td></tr>';
-      }).join('');
-
-    emailRoot.querySelector('[data-email-characteristics]').innerHTML =
-      QC.characteristics.map(function (char) {
-        return '<li>' + esc(char.characteristic) + '</li>';
-      }).join('');
-
-    /* Header-level files are the ones that govern the whole inspection — the
-       SOW, the inspection plan, the mill certificate — so those are what the
-       request email carries. Line-level evidence is the supplier's to add. */
-    emailRoot.querySelector('[data-email-attachments]').innerHTML =
-      QC.attachments.header.map(function (file) {
-        return '<li><img src="' + ICONS + (DOC_ICONS[file.kind] || DOC_ICONS.pdf) + '" alt="">' +
-          '<button class="link-button" type="button" data-toast="' +
-          esc(file.name + ' opens in the Attachments Library on the inspection screen.') +
-          '">' + esc(file.name) + '</button></li>';
+    emailRoot.querySelector('[data-email-summary]').innerHTML =
+      MAIL_SUMMARY.map(function (field) {
+        var value = field[2]
+          ? '<button class="link-button" type="button" data-toast="' + esc(field[2]) + '">' +
+            esc(field[1]) + '</button>'
+          : esc(field[1]);
+        return '<div><p class="email-summary__label">' + esc(field[0]) + '</p>' +
+          '<p class="email-summary__value">' + value + '</p></div>';
       }).join('');
   }
 

@@ -3,139 +3,67 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1440">
-  <title>Quality Inspection #8 for Performance Muffler XR-3 — Email notification</title>
+  <title>New Quality Inspection is required for PO #5001 — Performance Muffler XR-3</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/tokens.css?v=20260923a">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260923a">
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260923b">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260923b">
 </head>
 <body data-role="supplier">
 
-<div class="mail">
+<!-- Notification email — matched to the design's email screengrab. -->
+<div class="email-page" data-email>
 
-  <!-- The mail client around the email is a prototype aid, like the role
-       switcher: it puts the email in the place the supplier actually reads it,
-       with the subject line and the sender the notification would carry. -->
-  <div class="mail__client">
-    <header class="mail__head">
-      <h1 class="mail__subject">Quality Inspection #8 for Performance Muffler XR-3</h1>
-      <div class="mail__meta">
-        <span class="mail__avatar">BE</span>
-        <div class="mail__addresses">
-          <p class="mail__from">
-            Buyer Enterprises (via Coupa Supplier Portal)
-            <span class="mail__address">&lt;do_not_reply@supplier.coupahost.com&gt;</span>
-          </p>
-          <p class="mail__to">to Steven Neilson &lt;steven.neilson@apexexhaust.com&gt;</p>
-        </div>
-        <p class="mail__date">Fri, May 1, 2026 · 9:12 AM</p>
+  <p class="email-powered">Powered by <img src="assets/icons/coupa-logo.svg" alt="Coupa"></p>
+
+  <div class="email-frame">
+    <div class="email-frame__body">
+
+      <!-- The customer's own logo heads the email; Buyer Enterprises stands in
+           for the design's placeholder mark. -->
+      <div class="email-brand">
+        <img class="email-brand__mark" src="assets/img/customer-logo-mark.svg" alt="">
+        <span class="email-brand__name">Buyer Enterprises</span>
       </div>
-      <div class="mail__actions">
-        <button class="icon-button" type="button" data-toast="Reply is out of scope for this prototype — the notification is do-not-reply.">
-          <img src="assets/icons/comment.svg" alt="Reply">
-        </button>
-        <button class="icon-button" type="button" data-toast="Download is out of scope for this prototype.">
-          <img src="assets/icons/download-outline.svg" alt="Download">
-        </button>
-        <button class="icon-button" type="button" data-toast="Mailbox actions are out of scope for this prototype.">
-          <img src="assets/icons/more-v.svg" alt="More">
-        </button>
-      </div>
-    </header>
 
-    <div class="mail__canvas">
+      <h1 class="email-subject">
+        New Quality Inspection is required for PO <span data-email-field="poNumber">#5001</span>
+      </h1>
 
-      <!-- The email itself: one 600 px column, the request's own values, and a
-           single primary action that lands on the inspection. -->
-      <article class="email" data-email>
-
-        <header class="email__brand">
-          <span class="email__logo">
-            <span class="email__logo-mark"><img class="icon" src="assets/icons/csp-logo.svg" alt="Coupa"></span>
-            <span>supplier portal</span>
-          </span>
-        </header>
-
-        <div class="email__body">
-          <p class="email__eyebrow">Quality inspection requested</p>
-          <h2 class="email__title">
-            Inspection results are needed for <span data-email-field="itemName">Performance Muffler XR-3</span>
-          </h2>
-          <p class="email__due">
-            <img src="assets/icons/schedule-outline.svg" alt="">
-            Due <strong data-email-field="dueDate">06/15/26</strong>
+      <section class="email-intro">
+        <div class="email-intro__col">
+          <p class="email-intro__greeting">Hello Steven,</p>
+          <p class="email-intro__text">
+            You have received a new quality inspection request for
+            <strong data-email-field="poReference">PO #5001 / 0008</strong> for
+            <strong data-email-field="itemName">Performance Muffler XR-3</strong>, please review and
+            submit inspection by <strong data-email-field="dueDate">06/15/26</strong>. There are
+            <strong><span data-email-field="characteristicCount">8</span> characteristics</strong> required.
           </p>
-
-          <p class="email__text">Hello Steven,</p>
-          <p class="email__text">
-            <span data-email-field="requestedBy">Prasad T. (Quality Manager)</span> at Buyer Enterprises
-            has requested a quality inspection on
-            <strong data-email-field="poReference">PO #5001 / 0008</strong>, raised
-            <span data-email-field="requestDate">05/01/26</span>. Reason given:
-            <em data-email-field="requestReason">First article inspection, new SKU</em>.
+          <p class="email-intro__text email-intro__requested">
+            Requested by<br>
+            <strong data-email-field="requestedByLine">Prasad T., Buyer Enterprises</strong>
           </p>
-          <p class="email__text">
-            Record a result, the inspector and the inspection date for each of the
-            <strong data-email-field="characteristicCount">8</strong> characteristics below, attach the
-            report that backs each one, and submit the inspection for
-            <span data-email-field="requesterShortName">Prasad T.</span>’s review.
-          </p>
-
-          <div class="email__cta">
-            <button class="btn btn--primary email__cta-button" type="button" data-goto="index.html">
-              Submit Inspection Results
-            </button>
-            <p class="email__cta-note">
-              Or see every inspection assigned to
-              <span data-email-field="supplier">Apex Exhaust Systems</span> —
-              <button class="link-button" type="button" data-goto="inspections.html">View All Quality Inspections</button>
-            </p>
-          </div>
+          <button class="email-cta" type="button" data-goto="index.html">View &amp; Complete Inspection</button>
         </div>
+      </section>
 
-        <section class="email__section">
-          <h3 class="email__section-title">Inspection details</h3>
-          <table class="email__details">
-            <tbody data-email-details></tbody>
-          </table>
-        </section>
-
-        <section class="email__section">
-          <h3 class="email__section-title">
-            Characteristics to inspect (<span data-email-field="characteristicCount">8</span>)
-          </h3>
-          <ol class="email__chars" data-email-characteristics></ol>
-          <p class="email__hint">
-            Specifications, ranges and expected results are on the inspection screen.
-          </p>
-        </section>
-
-        <section class="email__section">
-          <h3 class="email__section-title">Attached by Buyer Enterprises</h3>
-          <ul class="email__files" data-email-attachments></ul>
-        </section>
-
-        <section class="email__section email__section--plain">
-          <p class="email__text">
-            If the due date can’t be met, add a comment on the inspection instead of letting it lapse —
-            <span data-email-field="requesterShortName">Prasad T.</span> is notified of comments.
-          </p>
-        </section>
-
-        <footer class="email__footer">
-          <p>
-            You are receiving this email because you are the quality contact for
-            <span data-email-field="supplier">Apex Exhaust Systems</span> in the Coupa Supplier Portal.
-            <button class="link-button" type="button" data-toast="Notification preferences are out of scope for this prototype.">Manage notification preferences</button>.
-          </p>
-          <p>Please do not reply to this email — replies to this address are not monitored.</p>
-          <img class="email__footer-logo" src="assets/icons/footer-logo.svg" alt="Coupa">
-          <p class="email__footer-legal">© 2026 Coupa Software Incorporated</p>
-        </footer>
-      </article>
+      <section class="email-summary">
+        <h2 class="email-summary__title">Summary</h2>
+        <div class="email-summary__grid" data-email-summary></div>
+      </section>
     </div>
   </div>
+
+  <footer class="email-footer">
+    <img class="email-footer__logo" src="assets/icons/coupa-logo.svg" alt="Coupa">
+    <p class="email-footer__tagline">Business Spend Management</p>
+    <p class="email-footer__prefs">
+      To change your notification preferences,
+      <button class="email-footer__link" type="button" data-toast="Notification preferences are out of scope for this prototype.">go here and adjust your settings</button>
+    </p>
+  </footer>
 </div>
 
 <div class="proto-switch">
@@ -147,7 +75,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/data.js?v=20260923a"></script>
-<script src="assets/js/app.js?v=20260923a"></script>
+<script src="assets/js/data.js?v=20260923b"></script>
+<script src="assets/js/app.js?v=20260923b"></script>
 </body>
 </html>

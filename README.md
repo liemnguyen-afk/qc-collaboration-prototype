@@ -56,7 +56,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260923a`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260923b`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -80,18 +80,18 @@ python3 -m http.server 8000
 - A small “View as” switcher (bottom-left) jumps between **Supplier**, **Buyer** and **Email**. It is a prototype aid and is *not* part of the Figma design.
 
 **Notification email** (`email.html`)
-- The email the supplier receives when the buyer raises the inspection: subject *Quality Inspection #8
-  for Performance Muffler XR-3*, from *Buyer Enterprises (via Coupa Supplier Portal)*, dated
-  **May 1, 2026 · 9:12 AM** — the timestamp of the *Requested* entry in History.
-- **Submit Inspection Results** is the one primary action and lands on the supplier screen; the
-  secondary link opens the Inspections list.
-- **Inspection details**, the **8 characteristics** and the three **buyer-attached files** are read from
-  `window.QC`, so the email cannot drift from the screens: the details are the Summary card's own
-  values, the characteristic names are `QC.characteristics`, the files are the header level of the
-  Attachments Library, and the requester, request reason and due date come from the *Requested* History
-  entry. Clicking a file name toasts — the library is on the inspection screen.
-- The mail client around the email (subject line, sender, date, reply/download/more) is a prototype
-  aid, like the “View as” switcher, so the email is seen where it is read.
+- The email the supplier receives when the buyer raises the inspection, laid out to match the design's
+  email screengrab: *Powered by Coupa* above a white body ruled top and bottom, the customer's logo,
+  the blue subject line **New Quality Inspection is required for PO #5001**, a grey intro panel with a
+  centred text column, and a **Summary** card of seven fields, four to a row.
+- **View & Complete Inspection** is the one action, and it lands on the supplier screen
+  (`index.html`).
+- The **Document Reference** and **Item Name** values are links, as they are in the Inspections list;
+  both toast, since a purchase order and an item page are outside this prototype.
+- Everything factual is read from `window.QC`, so the email cannot drift from the screens: the Summary
+  fields are the detail screens' own Summary values, the PO reference is the second half of the
+  inspection's title, the characteristic count is `QC.characteristics.length`, and the requester is the
+  *Requested* entry in History. **go here and adjust your settings** toasts.
 
 **History card**
 - Filter chips **All / Buyer / Supplier / System (ERP)** filter the entries client-side.
@@ -211,14 +211,21 @@ declared once in `tokens.css`.
 
 Things that are deliberate deviations or additions, so nothing here reads as unintentional:
 
-- **The notification email has no Figma frame behind it.** The *QC- History* section contains no email,
-  and the Figma connection was not authorised in the session that built `email.html`, so the layout is
-  **ours**: Coupa's supplier notification pattern — a 600 px column on a grey canvas, the CSP brand
-  lockup over the portal's blue rule, one primary action, a label/value table of the request, and a
-  do-not-reply footer. What is *not* invented is the content: every value comes from `window.QC`, and
-  the email's sender, date, requester and reason are the *Requested* History entry. If the design file
-  gets an email frame, this page should be re-matched against it; the copy is written to survive that
-  (it says only what the request contains).
+- **The notification email is matched from a screengrab, not from a Figma node.** The *QC- History*
+  section has no email frame and the Figma connection was not authorised in the sessions that built
+  `email.html`, so its structure, labels, copy and the *View & Complete Inspection* button come from a
+  screengrab of the design's email that the design owner supplied; the measurements are **ours**, solved
+  to the prototype's 1440 px width (email body inset 62 px, intro column 406 px wide and centred,
+  Summary on a four-column grid). Every value in it comes from `window.QC`, and the requester line is
+  the *Requested* History entry. Three content departures from the screengrab:
+  - Its Logoipsum placeholder became a **Buyer Enterprises** lockup, using
+    [`assets/img/customer-logo-mark.svg`](assets/img/customer-logo-mark.svg) — drawn, not a Figma
+    export, and the only asset in the prototype that is.
+  - Its **Manufacturer Part Number** label is kept, carrying this inspection's `buyerPartNumber`
+    (`EX-4471`), which the Summary cards on the two screens label *Buyer Part Number*.
+  - Its bottom-left “Click here to view full change request including 15 unchanged lines” link is
+    omitted. It is change-request-email boilerplate with no quality-inspection counterpart, so there is
+    nothing to point it at that would not be invented.
 - **Four history timestamps are inferred, not from Figma.** The Figma frames show these entries
   without a visible timestamp, so plausible ones were added to keep the chronology sortable:
   the ERP “Synced inspection results” entry (`Jun 10 - 12:10 PM`), Steven Neilson’s comment
