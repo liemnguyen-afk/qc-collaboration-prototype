@@ -2406,13 +2406,22 @@ button {
    full-width email body ruled top and bottom, the customer's logo over a blue
    subject line, a grey intro panel with a centred text column and one pill
    button, a Summary card of the request in four columns, and Coupa's Business
-   Spend Management footer under the body. Values are the inspection's own. */
+   Spend Management footer under the body. Values are the inspection's own.
+
+   Unlike the two screens, this page is responsive: an email is read wherever
+   the supplier opens it, so it reflows from 1440 px down to a phone. The
+   insets are clamped against the viewport rather than stepped, so at 1440 px
+   the rendering is identical to the fixed-width version the screengrab was
+   matched against, and only the Summary grid and the two display type sizes
+   change at a breakpoint. */
 
 .email-page {
-  width: 1440px;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
   min-height: 100vh;
-  padding: 24px 62px 40px;
+  /* 4.3vw resolves to the design's 62px at 1440px, and floors at 16px. */
+  padding: 24px clamp(16px, 4.3vw, 62px) 40px;
   background: var(--cui-surface-s3);
 }
 
@@ -2422,7 +2431,7 @@ button {
   justify-content: flex-end;
   gap: 8px;
   margin: 0 0 18px;
-  padding-right: 24px;
+  padding-right: clamp(0px, 1.7vw, 24px);
   font-size: 13px;
   line-height: var(--cui-line-2xs);
   color: var(--cui-text-t2);
@@ -2440,8 +2449,9 @@ button {
   border-bottom: 3px solid var(--cui-border-input);
 }
 
+/* 3.9vw and 8.3vw resolve to the design's 56px and 120px at 1440px. */
 .email-frame__body {
-  padding: 28px 56px 120px;
+  padding: 28px clamp(20px, 3.9vw, 56px) clamp(48px, 8.3vw, 120px);
 }
 
 .email-brand {
@@ -2477,12 +2487,14 @@ button {
 .email-intro {
   display: flex;
   justify-content: center;
-  padding: 36px 24px;
+  padding: clamp(24px, 2.5vw, 36px) clamp(16px, 1.7vw, 24px);
   background: var(--cui-surface-s3);
 }
 
+/* 406px is the design's column; narrower viewports take what is left. */
 .email-intro__col {
-  width: 406px;
+  width: 100%;
+  max-width: 406px;
 }
 
 .email-intro__greeting,
@@ -2522,7 +2534,7 @@ button {
 
 .email-summary {
   margin-top: 28px;
-  padding: 24px;
+  padding: clamp(16px, 1.7vw, 24px);
   border: 1px solid var(--cui-border-b2);
   border-radius: var(--cui-radii-xs);
   background: #ffffff;
@@ -2545,6 +2557,7 @@ button {
 
 .email-summary__label {
   margin: 0 0 4px;
+  overflow-wrap: break-word;
   font-size: 13px;
   font-weight: var(--cui-weight-bold);
   line-height: var(--cui-line-3xs);
@@ -2553,7 +2566,8 @@ button {
 
 .email-summary__value {
   margin: 0;
-  padding-right: 16px;
+  padding-right: clamp(0px, 1.1vw, 16px);
+  overflow-wrap: break-word;
   font-size: var(--cui-font-size-sm);
   line-height: var(--cui-line-2xs);
   color: var(--cui-text-t1);
@@ -2594,4 +2608,50 @@ button {
   color: var(--cui-text-link);
   text-decoration: underline;
   cursor: pointer;
+}
+
+/* The Summary drops a column at a time rather than squeezing four of them:
+   "Manufacturer Part Number" needs room to read as a label. */
+@media (max-width: 1120px) {
+  .email-summary__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .email-summary__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 12px;
+  }
+
+  /* Room under the footer for the fixed role switcher, which sits bottom-left. */
+  .email-page {
+    padding-bottom: 84px;
+  }
+
+  .email-brand__name {
+    font-size: 22px;
+    line-height: 26px;
+  }
+
+  .email-subject {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: var(--cui-line-xs);
+  }
+
+  .email-summary__title {
+    margin-bottom: 20px;
+    font-size: var(--cui-font-size-xl);
+  }
+}
+
+@media (max-width: 520px) {
+  .email-summary__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .email-powered {
+    justify-content: flex-start;
+  }
 }

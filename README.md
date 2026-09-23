@@ -56,7 +56,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260923b`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260923c`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -69,8 +69,8 @@ python3 -m http.server 8000
 ## What is clickable
 
 **Cross-screen flow**
-- The **notification email** (`email.html`) is where the flow starts: **Submit Inspection Results** →
-  the supplier screen (`index.html`), and **View All Quality Inspections** → the list.
+- The **notification email** (`email.html`) is where the flow starts: its one action,
+  **View & Complete Inspection**, opens the supplier screen (`index.html`).
 - **View All Quality Inspections** (bottom-left of both the supplier and the buyer screen) → the
   Inspections list (`inspections.html`); inspection **008** in that list opens the supplier screen
   again.
@@ -84,6 +84,14 @@ python3 -m http.server 8000
   email screengrab: *Powered by Coupa* above a white body ruled top and bottom, the customer's logo,
   the blue subject line **New Quality Inspection is required for PO #5001**, a grey intro panel with a
   centred text column, and a **Summary** card of seven fields, four to a row.
+- **This page is responsive** — the only one that is. An email gets read wherever the supplier opens
+  it, so it reflows from 1440 px down to 320 px with no horizontal scroll, and its `<meta viewport>` is
+  `width=device-width` where the two screens are pinned to `width=1440`. Resize the window to see it.
+  The insets are `clamp()`ed against the viewport rather than stepped, so **at 1440 px the rendering is
+  identical** to the fixed-width build the screengrab was matched against; only the Summary grid and
+  two display type sizes change at a breakpoint. The Summary goes four columns → three (≤1120 px) →
+  two (≤760 px) → one (≤520 px), the brand name and subject line drop to 22 px / 18 px below 760 px,
+  and the page gains bottom padding there so the fixed *View as* switcher clears the footer.
 - **View & Complete Inspection** is the one action, and it lands on the supplier screen
   (`index.html`).
 - The **Document Reference** and **Item Name** values are links, as they are in the Inspections list;
