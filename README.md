@@ -4,13 +4,14 @@ A static, clickable prototype of the **Quality Inspection collaboration** flow, 
 file *187 Quality Collaboration SCC/SCPL*, section **“QC- History”**
 ([node 3782-77289](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=3782-77289)).
 
-Three pages are implemented:
+Four pages are implemented:
 
 | Page | Figma node | Chrome |
 | --- | --- | --- |
 | [`index.html`](index.html) | `3782:74663` — *Supplier - Item Inspection* | Coupa Supplier Portal (CSP) |
 | [`buyer.html`](buyer.html) | `3782:77297` — *Item Inspection* | Coupa core / buyer |
 | [`inspections.html`](inspections.html) | [`514:38555`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=514-38555) — *Inspections* (the list) — see the fidelity note below | Coupa Supplier Portal (CSP) |
+| [`email.html`](email.html) | none — the section has no email frame; see the fidelity note below | Supplier's inbox |
 
 Two components on those screens are built from their own dedicated Figma sections:
 
@@ -54,8 +55,8 @@ GitHub Pages serves the prototype from `main` / root:
 **https://liemnguyen-afk.github.io/qc-collaboration-prototype/**
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
-will keep using the old files for ten minutes after a push. The three HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260916l`) — **bump that date whenever you change
+will keep using the old files for ten minutes after a push. The four HTML files therefore link their
+assets with a version query (`assets/css/styles.css?v=20260923a`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -68,13 +69,29 @@ python3 -m http.server 8000
 ## What is clickable
 
 **Cross-screen flow**
+- The **notification email** (`email.html`) is where the flow starts: **Submit Inspection Results** →
+  the supplier screen (`index.html`), and **View All Quality Inspections** → the list.
 - **View All Quality Inspections** (bottom-left of both the supplier and the buyer screen) → the
   Inspections list (`inspections.html`); inspection **008** in that list opens the supplier screen
   again.
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
 - Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in History) → returns to `index.html`.
 - Buyer **Accept** / **Reject** → confirmation modals with toast feedback.
-- A small “View as” switcher (bottom-left) jumps between the two roles. It is a prototype aid and is *not* part of the Figma design.
+- A small “View as” switcher (bottom-left) jumps between **Supplier**, **Buyer** and **Email**. It is a prototype aid and is *not* part of the Figma design.
+
+**Notification email** (`email.html`)
+- The email the supplier receives when the buyer raises the inspection: subject *Quality Inspection #8
+  for Performance Muffler XR-3*, from *Buyer Enterprises (via Coupa Supplier Portal)*, dated
+  **May 1, 2026 · 9:12 AM** — the timestamp of the *Requested* entry in History.
+- **Submit Inspection Results** is the one primary action and lands on the supplier screen; the
+  secondary link opens the Inspections list.
+- **Inspection details**, the **8 characteristics** and the three **buyer-attached files** are read from
+  `window.QC`, so the email cannot drift from the screens: the details are the Summary card's own
+  values, the characteristic names are `QC.characteristics`, the files are the header level of the
+  Attachments Library, and the requester, request reason and due date come from the *Requested* History
+  entry. Clicking a file name toasts — the library is on the inspection screen.
+- The mail client around the email (subject line, sender, date, reply/download/more) is a prototype
+  aid, like the “View as” switcher, so the email is seen where it is read.
 
 **History card**
 - Filter chips **All / Buyer / Supplier / System (ERP)** filter the entries client-side.
@@ -175,6 +192,7 @@ python3 -m http.server 8000
 index.html            Supplier screen
 buyer.html            Buyer review screen
 inspections.html      Inspections list
+email.html            Notification email the request sends the supplier
 assets/css/tokens.css Clarity UI (CUI) design tokens, resolved from Figma variables
 assets/css/styles.css Component styling for both product chromes
 assets/js/data.js     Inspections list, characteristics, attachments + history content
@@ -193,6 +211,14 @@ declared once in `tokens.css`.
 
 Things that are deliberate deviations or additions, so nothing here reads as unintentional:
 
+- **The notification email has no Figma frame behind it.** The *QC- History* section contains no email,
+  and the Figma connection was not authorised in the session that built `email.html`, so the layout is
+  **ours**: Coupa's supplier notification pattern — a 600 px column on a grey canvas, the CSP brand
+  lockup over the portal's blue rule, one primary action, a label/value table of the request, and a
+  do-not-reply footer. What is *not* invented is the content: every value comes from `window.QC`, and
+  the email's sender, date, requester and reason are the *Requested* History entry. If the design file
+  gets an email frame, this page should be re-matched against it; the copy is written to survive that
+  (it says only what the request contains).
 - **Four history timestamps are inferred, not from Figma.** The Figma frames show these entries
   without a visible timestamp, so plausible ones were added to keep the chronology sortable:
   the ERP “Synced inspection results” entry (`Jun 10 - 12:10 PM`), Steven Neilson’s comment
@@ -312,7 +338,7 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
 
 All content — the 8 inspections in the list, the 8 characteristics with their specifications, ranges,
 results, expected results, remarks and attachments, the 13 library attachments, and the 11 history
-entries — lives in [`assets/js/data.js`](assets/js/data.js). Editing that file updates all three pages.
+entries — lives in [`assets/js/data.js`](assets/js/data.js). Editing that file updates all four pages.
 
 The **structure** of that data is transcribed from the Figma frames and is what the layout was built
 against: 8 characteristic rows with Range left blank on 5 of them, one amber and one red result pill,

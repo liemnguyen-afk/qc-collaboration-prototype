@@ -1339,6 +1339,88 @@
     });
   });
 
+  /* ── Notification email — email.html ─────────────────────────────────── */
+
+  var emailRoot = document.querySelector('[data-email]');
+  if (emailRoot) {
+    var mail = QC.inspection.summary;
+
+    /* The email is the "Requested" History entry read from the supplier's
+       inbox, so the entry's own lines are what the email quotes — change the
+       request in History and the email changes with it. */
+    var requestEntry = QC.history.filter(function (entry) {
+      return entry.action.indexOf('Requested') === 0;
+    })[0] || { name: '', lines: [] };
+
+    function requestLine(label) {
+      var prefix = label + ': ';
+      var line = requestEntry.lines.filter(function (text) {
+        return text.indexOf(prefix) === 0;
+      })[0];
+      return line ? line.slice(prefix.length) : '';
+    }
+
+    var mailRow = QC.inspections.filter(function (row) {
+      return row.id === mail.inspectionId;
+    })[0] || {};
+
+    var MAIL_FIELDS = {
+      itemName: mail.itemName,
+      supplier: mail.supplier,
+      requestDate: mail.requestDate,
+      dueDate: mail.dueDate,
+      requestedBy: mailRow.requestedBy || requestEntry.name,
+      requesterShortName: requestEntry.name,
+      requestReason: requestLine('Reason'),
+      characteristicCount: String(QC.characteristics.length),
+      /* "PO #5001 / 0008" — the second half of the inspection's own title, so
+         the subject line and the paragraph cannot disagree. */
+      poReference: (QC.inspection.title.split(' - ')[1] || '').trim()
+    };
+
+    Object.keys(MAIL_FIELDS).forEach(function (key) {
+      emailRoot.querySelectorAll('[data-email-field="' + key + '"]').forEach(function (el) {
+        el.textContent = MAIL_FIELDS[key];
+      });
+    });
+
+    var MAIL_DETAILS = [
+      ['Inspection ID', mail.inspectionId],
+      ['Document Reference', mail.documentReference],
+      ['Item', mail.itemName, mail.itemDescription],
+      ['Supplier Part Number', mail.supplierPartNumber],
+      ['Buyer Part Number', mail.buyerPartNumber],
+      ['Buyer Batch Number', mail.buyerBatchNumber],
+      ['Sample Size', mail.sampleSize],
+      ['Requested By', mailRow.requestedBy || requestEntry.name],
+      ['Request Date', mail.requestDate],
+      ['Due Date', mail.dueDate]
+    ];
+
+    emailRoot.querySelector('[data-email-details]').innerHTML =
+      MAIL_DETAILS.map(function (detail) {
+        return '<tr><th>' + esc(detail[0]) + '</th><td>' + esc(detail[1]) +
+          (detail[2] ? '<span class="email__details-sub">' + esc(detail[2]) + '</span>' : '') +
+          '</td></tr>';
+      }).join('');
+
+    emailRoot.querySelector('[data-email-characteristics]').innerHTML =
+      QC.characteristics.map(function (char) {
+        return '<li>' + esc(char.characteristic) + '</li>';
+      }).join('');
+
+    /* Header-level files are the ones that govern the whole inspection — the
+       SOW, the inspection plan, the mill certificate — so those are what the
+       request email carries. Line-level evidence is the supplier's to add. */
+    emailRoot.querySelector('[data-email-attachments]').innerHTML =
+      QC.attachments.header.map(function (file) {
+        return '<li><img src="' + ICONS + (DOC_ICONS[file.kind] || DOC_ICONS.pdf) + '" alt="">' +
+          '<button class="link-button" type="button" data-toast="' +
+          esc(file.name + ' opens in the Attachments Library on the inspection screen.') +
+          '">' + esc(file.name) + '</button></li>';
+      }).join('');
+  }
+
   /* ── Modals ──────────────────────────────────────────────────────────── */
 
   function openModal(id) {

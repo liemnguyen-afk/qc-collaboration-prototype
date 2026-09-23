@@ -261,7 +261,7 @@ QC.attachments = {
               'Phase 1: Tooling & First Article – June to July 2026',
               'Phase 2: Pilot Lot & Sound Validation – August to October 2026',
               'Phase 3: PPAP, Packaging & Launch Readiness – November to December 2026',
-              'Production Ramp & Warranty Monitoring – January 2026'
+              'Production Ramp & Warranty Monitoring – January 2027'
             ]
           },
           {
