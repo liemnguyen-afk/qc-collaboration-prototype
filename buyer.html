@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/tokens.css?v=20260924a">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260924a">
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260924b">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260924b">
 </head>
 <body data-role="buyer">
 
@@ -293,26 +293,50 @@
       </div>
     </section>
 
-    <!-- Comments — Figma 3782:79100 -->
-    <section class="card" data-accordion>
-      <button class="card__header" type="button" aria-expanded="true">
-        <h2 class="card__title">Comments</h2>
-        <img class="card__chevron" src="assets/icons/chevron-up.svg" alt="">
-      </button>
-      <div class="card__body">
-        <div class="comment-form">
-          <label class="comment-form__label" for="comment">Enter Comment</label>
+    <!-- Comment — Coupa's legacy comment component, matched to the supplied
+         screengrab: counted bubble and a rule under the title, "Mute Comments"
+         and a collapse chevron, Add File | URL inside the input, the @name
+         hint, the two posting buttons, Participants, then the thread. -->
+    <section class="cmt" data-comments>
+      <div class="cmt__head">
+        <span class="cmt__badge">
+          <img src="assets/icons/comment-count.svg" alt="">
+          <span class="cmt__badge-count" data-comment-count>0</span>
+        </span>
+        <h2 class="cmt__title">Comment</h2>
+        <span class="cmt__head-right">
+          <button class="cmt__mute" type="button" data-toast="Comment notifications are out of scope for this prototype.">Mute Comments</button>
+          <button class="cmt__collapse" type="button" aria-expanded="true" aria-label="Collapse Comment" data-comment-collapse>
+            <img src="assets/icons/chevron-down.svg" alt="">
+          </button>
+        </span>
+      </div>
+
+      <div class="cmt__body">
+        <label class="cmt__label" for="comment">Enter Comment</label>
+        <div class="cmt__input">
           <textarea id="comment" data-comment-input></textarea>
-          <div class="comment-form__row">
-            <p class="comment-form__attach">
-              Add <button type="button" data-comment-attach="file">File</button> |
-              <button type="button" data-comment-attach="url">URL</button>
-            </p>
-            <button class="btn-legacy" type="button" data-comment-submit>Add Comment</button>
-          </div>
+          <p class="cmt__attach">
+            Add <button type="button" data-comment-attach="file">File</button>
+            <span class="cmt__pipe">|</span>
+            <button type="button" data-comment-attach="url">URL</button>
+          </p>
         </div>
+        <p class="cmt__hint">Send Comment notification to a user by typing @name (ex. @JohnSmith)</p>
+        <div class="cmt__actions">
+          <button class="cmt__btn" type="button" data-comment-submit="private" disabled>Add Private Comment</button>
+          <button class="cmt__btn" type="button" data-comment-submit="supplier" disabled>Add Comment to Supplier</button>
+        </div>
+
+        <p class="cmt__participants">
+          <span class="cmt__participants-label">Participants:</span>
+          <span data-comment-participants></span>
+        </p>
+
+        <div class="cmt__list" data-comment-list></div>
       </div>
     </section>
+
 
     <!-- The History card (Figma 3782:80315, Buyer chip active) was removed from
          this screen on request. Its markup is in git history and its CSS and
@@ -405,7 +429,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/data.js?v=20260924a"></script>
-<script src="assets/js/app.js?v=20260924a"></script>
+<script src="assets/js/data.js?v=20260924b"></script>
+<script src="assets/js/app.js?v=20260924b"></script>
 </body>
 </html>

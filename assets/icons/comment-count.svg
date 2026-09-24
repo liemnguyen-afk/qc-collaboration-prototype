@@ -1,0 +1,6 @@
+<!-- Legacy Coupa comment bubble that carries the comment count. Drawn to match
+     the supplied screengrab; the count itself is HTML on top, so it stays
+     data-driven. Not a Figma export. -->
+<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3 3H19V15H8L4.5 18.5V15H3Z" fill="#FFFFFF" stroke="#D2822A" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>

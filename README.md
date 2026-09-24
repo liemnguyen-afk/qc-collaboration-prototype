@@ -56,7 +56,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260924a`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260924b`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -105,10 +105,22 @@ python3 -m http.server 8000
 Its filter chips, search, sort and bubble list are gone from `index.html` and `buyer.html`; the
 entries still exist in `QC.history` and are still what the email quotes.
 
-**Comments**
-- Typing a comment and pressing **Add Comment** clears the box and toasts *Comment added.* With
-  History gone, the entry it posts has nowhere to render, so this is now the only feedback.
+**Comment** — core Coupa's **legacy comment component**, not a CUI card. See the fidelity note below.
+- The header carries the orange bubble with the **comment count** in it, a dark rule under the title,
+  **Mute Comments** (toasts) and a chevron that **collapses the whole section**.
+- **Add File | URL** sits inside the input's box and toasts; below it, the *@name* notification hint.
+- The posting buttons **start disabled** and enable as soon as something is typed, which is the state
+  the design was captured in. The buyer gets the design's pair — **Add Private Comment** and **Add
+  Comment to Supplier** — and the supplier gets a single **Add Comment**.
+- Posting clears the box, re-disables the buttons, toasts *Comment added.* (or *Private comment
+  added.*) and **appends the comment to the thread below**, scrolled into view.
+- **Participants** is whoever has commented, in the order they first did: *Steven Neilson, Prasad T.*
+- The thread is the comment subset of `QC.history`, oldest first, each on its own grey panel: the
+  visibility tag, avatar, name, `MM/DD/YYYY at h:mm AM` timestamp and an edit pencil (toasts). The
+  ERP's *“Added a comment; Added comment attachment URL”* sync entry has no body, so it is not one.
 - Clicking a row’s comment icon (buyer) pre-fills the comment box with that characteristic.
+- The **Attachments Library's own comment box** posts into this same thread, so its *Add Comment*
+  now has a visible result too.
 
 **Characteristics table**
 - **Search in this view** filters the 8 rows; the count next to “Items per page” updates.
@@ -179,8 +191,8 @@ entries still exist in `QC.history` and are still what the email quotes.
 - **Add File** opens the dashed dropzone — **Browse** or dragging files onto it really attaches them
   to the level you are on, with the doc-type icon picked from the extension.
 - **Add URL** enables its **Add** button only once you type something, then adds the URL as a row.
-- Either add mode also shows **Enter Comment** / **Add Comment**. It toasts; the entry it posts is
-  no longer displayed, History having been removed.
+- Either add mode also shows **Enter Comment** / **Add Comment**. It toasts, and the comment it posts
+  now appears in the **Comment** section's thread below.
 - **Pagination** appears once a level holds more than 10 attachments (the Figma
   *Line level - w/pagination* state); add enough files with Browse to see it.
 - The “12 Files | 1 URL” links expand the card and jump to the list; the URL link selects the URL.
@@ -188,7 +200,8 @@ entries still exist in `QC.history` and are still what the email quotes.
   collapsed state), so the counts read without expanding — and the links still expand and jump.
 
 **Cards**
-- Summary, Attachments Library and Comments all collapse/expand from their chevrons.
+- Summary and Attachments Library collapse/expand from their chevrons. **Comment** is not a CUI card,
+  but it collapses the same way from the chevron in its own header.
 - Summary’s **Show more / Show less** reveals the third field row (Supplier Part Number, Sample
   Size, Buyer Batch Number) from Figma `518:28852`.
 
@@ -203,15 +216,20 @@ assets/css/tokens.css Clarity UI (CUI) design tokens, resolved from Figma variab
 assets/css/styles.css Component styling for both product chromes
 assets/js/data.js     Inspections list, characteristics, attachments + history content
 assets/js/app.js      Filtering, sorting, accordions, attachments, comments, modals, navigation
-assets/icons/         49 assets: 47 from the Figma file (SVG + one PNG flag) + Clarity's Close and Check
-assets/img/           Report page images used as attachment previews
+assets/icons/         52 assets: 48 from the Figma file (SVG + one PNG flag), Clarity's Close and
+                      Check, and two for the legacy Comment component
+assets/img/           Report page images used as attachment previews, plus two drawn SVGs
 tools/reports/        HTML sources those page images are rendered from
 ```
 
-Every icon is a real asset — none are hand-drawn — so glyphs match the design exactly. All but two are
-Figma exports; `close-outline.svg` and `check-outline.svg` are Clarity's own `Close` and `Check`
-outline paths, taken from `@coupa/clarity-ui-icons`. Colours, spacing, radii, and type come from `get_variable_defs` on the Figma nodes and are
-declared once in `tokens.css`.
+Every icon in the Figma-derived screens is a real asset, so glyphs match the design exactly:
+`close-outline.svg` and `check-outline.svg` are Clarity's own `Close` and `Check` outline paths from
+`@coupa/clarity-ui-icons`, and the rest are Figma exports. The legacy Comment component and the email
+have no Figma node to export from, so four of their assets are drawn by hand and labelled as such in
+the fidelity notes: `comment-count.svg`, `img/avatar-placeholder.svg`, `img/customer-logo-mark.svg`,
+and `edit-pencil-legacy.svg` — which is a recolour of the `edit-outline.svg` export, so that glyph
+still matches. Colours, spacing, radii, and type come from `get_variable_defs` on the Figma nodes and
+are declared once in `tokens.css`.
 
 ## Fidelity notes
 
@@ -223,15 +241,50 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   CSS, the `renderHistory()` machinery and all 11 entries in `QC.history` are untouched, so restoring
   the card means restoring its `<section>` from git history and nothing else. Two knock-on effects
   worth knowing:
-  - **Comments, the Attachments Library comment box and a saved inline row edit all still post an
-    entry, and nothing renders it.** Each one toasts, so the button visibly does something, but the
-    record of it is no longer on the page. Comments was left otherwise untouched on request.
+  - **A saved inline row edit still posts an entry that nothing renders.** It toasts, so the save
+    visibly does something, but the record of it is no longer on the page. Comments no longer have
+    this problem: the legacy Comment component below renders its own thread off the same entries, so
+    a comment posted there or from the Attachments Library does show up.
   - `<body>` lost its now-dead `data-history-filter` attribute. That attribute was also **why the
     filter chips never worked**: `querySelectorAll('[data-history-filter]')` matched `<body>` as well
     as the four chips, so `<body>` got the chip click handler, and every click bubbling up to it reset
     the filter to the body's own value and cleared the active chip. Clicking *Supplier* on the supplier
     screen left no chip active and all 11 entries showing. The selector is now scoped to
     `.history-chip[data-history-filter]`, so a restored card gets working chips.
+- **The Comment section is core Coupa's legacy component, matched from a screengrab, and it replaces
+  the CUI Comments card the Figma frames draw.** The frames have a CUI card (`3782:74677` on the
+  supplier screen, `3782:79100` on the buyer screen) with a card border, radius and a single *Add
+  Comment*; the screengrab the design owner supplied is the real product's widget instead — no card,
+  a counted orange bubble and a dark rule under a 26 px title, *Mute Comments* and a collapse chevron
+  on the right, **Add File | URL** inside the input's box, the *@name* hint, two posting buttons,
+  *Participants*, then the thread on grey panels. That is what is built. Consequences worth knowing:
+  - **Its colours are literals, not CUI tokens** (`#D2822A` bubble and pencil, `#f4f4f4` panels,
+    `#767676` metadata, `#ccd2d9` input border, the buttons' `#eee → #e0dfe0` gradient), sampled from
+    the screengrab: legacy Coupa predates CUI, so there are no tokens that match. The buttons use
+    `--coupa-chrome-font` (Helvetica/Arial) for the same reason.
+  - **The supplier screen gets one *Add Comment* instead of the design's pair.** The screengrab is the
+    buyer side, and neither of its buttons makes sense for a supplier: there is no buyer-internal
+    *private* comment to write and no *supplier* to address. The buyer screen carries both.
+  - **Two of its three assets are drawn**, [`comment-count.svg`](assets/icons/comment-count.svg) and
+    [`img/avatar-placeholder.svg`](assets/img/avatar-placeholder.svg); the count itself is HTML over
+    the bubble so it stays data-driven. The third,
+    [`edit-pencil-legacy.svg`](assets/icons/edit-pencil-legacy.svg), is the `edit-outline.svg` Figma
+    export recoloured to the legacy orange, so the glyph is still the design system's.
+  - **The screengrab's content is replaced by the prototype's own**, since its Ashok Pusarla /
+    “hello world” / 12/02/2025 sample says nothing about this inspection. The thread is the two human
+    comments in `QC.history`, **oldest first** — the screengrab has a single entry, so it cannot show
+    an order, and oldest-first is how the removed History card read.
+  - **The grey visibility tag is derived, not stored.** A seeded comment takes it from its author
+    (`buyer` → *to supplier*, `supplier` → *to customer*); a posted one takes it from the button used,
+    so *Add Private Comment* tags the entry *private*. `QC.history` carries no such field.
+  - **Timestamps are reformatted, not re-dated.** The design stamps comments `MM/DD/YYYY at h:mm AM`
+    where History used `Jun 11 - 10:15 AM`; both are computed from the entry's own `sortKey`, so the
+    dates stay the prototype's 2026 (`06/10/2026 at 1:20 PM`, `06/11/2026 at 10:15 AM`).
+  - The old card's `.comment-form` CSS is **still in use** — by the Attachments Library's comment box
+    and by the Reject and Send Back modals — so it was left in place.
+  - The generic `[data-toast]` handler is now **delegated on `document`** rather than bound per
+    element at start-up. The thread's edit pencils are rebuilt on every post, so a handler bound once
+    would have been thrown away with them and the pencils would have gone silent.
 - **The notification email is matched from a screengrab, not from a Figma node.** The *QC- History*
   section has no email frame and the Figma connection was not authorised in the sessions that built
   `email.html`, so its structure, labels, copy and the *View & Complete Inspection* button come from a
@@ -241,7 +294,7 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   the *Requested* History entry. Three content departures from the screengrab:
   - Its Logoipsum placeholder became a **Buyer Enterprises** lockup, using
     [`assets/img/customer-logo-mark.svg`](assets/img/customer-logo-mark.svg) — drawn, not a Figma
-    export, and the only asset in the prototype that is.
+    export, as the legacy Comment component's bubble and avatar also are.
   - Its **Manufacturer Part Number** label is kept, carrying this inspection's `buyerPartNumber`
     (`EX-4471`), which the Summary cards on the two screens label *Buyer Part Number*.
   - Its bottom-left “Click here to view full change request including 15 unchanged lines” link is

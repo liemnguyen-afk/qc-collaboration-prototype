@@ -1919,6 +1919,306 @@ button {
   background: linear-gradient(180deg, #e6e6e6 0%, #d6d5d6 100%);
 }
 
+/* ─── Comment — legacy Coupa comment component ─────────────────────────────
+   Matched to the supplied screengrab, which is core Coupa's own comment widget
+   rather than a CUI card: no card border or radius, a counted bubble and a dark
+   rule under the title, "Mute Comments" and a collapse chevron on the right,
+   "Add File | URL" inside the input's box, the @name hint, the posting buttons
+   disabled until something is typed, Participants, then the thread on grey
+   panels. The colours below are sampled from the screengrab, not CUI tokens,
+   which is why they are literals. */
+
+.cmt {
+  margin-top: var(--cui-space-4xl);
+}
+
+.cmt__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #333333;
+}
+
+/* The bubble carries the comment count, so the count is text over the glyph. */
+.cmt__badge {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.cmt__badge img {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.cmt__badge-count {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 22px;
+  height: 13px;
+  font-size: 10px;
+  font-weight: var(--cui-weight-semibold);
+  line-height: 13px;
+  text-align: center;
+  color: #D2822A;
+}
+
+.cmt__title {
+  flex: 1 0 auto;
+  margin: 0;
+  font-family: var(--cui-font-heading);
+  font-size: 26px;
+  font-weight: var(--cui-weight-regular);
+  line-height: 32px;
+  color: var(--cui-text-dark);
+}
+
+.cmt__head-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cmt__mute {
+  border: 0;
+  padding: 0;
+  background: none;
+  font-family: inherit;
+  font-size: var(--cui-font-size-sm);
+  color: var(--cui-text-link);
+  cursor: pointer;
+}
+
+.cmt__mute:hover {
+  text-decoration: underline;
+}
+
+.cmt__collapse {
+  display: flex;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.cmt__collapse img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.18s ease;
+}
+
+.cmt.is-collapsed .cmt__collapse img {
+  transform: rotate(180deg);
+}
+
+.cmt.is-collapsed .cmt__body {
+  display: none;
+}
+
+.cmt__label {
+  display: block;
+  margin: 18px 0 6px;
+  font-size: 13px;
+  font-weight: var(--cui-weight-bold);
+  line-height: var(--cui-line-3xs);
+  color: var(--cui-text-t2);
+}
+
+/* One bordered box holds the textarea and the Add File | URL line, as the
+   screengrab has it — the input's own border is the box. */
+.cmt__input {
+  border: 1px solid #ccd2d9;
+  border-radius: 2px;
+  background: #ffffff;
+}
+
+.cmt__input textarea {
+  display: block;
+  width: 100%;
+  height: 52px;
+  padding: 8px 10px 4px;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: var(--cui-font-size-sm);
+  line-height: var(--cui-line-2xs);
+  color: var(--cui-text-1);
+  resize: vertical;
+}
+
+.cmt__input textarea:focus {
+  outline: 0;
+}
+
+.cmt__input:focus-within {
+  border-color: var(--cui-light-blue-subtle-border);
+}
+
+.cmt__attach {
+  margin: 0;
+  padding: 0 10px 7px;
+  font-size: 13px;
+  line-height: var(--cui-line-3xs);
+  color: var(--cui-text-dark);
+}
+
+.cmt__attach button {
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  color: var(--cui-text-link);
+  cursor: pointer;
+}
+
+.cmt__attach button:hover {
+  text-decoration: underline;
+}
+
+.cmt__pipe {
+  color: #9aa3ad;
+}
+
+.cmt__hint {
+  margin: 5px 0 0;
+  font-size: var(--cui-font-size-2xs);
+  line-height: var(--cui-line-3xs);
+  color: #767676;
+}
+
+.cmt__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Disabled until the box has text, which is the state the screengrab caught. */
+.cmt__btn {
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #eeeeee 0%, #e0dfe0 100%);
+  font-family: var(--coupa-chrome-font);
+  font-size: 13px;
+  font-weight: var(--cui-weight-medium);
+  color: var(--cui-text-dark);
+  cursor: pointer;
+}
+
+.cmt__btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #e6e6e6 0%, #d6d5d6 100%);
+}
+
+.cmt__btn:disabled {
+  background: #d6d9dc;
+  color: #8f9499;
+  cursor: default;
+}
+
+.cmt__participants {
+  margin: 18px 0 0;
+  font-size: var(--cui-font-size-sm);
+  line-height: var(--cui-line-2xs);
+  font-weight: var(--cui-weight-bold);
+  color: var(--cui-text-dark);
+}
+
+.cmt__participants-label {
+  margin-right: 8px;
+}
+
+.cmt__list {
+  margin-top: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.cmt-entry {
+  padding: 12px 18px 16px;
+  background: #f4f4f4;
+}
+
+.cmt-entry + .cmt-entry {
+  margin-top: 10px;
+}
+
+.cmt-entry__tag {
+  margin: 0 0 8px;
+  font-size: var(--cui-font-size-2xs);
+  line-height: var(--cui-line-3xs);
+  color: #767676;
+}
+
+.cmt-entry__top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cmt-entry__avatar {
+  display: block;
+  width: 44px;
+  height: 44px;
+  flex: none;
+}
+
+.cmt-entry__avatar img {
+  display: block;
+  width: 44px;
+  height: 44px;
+}
+
+.cmt-entry__name {
+  flex: 1 0 auto;
+  font-size: 15px;
+  font-weight: var(--cui-weight-bold);
+  color: var(--cui-text-dark);
+}
+
+.cmt-entry__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cmt-entry__time {
+  font-size: 13px;
+  color: #767676;
+}
+
+.cmt-entry__edit {
+  display: flex;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.cmt-entry__edit img {
+  width: 20px;
+  height: 20px;
+}
+
+/* The body sits at the panel's own left edge, not indented under the avatar. */
+.cmt-entry__body {
+  margin: 10px 0 0;
+  font-size: var(--cui-font-size-sm);
+  line-height: var(--cui-line-xs);
+  color: var(--cui-text-dark);
+}
+
+.cmt__empty {
+  margin: 0;
+  padding: 12px 0;
+  font-size: var(--cui-font-size-sm);
+  color: #767676;
+}
+
 /* ─── History ─────────────────────────────────────────────────────────── */
 
 .history {

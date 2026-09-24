@@ -1277,7 +1277,6 @@
   /* ── Comment box → appends a history entry ───────────────────────────── */
 
   var commentInput = document.querySelector('[data-comment-input]');
-  var commentSubmit = document.querySelector('[data-comment-submit]');
 
   var me = role === 'supplier'
     ? { actor: 'supplier', name: 'Niles Parker', initials: 'NP' }
@@ -1309,6 +1308,7 @@
       action: entry.action,
       link: entry.link || '',
       lines: entry.lines,
+      visibility: entry.visibility || '',
       timestamp: stamp.label,
       sortKey: stamp.key,
       isNew: true
@@ -1316,29 +1316,149 @@
     var history = document.querySelector('.history');
     if (history) history.classList.remove('is-collapsed');
     renderHistory();
+    /* Comments are the one kind of entry the screens still display, so the
+       Comment section's thread refreshes too. */
+    renderComments();
     /* A saved row edit does not scroll away from the table it was made in. */
     if (historyList && entry.scroll !== false) {
       historyList.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 
-  /* Shared by the Comments card and the Attachments Library comment box. */
-  function addHistoryComment(text) {
-    addHistoryEntry({ action: 'Added a comment: ', link: '', lines: [' ' + text] });
+  /* Shared by the Comment section and the Attachments Library comment box.
+     `visibility` is the grey tag the thread shows above each entry. */
+  function addHistoryComment(text, visibility) {
+    addHistoryEntry({
+      action: 'Added a comment: ',
+      link: '',
+      lines: [' ' + text],
+      visibility: visibility || (role === 'supplier' ? 'to customer' : 'to supplier')
+    });
   }
 
-  if (commentSubmit && commentInput) {
-    commentSubmit.addEventListener('click', function () {
+  /* ── Comment section — the legacy component ──────────────────────────────
+     The thread is the comment subset of the same `entries` array History used,
+     so a comment posted here, from the Attachments Library, or seeded in
+     QC.history all read the same. */
+
+  var commentList = document.querySelector('[data-comment-list]');
+  var commentSection = document.querySelector('[data-comments]');
+
+  /* The design stamps comments "MM/DD/YYYY at h:mm AM", where History used
+     "Jun 11 - 10:15 AM". Both come off the entry's own sortKey, so the year
+     stays the prototype's 2026. */
+  function commentStamp(entry) {
+    var parts = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(entry.sortKey || '');
+    if (!parts) return entry.timestamp || '';
+    var hours = parseInt(parts[4], 10);
+    var suffix = hours >= 12 ? 'PM' : 'AM';
+    var display = hours % 12 === 0 ? 12 : hours % 12;
+    return parts[2] + '/' + parts[3] + '/' + parts[1] +
+      ' at ' + display + ':' + parts[5] + ' ' + suffix;
+  }
+
+  /* A comment is a person's comment. The ERP's "Added a comment; Added comment
+     attachment URL" entry is sync activity with no body, so it is not one. */
+  function commentEntries() {
+    return entries.filter(function (entry) {
+      return entry.actor !== 'system' && entry.action.indexOf('Added a comment') === 0;
+    }).sort(function (a, b) {
+      return a.sortKey < b.sortKey ? -1 : a.sortKey > b.sortKey ? 1 : 0;
+    });
+  }
+
+  function commentVisibility(entry) {
+    if (entry.visibility) return entry.visibility;
+    /* Seeded entries carry none, so it follows who wrote them. */
+    return entry.actor === 'buyer' ? 'to supplier' : 'to customer';
+  }
+
+  function commentBody(entry) {
+    return entry.lines.map(function (line) { return String(line).trim(); })
+      .filter(Boolean).join(' ');
+  }
+
+  function renderComments() {
+    if (!commentList) return;
+    var list = commentEntries();
+
+    commentList.innerHTML = list.length
+      ? list.map(function (entry) {
+          return (
+            '<article class="cmt-entry">' +
+            '<p class="cmt-entry__tag">' + esc(commentVisibility(entry)) + '</p>' +
+            '<div class="cmt-entry__top">' +
+            '<span class="cmt-entry__avatar">' +
+            '<img src="assets/img/avatar-placeholder.svg" alt=""></span>' +
+            '<span class="cmt-entry__name">' + esc(entry.name) + '</span>' +
+            '<span class="cmt-entry__meta">' +
+            '<span class="cmt-entry__time">' + esc(commentStamp(entry)) + '</span>' +
+            '<button class="cmt-entry__edit" type="button" aria-label="Edit this comment"' +
+            ' data-toast="Editing a posted comment is out of scope for this prototype.">' +
+            '<img src="' + ICONS + 'edit-pencil-legacy.svg" alt=""></button>' +
+            '</span></div>' +
+            '<p class="cmt-entry__body">' + esc(commentBody(entry)) + '</p>' +
+            '</article>'
+          );
+        }).join('')
+      : '<p class="cmt__empty">No comments yet.</p>';
+
+    var count = document.querySelector('[data-comment-count]');
+    if (count) count.textContent = String(list.length);
+
+    /* Participants are whoever has commented, first comment first. */
+    var names = [];
+    list.forEach(function (entry) {
+      if (names.indexOf(entry.name) === -1) names.push(entry.name);
+    });
+    var participants = document.querySelector('[data-comment-participants]');
+    if (participants) participants.textContent = names.join(',  ') || '—';
+  }
+
+  /* Both posting buttons share this; the private one tags the entry "private"
+     instead of naming who it went to. */
+  document.querySelectorAll('[data-comment-submit]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      if (!commentInput) return;
       var text = commentInput.value.trim();
       if (!text) {
         commentInput.focus();
-        toast('Enter a comment first.');
         return;
       }
-      addHistoryComment(text);
+      var target = button.dataset.commentSubmit;
+      addHistoryComment(text, target === 'private' ? 'private' : 'to ' + target);
       commentInput.value = '';
-      toast('Comment added.');
+      syncCommentButtons();
+      toast(target === 'private' ? 'Private comment added.' : 'Comment added.');
+      var posted = commentList && commentList.lastElementChild;
+      if (posted) posted.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
+  });
+
+  /* The screengrab caught both buttons disabled, which is the empty-box state. */
+  function syncCommentButtons() {
+    var ready = !!(commentInput && commentInput.value.trim());
+    document.querySelectorAll('[data-comment-submit]').forEach(function (button) {
+      button.disabled = !ready;
+    });
+  }
+
+  if (commentInput) {
+    commentInput.addEventListener('input', syncCommentButtons);
+    syncCommentButtons();
+  }
+
+  if (commentSection) {
+    var commentCollapse = commentSection.querySelector('[data-comment-collapse]');
+    if (commentCollapse) {
+      commentCollapse.addEventListener('click', function () {
+        commentSection.classList.toggle('is-collapsed');
+        commentCollapse.setAttribute(
+          'aria-expanded',
+          String(!commentSection.classList.contains('is-collapsed'))
+        );
+      });
+    }
   }
 
   document.querySelectorAll('[data-comment-attach]').forEach(function (button) {
@@ -1445,14 +1565,18 @@
     });
   });
 
-  document.querySelectorAll('[data-toast]').forEach(function (button) {
-    button.addEventListener('click', function () {
-      toast(button.dataset.toast);
-    });
+  /* Delegated rather than bound per element, because rendered markup carries
+     data-toast too — the Comment thread's edit pencils are rebuilt on every
+     post, so a handler bound once at start-up would be thrown away with them.
+     closest() also covers a click landing on a button's inner <img>. */
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-toast]');
+    if (button) toast(button.dataset.toast);
   });
 
   /* ── Initial render ──────────────────────────────────────────────────── */
 
   renderTable();
   renderHistory();
+  renderComments();
 })();
