@@ -36,7 +36,7 @@
     }, 2600);
   }
 
-  /* ── accordions (Summary / Attachments / Comments / History) ─────────── */
+  /* ── accordions (Summary / Attachments / Comments) ───────────────────── */
 
   document.querySelectorAll('[data-accordion] .card__header').forEach(function (header) {
     header.addEventListener('click', function () {
@@ -1181,7 +1181,7 @@
       }
       addHistoryComment(text);
       commentBox.value = '';
-      toast('Comment added to History.');
+      toast('Comment added.');
     });
 
     render();
@@ -1190,10 +1190,20 @@
 
   /* ── History ─────────────────────────────────────────────────────────── */
 
+  /* No page renders History any more — the card was removed from both
+     inspection screens on request. This block stays because the comment boxes
+     and the inline row edit still post through addHistoryEntry(), and because
+     restoring the card should need nothing but its markup. Every lookup below
+     tolerates the elements being absent. */
+
   var historyList = document.querySelector('[data-history-list]');
   var historySearch = document.querySelector('[data-history-search]');
   var historySort = document.querySelector('[data-history-sort]');
-  var historyChips = document.querySelectorAll('[data-history-filter]');
+  /* Scoped to the chips: <body> used to carry data-history-filter too, so an
+     unscoped selector gave body the click handler below, and every click
+     bubbling up to it reset the filter to body's value and cleared the active
+     chip — which silently broke all four chips. */
+  var historyChips = document.querySelectorAll('.history-chip[data-history-filter]');
   var historyFilter = document.body.dataset.historyFilter || 'all';
   var historyDir = -1; // newest first
   var entries = QC.history.slice();
@@ -1327,7 +1337,7 @@
       }
       addHistoryComment(text);
       commentInput.value = '';
-      toast('Comment added to History.');
+      toast('Comment added.');
     });
   }
 

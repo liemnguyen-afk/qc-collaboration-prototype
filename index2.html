@@ -3,68 +3,61 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1440">
-  <title>Quality Inspection #8 for Performance Muffler XR-3 — Buyer Review</title>
+  <title>Quality Inspection #8 for Performance Muffler XR-3 — Supplier Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/tokens.css?v=20260924a">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260924a">
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260923c">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260923c">
 </head>
-<body data-role="buyer">
+<body data-role="supplier" data-history-filter="all">
 
 <div class="page">
 
-  <!-- Coupa header — Figma 3782:77300 -->
-  <header class="coupa-header">
-    <div class="coupa-header__bar">
-      <div class="coupa-header__left">
-        <span class="coupa-header__logo"><img src="assets/icons/coupa-logo.svg" alt="Coupa"></span>
-        <button class="coupa-search" type="button" data-toast="Global search is out of scope for this prototype.">
-          <img src="assets/icons/global-search.svg" alt="">
-          What do you need?
-        </button>
-        <span class="coupa-header__mic">
-          <img src="assets/icons/write-request-bg.svg" alt="">
-          <img src="assets/icons/write-request.svg" alt="Write a request">
-        </span>
+  <!-- Header — Figma 3782:74664 -->
+  <header class="csp-header">
+    <div class="csp-header__top">
+      <div class="csp-header__brand">
+        <span class="csp-header__logo"><img class="icon" src="assets/icons/csp-logo.svg" alt="Coupa"></span>
+        <span>supplier portal</span>
       </div>
-      <div class="coupa-header__actions">
-        <button class="coupa-pill" type="button" data-toast="Account menu is out of scope for this prototype.">RV</button>
-        <button class="coupa-pill" type="button" data-toast="No new notifications.">
-          <img src="assets/icons/bell.svg" alt="Notifications">
+      <div class="csp-welcome">
+        <button class="csp-welcome__item" type="button" data-toast="Account menu is out of scope for this prototype.">
+          NILES <img class="csp-welcome__caret" src="assets/icons/caret-down-sm.svg" alt="">
         </button>
-        <button class="coupa-pill" type="button" data-toast="Cart is empty.">
-          <img src="assets/icons/cart.svg" alt="Cart">
+        <img class="csp-welcome__divider" src="assets/icons/divider.svg" alt="">
+        <button class="csp-welcome__item" type="button" data-toast="No new notifications.">
+          NOTIFICATIONS <span class="csp-welcome__count">0</span>
         </button>
-        <button class="coupa-pill" type="button" data-toast="Approvals: 1 pending.">
-          <img src="assets/icons/check-circle.svg" alt="Approvals">
-        </button>
-        <button class="coupa-pill" type="button" data-toast="Help menu is out of scope for this prototype.">
-          <img src="assets/icons/help.svg" alt="Help">
+        <img class="csp-welcome__divider" src="assets/icons/divider.svg" alt="">
+        <button class="csp-welcome__item" type="button" data-toast="Help menu is out of scope for this prototype.">
+          HELP <img class="csp-welcome__caret" src="assets/icons/caret-down-sm.svg" alt="">
         </button>
       </div>
     </div>
 
-    <!-- Primary nav — Figma 3782:77327 -->
-    <nav class="coupa-nav" aria-label="Main">
-      <div class="coupa-nav__links">
-        <button class="coupa-nav__link coupa-nav__home" type="button" data-toast="Home">
-          <img src="assets/icons/home.svg" alt="Home">
-        </button>
-        <button class="coupa-nav__link" type="button" data-toast="Travel &amp; Expenses">Travel &amp; Expenses</button>
-        <button class="coupa-nav__link" type="button" data-toast="Forecasts">Forecasts</button>
-        <button class="coupa-nav__link" type="button" data-toast="Requests">Requests</button>
-        <button class="coupa-nav__link" type="button" data-toast="Orders">Orders</button>
-        <button class="coupa-nav__link" type="button" data-toast="Inventory">Inventory</button>
-        <button class="coupa-nav__link coupa-nav__link--active" type="button" aria-current="page">Quality</button>
-        <button class="coupa-nav__link" type="button" data-toast="Invoices">Invoices</button>
-        <button class="coupa-nav__link" type="button" data-toast="Community">Community</button>
-        <button class="coupa-nav__link" type="button" data-toast="Payments">Payments</button>
-        <button class="coupa-nav__link" type="button" data-toast="Setup">Setup</button>
-        <button class="coupa-nav__link" type="button" data-toast="More...">More...</button>
-      </div>
-      <img class="coupa-nav__border" src="assets/icons/nav-bottom-border.svg" alt="">
+    <nav class="csp-nav" aria-label="Supplier portal">
+      <button class="csp-nav__tab" type="button" data-toast="Home">
+        <img class="csp-nav__home" src="assets/icons/csp-home.svg" alt="Home">
+      </button>
+      <button class="csp-nav__tab" type="button" data-toast="Profile">Profile</button>
+      <button class="csp-nav__tab" type="button" data-toast="Tasks">Tasks</button>
+      <button class="csp-nav__tab" type="button" data-toast="Items">Items</button>
+      <button class="csp-nav__tab" type="button" data-toast="Invoices">Invoices</button>
+      <button class="csp-nav__tab" type="button" data-toast="Orders">Orders</button>
+      <button class="csp-nav__tab csp-nav__tab--active" type="button" aria-current="page">Quality</button>
+      <button class="csp-nav__tab" type="button" data-toast="ASN">ASN</button>
     </nav>
+
+    <!-- Customer selector — Figma 3782:74665 -->
+    <div class="csp-customer">
+      <label class="csp-customer__label" for="customer">Select Customer</label>
+      <select class="csp-customer__select" id="customer">
+        <option>Frasier Inc</option>
+        <option>Buyer Enterprises</option>
+        <option>Acme Manufacturing</option>
+      </select>
+    </div>
   </header>
 
   <div class="page-title">
@@ -73,23 +66,23 @@
 
   <main class="content">
 
-    <!-- Alert — Figma 3782:77331 -->
-    <section class="alert alert--warning" role="status">
-      <div class="alert__icon"><img src="assets/icons/warning-outline.svg" alt="Warning"></div>
+    <!-- Alert — Figma 3782:74669 -->
+    <section class="alert" role="status">
+      <div class="alert__icon"><img src="assets/icons/info-outline.svg" alt="Information"></div>
       <div class="alert__text">
-        <p class="alert__title">Your Review Required</p>
-        <p class="alert__body"><strong>Steven N.</strong> (Apex Exhaust Systems) submitted results on <strong>06/10/2026</strong> for your review.</p>
+        <p class="alert__title">Quality Inspection is ready to be submitted to <strong>Prasad T.</strong> (Buyer Enterprises)</p>
+        <p class="alert__body">Send to <strong>Prasad T.</strong> (Buyer Enterprises) for review by clicking on Submit.</p>
       </div>
       <div class="alert__action">
-        <span class="chip chip--warning">
-          <img src="assets/icons/file-search-outline.svg" alt="">
-          <span class="chip__label">Characteristics Submitted</span>
+        <span class="chip">
+          <img src="assets/icons/schedule-outline.svg" alt="">
+          <span class="chip__label">Characteristics provided</span>
           <span class="chip__count">8</span>
         </span>
       </div>
     </section>
 
-    <!-- Summary — Figma 3782:77332 -->
+    <!-- Summary — Figma 3782:74670 -->
     <section class="card summary" data-accordion>
       <button class="card__header" type="button" aria-expanded="true">
         <h2 class="card__title">Summary</h2>
@@ -115,7 +108,7 @@
           </div>
           <div>
             <p class="summary__label">STATUS</p>
-            <p class="summary__value">In Buyer Review</p>
+            <p class="summary__value">In Progress</p>
           </div>
         </div>
         <div class="summary__extra">
@@ -162,7 +155,7 @@
       </div>
     </section>
 
-    <!-- Characteristics table — Figma 3782:77333 / 3782:77354 / 3782:77380 -->
+    <!-- Characteristics table — Figma 3782:74674 / 3782:74675 -->
     <section class="table-block">
       <div class="table-block__title-row">
         <button class="views-trigger" type="button" data-views-trigger aria-haspopup="true">
@@ -175,7 +168,7 @@
       <div class="views-panel" data-views-panel>
         <p class="views-panel__title">SAVED VIEWS</p>
         <button class="views-panel__item is-active" type="button">All Characteristics</button>
-        <button class="views-panel__item" type="button">Awaiting My Review</button>
+        <button class="views-panel__item" type="button">Pending Results</button>
         <button class="views-panel__item" type="button">Out of Specification</button>
         <button class="views-panel__item" type="button">Revised Results</button>
       </div>
@@ -200,10 +193,8 @@
               <th data-sort-key="id">ID</th>
               <th data-sort-key="characteristic">Characteristic</th>
               <th data-sort-key="specification">Specification</th>
-              <th data-sort-key="range">Range</th>
               <th data-sort-key="result">Result</th>
-              <th data-sort-key="expectedResult">Expected Result</th>
-              <th data-sort-key="inspectedBy">Inspected by</th>
+              <th data-sort-key="inspectedBy">Inspected By</th>
               <th data-sort-key="inspectionDate">Inspection Date</th>
               <th data-sort-key="remarks">Remarks</th>
               <th class="col-att">Attachments</th>
@@ -293,7 +284,7 @@
       </div>
     </section>
 
-    <!-- Comments — Figma 3782:79100 -->
+    <!-- Comments — Figma 3782:74677 -->
     <section class="card" data-accordion>
       <button class="card__header" type="button" aria-expanded="true">
         <h2 class="card__title">Comments</h2>
@@ -314,25 +305,50 @@
       </div>
     </section>
 
-    <!-- The History card (Figma 3782:80315, Buyer chip active) was removed from
-         this screen on request. Its markup is in git history and its CSS and
-         render code are still in place, so restoring it means putting the
-         section back. -->
+    <!-- History — Figma 3782:76992 -->
+    <section class="card card--tight history" data-accordion>
+      <button class="card__header" type="button" aria-expanded="true">
+        <h2 class="card__title">History</h2>
+        <img class="card__chevron" src="assets/icons/chevron-up.svg" alt="">
+      </button>
+      <div class="card__body">
+        <div class="history__filter">
+          <div class="history__filter-bar">
+            <span class="history-search">
+              <img src="assets/icons/history-search.svg" alt="">
+              <input type="search" placeholder="Search" aria-label="Search history" data-history-search>
+            </span>
+            <button class="history-sort" type="button" data-history-sort>
+              <img src="assets/icons/sort-outline.svg" alt="">
+              <span>Newest first</span>
+              <img src="assets/icons/caret-dropdown.svg" alt="">
+            </button>
+          </div>
+          <div class="history__chips" role="group" aria-label="Filter history by actor">
+            <button class="history-chip is-active" type="button" data-history-filter="all" aria-pressed="true">All</button>
+            <button class="history-chip" type="button" data-history-filter="buyer" aria-pressed="false">Buyer</button>
+            <button class="history-chip" type="button" data-history-filter="supplier" aria-pressed="false">Supplier</button>
+            <button class="history-chip" type="button" data-history-filter="system" aria-pressed="false">System (ERP)</button>
+          </div>
+        </div>
+        <div class="history__frames">
+          <div class="history__bubbles" data-history-list></div>
+        </div>
+      </div>
+    </section>
 
-    <!-- Buyer action bar — Figma 3782:80290 -->
+    <!-- Bottom CTAs — Figma 3782:74679 / 3782:74693 -->
     <div class="action-bar">
       <button class="btn btn--outline" type="button" data-goto="inspections.html">
         View All Quality Inspections
       </button>
       <div class="action-bar__right">
-        <button class="btn btn--link-outline" type="button" data-open-modal="send-back-modal">Send Back to Supplier</button>
-        <button class="btn btn--danger-outline" type="button" data-open-modal="reject-modal">Reject</button>
-        <button class="btn btn--primary" type="button" data-open-modal="accept-modal">Accept</button>
+        <button class="btn btn--primary" type="button" data-open-modal="submit-modal">Submit</button>
       </div>
     </div>
   </main>
 
-  <!-- Footer — Figma 3782:79111 -->
+  <!-- Footer — Figma 3782:74699 -->
   <footer class="footer">
     <div class="footer__border"></div>
     <div class="footer__contents">
@@ -350,62 +366,34 @@
   </footer>
 </div>
 
-<div class="overlay" id="accept-modal" role="dialog" aria-modal="true" aria-labelledby="accept-modal-title">
+<!-- Submit confirmation -->
+<div class="overlay" id="submit-modal" role="dialog" aria-modal="true" aria-labelledby="submit-modal-title">
   <div class="modal">
-    <h2 id="accept-modal-title">Accept inspection results?</h2>
-    <p>All 8 characteristics will be marked as accepted and Apex Exhaust Systems will be notified.</p>
+    <h2 id="submit-modal-title">Submit inspection for review?</h2>
+    <p>All 8 characteristics will be sent to Prasad T. (Buyer Enterprises). You will not be able to edit results while the inspection is in buyer review.</p>
     <dl class="modal__dl">
       <dt>Inspection ID</dt><dd>008</dd>
-      <dt>Submitted by</dt><dd>Steven N. on 06/10/2026</dd>
-      <dt>New status</dt><dd>Accepted</dd>
+      <dt>Characteristics</dt><dd>8 provided</dd>
+      <dt>Attachments</dt><dd data-att-counts></dd>
+      <dt>Due Date</dt><dd>06/15/26</dd>
     </dl>
     <div class="modal__actions">
       <button class="btn btn--outline" type="button" data-close-modal>Cancel</button>
-      <button class="btn btn--primary" type="button" data-close-modal data-toast="Inspection 008 accepted. Supplier notified.">Accept</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="reject-modal" role="dialog" aria-modal="true" aria-labelledby="reject-modal-title">
-  <div class="modal">
-    <h2 id="reject-modal-title">Reject inspection results?</h2>
-    <p>Rejecting closes the inspection and requires a new request for the item. Add a reason so the supplier understands the decision.</p>
-    <div class="comment-form">
-      <label class="comment-form__label" for="reject-reason">Rejection reason</label>
-      <textarea id="reject-reason"></textarea>
-    </div>
-    <div class="modal__actions" style="margin-top:20px">
-      <button class="btn btn--outline" type="button" data-close-modal>Cancel</button>
-      <button class="btn btn--danger-outline" type="button" data-close-modal data-toast="Inspection 008 rejected. Supplier notified.">Reject</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="send-back-modal" role="dialog" aria-modal="true" aria-labelledby="send-back-modal-title">
-  <div class="modal">
-    <h2 id="send-back-modal-title">Send back to supplier?</h2>
-    <p>The inspection returns to Apex Exhaust Systems so results can be corrected or completed.</p>
-    <div class="comment-form">
-      <label class="comment-form__label" for="send-back-reason">What needs to change?</label>
-      <textarea id="send-back-reason">Characteristic 5 measured 97 dB(A) against the 95 dB(A) ceiling. Please re-pack those units to 96 kg/m³ and re-test per SAE J1169. The inspection plan also calls for a weld seam photo of every unit inspected and only XR3-0412 is attached, so please add the remaining four.</textarea>
-    </div>
-    <div class="modal__actions" style="margin-top:20px">
-      <button class="btn btn--outline" type="button" data-close-modal>Cancel</button>
-      <button class="btn btn--primary" type="button" data-goto="index.html">Send Back</button>
+      <button class="btn btn--primary" type="button" data-goto="buyer.html">Submit to Buyer</button>
     </div>
   </div>
 </div>
 
 <div class="proto-switch">
   <span class="proto-switch__label">View as</span>
-  <a href="index.html">Supplier</a>
-  <a class="is-current" href="buyer.html">Buyer</a>
+  <a class="is-current" href="index.html">Supplier</a>
+  <a href="buyer.html">Buyer</a>
   <a href="email.html">Email</a>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/data.js?v=20260924a"></script>
-<script src="assets/js/app.js?v=20260924a"></script>
+<script src="assets/js/data.js?v=20260923c"></script>
+<script src="assets/js/app.js?v=20260923c"></script>
 </body>
 </html>

@@ -56,7 +56,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20260923c`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20260924a`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -75,7 +75,7 @@ python3 -m http.server 8000
   Inspections list (`inspections.html`); inspection **008** in that list opens the supplier screen
   again.
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
-- Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in History) → returns to `index.html`.
+- Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in `QC.history`) → returns to `index.html`.
 - Buyer **Accept** / **Reject** → confirmation modals with toast feedback.
 - A small “View as” switcher (bottom-left) jumps between **Supplier**, **Buyer** and **Email**. It is a prototype aid and is *not* part of the Figma design.
 
@@ -99,18 +99,15 @@ python3 -m http.server 8000
 - Everything factual is read from `window.QC`, so the email cannot drift from the screens: the Summary
   fields are the detail screens' own Summary values, the PO reference is the second half of the
   inspection's title, the characteristic count is `QC.characteristics.length`, and the requester is the
-  *Requested* entry in History. **go here and adjust your settings** toasts.
+  *Requested* entry in `QC.history`. **go here and adjust your settings** toasts.
 
-**History card**
-- Filter chips **All / Buyer / Supplier / System (ERP)** filter the entries client-side.
-  The supplier screen opens on *All*; the buyer screen opens on *Buyer*, matching the Figma frames.
-- **Search** filters entries by name, action, linked object, and detail lines.
-- **Sort By** toggles newest-first / oldest-first.
-- The bubble list scrolls with the CUI scrollbar styling from the design.
+**History card** — **removed from both inspection screens on request.** See the fidelity note below.
+Its filter chips, search, sort and bubble list are gone from `index.html` and `buyer.html`; the
+entries still exist in `QC.history` and are still what the email quotes.
 
 **Comments**
-- Typing a comment and pressing **Add Comment** appends a real history bubble (with your role’s
-  avatar and the current timestamp) and scrolls to it.
+- Typing a comment and pressing **Add Comment** clears the box and toasts *Comment added.* With
+  History gone, the entry it posts has nowhere to render, so this is now the only feedback.
 - Clicking a row’s comment icon (buyer) pre-fills the comment box with that characteristic.
 
 **Characteristics table**
@@ -139,8 +136,8 @@ python3 -m http.server 8000
   the buyer’s request, so they stay read-only, and the row keeps its own columns and height.
 - The row action swaps the pencil for **save (✓)** and **cancel (×)**. `Enter` saves, `Esc` cancels.
 - **Save** writes into `QC.characteristics`, so the new values survive sorting, searching and
-  submitting — and posts an *Updated Results on Characteristic: N* entry to **History** listing only
-  the fields that actually changed. Saving an unchanged row posts nothing.
+  submitting. It also posts an *Updated Results on Characteristic: N* entry listing only the fields
+  that actually changed, but with History removed that entry is no longer displayed anywhere.
 - **Cancel** discards. A blank Result is refused with a toast, since that is the cell the row exists
   for. One row edits at a time: clicking another pencil closes the open editor without saving.
 - Typed values are held in a draft, so sorting or searching mid-edit keeps them.
@@ -182,7 +179,8 @@ python3 -m http.server 8000
 - **Add File** opens the dashed dropzone — **Browse** or dragging files onto it really attaches them
   to the level you are on, with the doc-type icon picked from the extension.
 - **Add URL** enables its **Add** button only once you type something, then adds the URL as a row.
-- Either add mode also shows **Enter Comment** / **Add Comment**, which posts to History.
+- Either add mode also shows **Enter Comment** / **Add Comment**. It toasts; the entry it posts is
+  no longer displayed, History having been removed.
 - **Pagination** appears once a level holds more than 10 attachments (the Figma
   *Line level - w/pagination* state); add enough files with Browse to see it.
 - The “12 Files | 1 URL” links expand the card and jump to the list; the URL link selects the URL.
@@ -190,7 +188,7 @@ python3 -m http.server 8000
   collapsed state), so the counts read without expanding — and the links still expand and jump.
 
 **Cards**
-- Summary, Attachments Library, Comments, and History all collapse/expand from their chevrons.
+- Summary, Attachments Library and Comments all collapse/expand from their chevrons.
 - Summary’s **Show more / Show less** reveals the third field row (Supplier Part Number, Sample
   Size, Buyer Batch Number) from Figma `518:28852`.
 
@@ -219,6 +217,21 @@ declared once in `tokens.css`.
 
 Things that are deliberate deviations or additions, so nothing here reads as unintentional:
 
+- **The History card was removed from both inspection screens, against the design.** The Figma frames
+  draw it on both (`3782:76992` on the supplier screen, `3782:80315` on the buyer screen, with the
+  *Buyer* chip active); it was taken out on request. Only the markup went — the `.history` and `.bubble`
+  CSS, the `renderHistory()` machinery and all 11 entries in `QC.history` are untouched, so restoring
+  the card means restoring its `<section>` from git history and nothing else. Two knock-on effects
+  worth knowing:
+  - **Comments, the Attachments Library comment box and a saved inline row edit all still post an
+    entry, and nothing renders it.** Each one toasts, so the button visibly does something, but the
+    record of it is no longer on the page. Comments was left otherwise untouched on request.
+  - `<body>` lost its now-dead `data-history-filter` attribute. That attribute was also **why the
+    filter chips never worked**: `querySelectorAll('[data-history-filter]')` matched `<body>` as well
+    as the four chips, so `<body>` got the chip click handler, and every click bubbling up to it reset
+    the filter to the body's own value and cleared the active chip. Clicking *Supplier* on the supplier
+    screen left no chip active and all 11 entries showing. The selector is now scoped to
+    `.history-chip[data-history-filter]`, so a restored card gets working chips.
 - **The notification email is matched from a screengrab, not from a Figma node.** The *QC- History*
   section has no email frame and the Figma connection was not authorised in the sessions that built
   `email.html`, so its structure, labels, copy and the *View & Complete Inspection* button come from a
@@ -239,7 +252,8 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   the ERP “Synced inspection results” entry (`Jun 10 - 12:10 PM`), Steven Neilson’s comment
   (`Jun 10 - 1:20 PM`), the ERP comment-activity entry (`Jun 10 - 3:00 PM`), and Prasad T.’s comment
   (`Jun 11 - 10:15 AM`). They are flagged with `timestampInferred: true` in
-  [`assets/js/data.js`](assets/js/data.js).
+  [`assets/js/data.js`](assets/js/data.js). Since the History card was removed these are no longer
+  rendered, but they still order `QC.history`, which the email reads.
 - **Horizontal scroll and the locked Actions column are additions.** The Figma frames draw the table
   at full width with no scroller. To keep long Specification and Remarks text readable at 1440 px, the
   data columns are given explicit minimum widths — which makes the table wider than the card — and the
@@ -358,7 +372,8 @@ entries — lives in [`assets/js/data.js`](assets/js/data.js). Editing that file
 The **structure** of that data is transcribed from the Figma frames and is what the layout was built
 against: 8 characteristic rows with Range left blank on 5 of them, one amber and one red result pill,
 both attachment levels with the design's mix of `kind` values (word, pdf, image, url) and its
-per-kind action sets, and 11 history entries across the four actor filters. The **values** are the
+per-kind action sets, and 11 history entries spanning the four actors (buyer, supplier, ERP, and
+the requester), which is the shape the removed History card's filters were built against. The **values** are the
 muffler example, so swapping in another item means keeping that shape and replacing the text.
 
 Line-level attachments carry `line` set to the ID of the characteristic they evidence, and that is the
