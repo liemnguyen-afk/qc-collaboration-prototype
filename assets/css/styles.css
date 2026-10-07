@@ -791,7 +791,6 @@ button {
    while Attachments and Actions stay pinned to the right edge. */
 .data-table th[data-sort-key='id'] { min-width: 56px; }
 .data-table th[data-sort-key='characteristic'] { min-width: 240px; }
-.data-table th[data-sort-key='specification'] { min-width: 420px; }
 .data-table th[data-sort-key='range'] { min-width: 150px; }
 .data-table th[data-sort-key='result'] { min-width: 120px; }
 .data-table th[data-sort-key='expectedResult'] { min-width: 200px; }
@@ -827,25 +826,18 @@ button {
   background: var(--cui-surface-s2);
 }
 
+/* Specification is a fixed 300px column whose text wraps instead of clipping,
+   so the full spec reads in place on both screens. A wrapped cell is never
+   clipped, so the hover tooltip stops appearing there by itself. */
+.data-table th[data-sort-key='specification'],
 .data-table .col-spec {
-  max-width: 420px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Supplier screen only: Specification is a fixed 300px column whose text wraps
-   instead of clipping, so the full spec reads in place. A wrapped cell is never
-   clipped, so the hover tooltip stops appearing there by itself. The buyer
-   screen keeps the 420px clipped column. */
-body[data-role='supplier'] .data-table th[data-sort-key='specification'],
-body[data-role='supplier'] .data-table .col-spec {
   box-sizing: border-box;
   width: 300px;
   min-width: 300px;
   max-width: 300px;
 }
 
-body[data-role='supplier'] .data-table .col-spec {
+.data-table .col-spec {
   white-space: normal;
   overflow-wrap: break-word;
   overflow: visible;

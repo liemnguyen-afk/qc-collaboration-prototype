@@ -112,9 +112,27 @@
      the cell follows. Assigned by the library so the table can open a file in it. */
   var openInLibrary = null;
 
+  /* The supplier screen opens with Result through Attachments blank: those
+     are the supplier's own entries, filled in by editing a row. data.js is
+     loaded fresh per page, so clearing them here leaves the buyer screen's
+     submitted values alone. The seeded line-level files stay in the library;
+     the table just does not list them, so a row's Attachments cell shows only
+     what is attached to it from this screen. */
+  var seededLineIds = {};
+  if (role === 'supplier') {
+    QC.characteristics.forEach(function (row) {
+      row.result = '';
+      row.resultTone = '';
+      row.inspectedBy = '';
+      row.inspectionDate = '';
+      row.remarks = '';
+    });
+    QC.attachments.line.forEach(function (item) { seededLineIds[item.id] = true; });
+  }
+
   function lineAttachments(row) {
     return QC.attachments.line.filter(function (item) {
-      return String(item.line) === String(row.id);
+      return String(item.line) === String(row.id) && !seededLineIds[item.id];
     });
   }
 
@@ -130,6 +148,8 @@
 
   function attCell(row) {
     var items = lineAttachments(row);
+    /* Blank on the supplier screen, which starts with nothing entered. */
+    if (!items.length && role === 'supplier') return '<td class="col-att"></td>';
     if (!items.length) {
       return '<td class="col-att"><span class="att-cell__none" title="No attachment on this ' +
         'characteristic">—</span></td>';
