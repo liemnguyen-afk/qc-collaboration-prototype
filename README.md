@@ -77,7 +77,7 @@ python3 -m http.server 8000
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
 - Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in `QC.history`) → returns to `index.html`.
 - Buyer **Accept** / **Reject** → confirmation modals with toast feedback.
-- A small “View as” switcher (bottom-left) jumps between **Supplier**, **Buyer** and **Email**. It is a prototype aid and is *not* part of the Figma design.
+- A small “View as” switcher (bottom-left) jumps between **Email**, **Supplier** and **Buyer**. It is a prototype aid and is *not* part of the Figma design.
 
 **Notification email** (`email.html`)
 - The email the supplier receives when the buyer raises the inspection, laid out to match the design's
