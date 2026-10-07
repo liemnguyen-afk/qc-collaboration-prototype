@@ -2650,6 +2650,201 @@ button {
   gap: 12px;
 }
 
+/* ─── Reason modals — buyer Accept / Reject / Send Back ────────────────────
+   Matched to the supplied "Modal flows" screengrab: a small-radius white
+   panel, a regular-weight title, a one-line intro, bold field labels, a
+   Reason dropdown whose open menu is a floating card, Comments, then a text
+   Cancel and a compact primary button. Sizes are scaled from the screengrab;
+   colours are CUI tokens. */
+
+.qmodal {
+  width: 480px;
+  max-width: calc(100vw - 40px);
+  padding: 22px 22px 22px;
+  border-radius: var(--border-radius);
+  background: var(--cui-surface-s1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+  font-family: var(--cui-font-control);
+}
+
+/* Send Back has no Reason row; the design keeps it the others' height. */
+.qmodal--tall {
+  min-height: 364px;
+  display: flex;
+  flex-direction: column;
+}
+
+.qmodal--tall .qmodal__actions {
+  margin-top: auto;
+}
+
+.qmodal__title {
+  margin: 0;
+  font-family: var(--cui-font-heading);
+  font-size: 18px;
+  font-weight: var(--cui-weight-regular);
+  line-height: var(--cui-line-xs);
+  color: var(--cui-text-t1);
+}
+
+.qmodal__intro {
+  margin: 8px 0 20px;
+  font-size: 13px;
+  line-height: var(--cui-line-3xs);
+  color: var(--cui-text-t1);
+}
+
+.qmodal__label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: var(--cui-weight-bold);
+  line-height: var(--cui-line-3xs);
+  color: var(--cui-text-t1);
+}
+
+.qselect {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.qselect__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 44px;
+  padding: 0 14px 0 6px;
+  border: 1px solid var(--cui-border-b2);
+  border-radius: var(--border-radius);
+  background: var(--cui-surface-s1);
+  font: inherit;
+  font-size: 12px;
+  color: var(--cui-text-t1);
+  text-align: left;
+  cursor: pointer;
+}
+
+.qselect__trigger:focus-visible,
+.qselect.is-open .qselect__trigger {
+  outline: none;
+  border-color: var(--cui-light-blue-subtle-border);
+}
+
+.qselect.is-invalid .qselect__trigger {
+  border-color: var(--cui-status-error);
+}
+
+.qselect__value.is-placeholder {
+  color: var(--cui-text-t3);
+}
+
+.qselect__trigger img {
+  width: 7.31px;
+  height: 4px;
+  flex: none;
+}
+
+.qselect__menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: none;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  border-radius: var(--border-radius);
+  background: var(--cui-surface-s1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 6px 16px rgba(0, 0, 0, 0.16);
+}
+
+.qselect.is-open .qselect__menu {
+  display: block;
+}
+
+.qselect__option {
+  display: block;
+  width: 100%;
+  padding: 6px 20px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  line-height: var(--cui-line-3xs);
+  color: var(--cui-text-t1);
+  text-align: left;
+  cursor: pointer;
+}
+
+.qselect__option:hover,
+.qselect__option:focus-visible {
+  outline: none;
+  background: var(--cui-surface-s3);
+}
+
+.qselect__option[aria-selected='true'] {
+  font-weight: var(--cui-weight-semibold);
+}
+
+.qmodal__comments {
+  display: block;
+  width: 100%;
+  height: 82px;
+  padding: 10px 10px;
+  border: 1px solid var(--cui-border-b2);
+  border-radius: var(--border-radius);
+  font: inherit;
+  font-size: 12px;
+  line-height: 22px;
+  color: var(--cui-text-t1);
+  resize: vertical;
+}
+
+.qmodal__comments:focus {
+  outline: none;
+  border-color: var(--cui-light-blue-subtle-border);
+}
+
+.qmodal__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.qmodal__cancel {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: var(--cui-text-link-history);
+  cursor: pointer;
+}
+
+.qmodal__cancel:hover {
+  text-decoration: underline;
+}
+
+.qmodal__submit {
+  height: 30px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--cui-text-link-history);
+  font: inherit;
+  font-size: 12px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.qmodal__submit:hover {
+  background: var(--cui-light-blue-bold-surface);
+}
+
 .toast {
   position: fixed;
   left: 50%;

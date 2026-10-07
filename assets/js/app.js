@@ -1550,8 +1550,98 @@
 
   function openModal(id) {
     var overlay = document.getElementById(id);
-    if (overlay) overlay.classList.add('is-open');
+    if (!overlay) return;
+    var form = overlay.querySelector('[data-qmodal]');
+    if (form) resetQModal(form);
+    overlay.classList.add('is-open');
   }
+
+  /* ── Reason modals — buyer Accept / Reject / Send Back ───────────────────
+     Each opens blank, as the design's first frame does. The Reason dropdown is
+     a custom listbox because the design draws its open menu as a floating
+     card, which a native <select> cannot be styled into. */
+
+  function closeQSelect(select) {
+    select.classList.remove('is-open');
+    select.querySelector('[data-qselect-trigger]').setAttribute('aria-expanded', 'false');
+  }
+
+  function resetQModal(form) {
+    form.querySelectorAll('[data-qselect]').forEach(function (select) {
+      closeQSelect(select);
+      select.classList.remove('is-invalid');
+      delete select.dataset.value;
+      var value = select.querySelector('[data-qselect-value]');
+      value.textContent = 'Select';
+      value.classList.add('is-placeholder');
+      select.querySelectorAll('[data-qselect-option]').forEach(function (option) {
+        option.setAttribute('aria-selected', 'false');
+      });
+    });
+    form.querySelectorAll('[data-qmodal-comments]').forEach(function (box) { box.value = ''; });
+  }
+
+  document.querySelectorAll('[data-qselect]').forEach(function (select) {
+    var trigger = select.querySelector('[data-qselect-trigger]');
+    trigger.addEventListener('click', function () {
+      var open = !select.classList.contains('is-open');
+      select.classList.toggle('is-open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+      if (open) {
+        var current = select.querySelector('[aria-selected="true"]') ||
+          select.querySelector('[data-qselect-option]');
+        current.focus();
+      }
+    });
+    select.querySelectorAll('[data-qselect-option]').forEach(function (option) {
+      option.addEventListener('click', function () {
+        select.querySelectorAll('[data-qselect-option]').forEach(function (other) {
+          other.setAttribute('aria-selected', String(other === option));
+        });
+        select.dataset.value = option.textContent;
+        var value = select.querySelector('[data-qselect-value]');
+        value.textContent = option.textContent;
+        value.classList.remove('is-placeholder');
+        select.classList.remove('is-invalid');
+        closeQSelect(select);
+        trigger.focus();
+      });
+    });
+    /* Up / Down move through the open menu. */
+    select.querySelector('[data-qselect-menu]').addEventListener('keydown', function (event) {
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      event.preventDefault();
+      var options = [].slice.call(select.querySelectorAll('[data-qselect-option]'));
+      var index = options.indexOf(document.activeElement) + (event.key === 'ArrowDown' ? 1 : -1);
+      options[Math.max(0, Math.min(options.length - 1, index))].focus();
+    });
+  });
+
+  /* A click anywhere outside an open menu closes it. */
+  document.addEventListener('click', function (event) {
+    document.querySelectorAll('[data-qselect].is-open').forEach(function (select) {
+      if (!select.contains(event.target)) closeQSelect(select);
+    });
+  });
+
+  document.querySelectorAll('[data-qmodal-submit]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var form = button.closest('[data-qmodal]');
+      var select = form.querySelector('[data-qselect]');
+      if (select && !select.dataset.value) {
+        select.classList.add('is-invalid');
+        select.querySelector('[data-qselect-trigger]').focus();
+        toast('Select a reason first.');
+        return;
+      }
+      if (button.dataset.qmodalGoto) {
+        window.location.href = button.dataset.qmodalGoto;
+        return;
+      }
+      closeModal(button.closest('.overlay'));
+      toast(button.dataset.qmodalToast);
+    });
+  });
 
   function closeModal(overlay) {
     overlay.classList.remove('is-open');
@@ -1576,6 +1666,13 @@
 
   document.addEventListener('keydown', function (event) {
     if (event.key !== 'Escape') return;
+    /* An open Reason menu closes first; a second Escape closes the modal. */
+    var menu = document.querySelector('[data-qselect].is-open');
+    if (menu) {
+      closeQSelect(menu);
+      menu.querySelector('[data-qselect-trigger]').focus();
+      return;
+    }
     document.querySelectorAll('.overlay.is-open').forEach(closeModal);
   });
 

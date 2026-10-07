@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/tokens.css?v=20261007d">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261007d">
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20261007e">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261007e">
 </head>
 <body data-role="buyer">
 
@@ -374,48 +374,80 @@
   </footer>
 </div>
 
+<!-- Accept / Reject / Send Back — matched to the supplied "Modal flows"
+     screengrab: title, one-line intro, a Reason dropdown (not on Send Back),
+     Comments, then Cancel and the action. A reason is required; comments are
+     optional. -->
 <div class="overlay" id="accept-modal" role="dialog" aria-modal="true" aria-labelledby="accept-modal-title">
-  <div class="modal">
-    <h2 id="accept-modal-title">Accept inspection results?</h2>
-    <p>All 8 characteristics will be marked as accepted and Apex Exhaust Systems will be notified.</p>
-    <dl class="modal__dl">
-      <dt>Inspection ID</dt><dd>008</dd>
-      <dt>Submitted by</dt><dd>Steven N. on 06/10/2026</dd>
-      <dt>New status</dt><dd>Accepted</dd>
-    </dl>
-    <div class="modal__actions">
-      <button class="btn btn--outline" type="button" data-close-modal>Cancel</button>
-      <button class="btn btn--primary" type="button" data-close-modal data-toast="Inspection 008 accepted. Supplier notified.">Accept</button>
+  <div class="qmodal" data-qmodal>
+    <h2 class="qmodal__title" id="accept-modal-title">Reasons for Acceptance</h2>
+    <p class="qmodal__intro">Please provide a reason and any additional comments.</p>
+
+    <p class="qmodal__label" id="accept-modal-reason-label">Reason</p>
+    <div class="qselect" data-qselect>
+      <button class="qselect__trigger" type="button" aria-haspopup="listbox" aria-expanded="false"
+              aria-labelledby="accept-modal-reason-label" data-qselect-trigger>
+        <span class="qselect__value" data-qselect-value>Select</span>
+        <img src="assets/icons/caret-dropdown.svg" alt="">
+      </button>
+      <ul class="qselect__menu" role="listbox" aria-labelledby="accept-modal-reason-label" data-qselect-menu>
+          <li><button class="qselect__option" type="button" role="option" data-qselect-option>All specification satisfied</button></li>
+          <li><button class="qselect__option" type="button" role="option" data-qselect-option>Expectation not met: Non-critical Inspection Characteristics</button></li>
+          <li><button class="qselect__option" type="button" role="option" data-qselect-option>Few Critical characteristics – expectation not met</button></li>
+      </ul>
+    </div>
+
+    <label class="qmodal__label" for="accept-modal-comments">Comments</label>
+    <textarea class="qmodal__comments" id="accept-modal-comments" data-qmodal-comments></textarea>
+
+    <div class="qmodal__actions">
+      <button class="qmodal__cancel" type="button" data-close-modal>Cancel</button>
+      <button class="qmodal__submit" type="button" data-qmodal-submit data-qmodal-toast="Inspection 008 accepted. Supplier notified.">Accept</button>
     </div>
   </div>
 </div>
 
 <div class="overlay" id="reject-modal" role="dialog" aria-modal="true" aria-labelledby="reject-modal-title">
-  <div class="modal">
-    <h2 id="reject-modal-title">Reject inspection results?</h2>
-    <p>Rejecting closes the inspection and requires a new request for the item. Add a reason so the supplier understands the decision.</p>
-    <div class="comment-form">
-      <label class="comment-form__label" for="reject-reason">Rejection reason</label>
-      <textarea id="reject-reason"></textarea>
+  <div class="qmodal" data-qmodal>
+    <h2 class="qmodal__title" id="reject-modal-title">Reason for Rejection</h2>
+    <p class="qmodal__intro">Please provide a reason and any additional comments.</p>
+
+    <p class="qmodal__label" id="reject-modal-reason-label">Reason</p>
+    <div class="qselect" data-qselect>
+      <button class="qselect__trigger" type="button" aria-haspopup="listbox" aria-expanded="false"
+              aria-labelledby="reject-modal-reason-label" data-qselect-trigger>
+        <span class="qselect__value" data-qselect-value>Select</span>
+        <img src="assets/icons/caret-dropdown.svg" alt="">
+      </button>
+      <ul class="qselect__menu" role="listbox" aria-labelledby="reject-modal-reason-label" data-qselect-menu>
+          <li><button class="qselect__option" type="button" role="option" data-qselect-option>Expectation not met</button></li>
+          <li><button class="qselect__option" type="button" role="option" data-qselect-option>Critical characteristics – expectation not met</button></li>
+          <li><button class="qselect__option" type="button" role="option" data-qselect-option>No results received from Supplier</button></li>
+          <li><button class="qselect__option" type="button" role="option" data-qselect-option>Quality certificates not added by supplier</button></li>
+      </ul>
     </div>
-    <div class="modal__actions" style="margin-top:20px">
-      <button class="btn btn--outline" type="button" data-close-modal>Cancel</button>
-      <button class="btn btn--danger-outline" type="button" data-close-modal data-toast="Inspection 008 rejected. Supplier notified.">Reject</button>
+
+    <label class="qmodal__label" for="reject-modal-comments">Comments</label>
+    <textarea class="qmodal__comments" id="reject-modal-comments" data-qmodal-comments></textarea>
+
+    <div class="qmodal__actions">
+      <button class="qmodal__cancel" type="button" data-close-modal>Cancel</button>
+      <button class="qmodal__submit" type="button" data-qmodal-submit data-qmodal-toast="Inspection 008 rejected. Supplier notified.">Reject</button>
     </div>
   </div>
 </div>
 
 <div class="overlay" id="send-back-modal" role="dialog" aria-modal="true" aria-labelledby="send-back-modal-title">
-  <div class="modal">
-    <h2 id="send-back-modal-title">Send back to supplier?</h2>
-    <p>The inspection returns to Apex Exhaust Systems so results can be corrected or completed.</p>
-    <div class="comment-form">
-      <label class="comment-form__label" for="send-back-reason">What needs to change?</label>
-      <textarea id="send-back-reason">Characteristic 5 measured 97 dB(A) against the 95 dB(A) ceiling. Please re-pack those units to 96 kg/m³ and re-test per SAE J1169. The inspection plan also calls for a weld seam photo of every unit inspected and only XR3-0412 is attached, so please add the remaining four.</textarea>
-    </div>
-    <div class="modal__actions" style="margin-top:20px">
-      <button class="btn btn--outline" type="button" data-close-modal>Cancel</button>
-      <button class="btn btn--primary" type="button" data-goto="index.html">Send Back</button>
+  <div class="qmodal qmodal--tall" data-qmodal>
+    <h2 class="qmodal__title" id="send-back-modal-title">Reasons for Sending Back to Supplier</h2>
+    <p class="qmodal__intro">Please provide any comments for Supplier.</p>
+
+    <label class="qmodal__label" for="send-back-comments">Comments</label>
+    <textarea class="qmodal__comments" id="send-back-comments" data-qmodal-comments></textarea>
+
+    <div class="qmodal__actions">
+      <button class="qmodal__cancel" type="button" data-close-modal>Cancel</button>
+      <button class="qmodal__submit" type="button" data-qmodal-submit data-qmodal-goto="index.html">Send Back to Supplier</button>
     </div>
   </div>
 </div>
@@ -429,7 +461,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/data.js?v=20261007d"></script>
-<script src="assets/js/app.js?v=20261007d"></script>
+<script src="assets/js/data.js?v=20261007e"></script>
+<script src="assets/js/app.js?v=20261007e"></script>
 </body>
 </html>

@@ -56,7 +56,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20261007d`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20261007e`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -75,8 +75,16 @@ python3 -m http.server 8000
   Inspections list (`inspections.html`); inspection **008** in that list opens the supplier screen
   again.
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
-- Buyer **Send Back to Supplier** → modal (pre-filled with the reason from the buyer’s last comment in `QC.history`) → returns to `index.html`.
-- Buyer **Accept** / **Reject** → confirmation modals with toast feedback.
+- Buyer **Accept**, **Reject** and **Send Back to Supplier** each open a modal matched to the supplied
+  *Modal flows* screengrab, and each opens blank:
+  - **Reasons for Acceptance** / **Reason for Rejection** — a **Reason** dropdown with the design's
+    options (3 for Accept, 4 for Reject) and optional **Comments**. The Reason is **required**: pressing
+    Accept or Reject without one outlines the dropdown red and toasts *Select a reason first.* With one,
+    the modal closes and toasts that the supplier was notified.
+  - **Reasons for Sending Back to Supplier** — **Comments** only, optional → returns to `index.html`.
+  - The dropdown is a custom listbox, since the design draws its open menu as a floating card a native
+    `<select>` cannot become. Up/Down move through it, a click outside closes it, and **Escape** closes
+    the menu first and the modal on a second press. Cancel, the backdrop and Escape all close the modal.
 - A small “View as” switcher (bottom-left) jumps between **Email**, **Supplier** and **Buyer**. It is a prototype aid and is *not* part of the Figma design.
 
 **Notification email** (`email.html`)
@@ -295,7 +303,8 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
     where History used `Jun 11 - 10:15 AM`; both are computed from the entry's own `sortKey`, so the
     dates stay the prototype's 2026 (`06/10/2026 at 1:20 PM`, `06/11/2026 at 10:15 AM`).
   - The old card's `.comment-form` CSS is **still in use** — by the Attachments Library's comment box
-    and by the Reject and Send Back modals — so it was left in place.
+    — so it was left in place. (The buyer's Reject and Send Back modals used it too, until they were
+    rebuilt as the reason modals.)
   - The generic `[data-toast]` handler is now **delegated on `document`** rather than bound per
     element at start-up. The thread's edit pencils are rebuilt on every post, so a handler bound once
     would have been thrown away with them and the pencils would have gone silent.
