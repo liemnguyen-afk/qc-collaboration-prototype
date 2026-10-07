@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/tokens.css?v=20261007e">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261007e">
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20261007f">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261007f">
 </head>
 <body data-role="buyer">
 
@@ -345,7 +345,7 @@
 
     <!-- Buyer action bar — Figma 3782:80290 -->
     <div class="action-bar">
-      <button class="btn btn--outline" type="button" data-goto="inspections.html">
+      <button class="btn btn--outline" type="button" data-goto="buyer-inspections.html">
         View All Quality Inspections
       </button>
       <div class="action-bar__right">
@@ -402,7 +402,7 @@
 
     <div class="qmodal__actions">
       <button class="qmodal__cancel" type="button" data-close-modal>Cancel</button>
-      <button class="qmodal__submit" type="button" data-qmodal-submit data-qmodal-toast="Inspection 008 accepted. Supplier notified.">Accept</button>
+      <button class="qmodal__submit" type="button" data-qmodal-submit data-qmodal-result="accepted">Accept</button>
     </div>
   </div>
 </div>
@@ -432,7 +432,7 @@
 
     <div class="qmodal__actions">
       <button class="qmodal__cancel" type="button" data-close-modal>Cancel</button>
-      <button class="qmodal__submit" type="button" data-qmodal-submit data-qmodal-toast="Inspection 008 rejected. Supplier notified.">Reject</button>
+      <button class="qmodal__submit" type="button" data-qmodal-submit data-qmodal-result="rejected">Reject</button>
     </div>
   </div>
 </div>
@@ -447,7 +447,7 @@
 
     <div class="qmodal__actions">
       <button class="qmodal__cancel" type="button" data-close-modal>Cancel</button>
-      <button class="qmodal__submit" type="button" data-qmodal-submit data-qmodal-goto="index.html">Send Back to Supplier</button>
+      <button class="qmodal__submit" type="button" data-qmodal-submit data-qmodal-result="sent-back">Send Back to Supplier</button>
     </div>
   </div>
 </div>
@@ -461,7 +461,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/data.js?v=20261007e"></script>
-<script src="assets/js/app.js?v=20261007e"></script>
+<script src="assets/js/data.js?v=20261007f"></script>
+<script src="assets/js/app.js?v=20261007f"></script>
 </body>
 </html>

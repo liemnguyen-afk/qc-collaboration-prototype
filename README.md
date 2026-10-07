@@ -11,6 +11,7 @@ Four pages are implemented:
 | [`index.html`](index.html) | `3782:74663` — *Supplier - Item Inspection* | Coupa Supplier Portal (CSP) |
 | [`buyer.html`](buyer.html) | `3782:77297` — *Item Inspection* | Coupa core / buyer |
 | [`inspections.html`](inspections.html) | [`514:38555`](https://www.figma.com/design/sdmS17osDPwbd12jR0eyUR/187-Quality-Collaboration-SCC-SCPL?node-id=514-38555) — *Inspections* (the list) — see the fidelity note below | Coupa Supplier Portal (CSP) |
+| [`buyer-inspections.html`](buyer-inspections.html) | `514:38555`'s list under the buyer chrome, plus a success banner matched to a screengrab | Coupa core / buyer |
 | [`email.html`](email.html) | none — the section has no email frame; see the fidelity note below | Supplier's inbox |
 
 Two components on those screens are built from their own dedicated Figma sections:
@@ -56,7 +57,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20261007e`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20261007f`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -71,17 +72,24 @@ python3 -m http.server 8000
 **Cross-screen flow**
 - The **notification email** (`email.html`) is where the flow starts: its one action,
   **View & Complete Inspection**, opens the supplier screen (`index.html`).
-- **View All Quality Inspections** (bottom-left of both the supplier and the buyer screen) → the
-  Inspections list (`inspections.html`); inspection **008** in that list opens the supplier screen
-  again.
+- **View All Quality Inspections** (bottom-left of both screens) → that side's Inspections list:
+  `inspections.html` from the supplier screen, `buyer-inspections.html` from the buyer's. Inspection
+  **008** in each list opens the screen it came from.
 - Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
 - Buyer **Accept**, **Reject** and **Send Back to Supplier** each open a modal matched to the supplied
   *Modal flows* screengrab, and each opens blank:
   - **Reasons for Acceptance** / **Reason for Rejection** — a **Reason** dropdown with the design's
     options (3 for Accept, 4 for Reject) and optional **Comments**. The Reason is **required**: pressing
-    Accept or Reject without one outlines the dropdown red and toasts *Select a reason first.* With one,
-    the modal closes and toasts that the supplier was notified.
-  - **Reasons for Sending Back to Supplier** — **Comments** only, optional → returns to `index.html`.
+    Accept or Reject without one outlines the dropdown red and toasts *Select a reason first.*
+  - **Reasons for Sending Back to Supplier** — **Comments** only, optional.
+  - Completing any of the three **navigates to the buyer's list, `buyer-inspections.html`**, with a green
+    success banner matched to the supplied screengrab: *Quality Inspection #8 has been accepted.* /
+    *rejected.* / *sent back to the supplier.* The outcome travels in the query string
+    (`?result=accepted&reason=…`), so the banner is hidden on a plain visit, and 008's row takes it:
+    **Closed** with *Accepted: \<reason\>* or *Rejected: \<reason\>*, or **In Progress** when sent back.
+    The **×** dismisses the banner. The screengrab's note also asks for a red error banner that keeps
+    the buyer on the inspection when something fails; the prototype has no failure path, so it is
+    not built.
   - The dropdown is a custom listbox, since the design draws its open menu as a floating card a native
     `<select>` cannot become. Up/Down move through it, a click outside closes it, and **Escape** closes
     the menu first and the modal on a second press. Cancel, the backdrop and Escape all close the modal.
@@ -228,6 +236,7 @@ entries still exist in `QC.history` and are still what the email quotes.
 index.html            Supplier screen
 buyer.html            Buyer review screen
 inspections.html      Inspections list
+buyer-inspections.html  The same list in the buyer's chrome, where the buyer's modals land
 email.html            Notification email the request sends the supplier
 assets/css/tokens.css Clarity UI (CUI) design tokens, resolved from Figma variables
 assets/css/styles.css Component styling for both product chromes

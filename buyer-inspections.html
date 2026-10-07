@@ -3,70 +3,88 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1440">
-  <title>Inspections — Supplier Portal</title>
+  <title>Quality Inspections — Buyer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/tokens.css?v=20261007f">
   <link rel="stylesheet" href="assets/css/styles.css?v=20261007f">
 </head>
-<body data-role="supplier">
+<body data-role="buyer">
 
 <div class="page">
 
-  <!-- Header — Figma 3782:74664 -->
-  <header class="csp-header">
-    <div class="csp-header__top">
-      <div class="csp-header__brand">
-        <span class="csp-header__logo"><img class="icon" src="assets/icons/csp-logo.svg" alt="Coupa"></span>
-        <span>supplier portal</span>
+  <!-- Coupa header — Figma 3782:77300 -->
+  <header class="coupa-header">
+    <div class="coupa-header__bar">
+      <div class="coupa-header__left">
+        <span class="coupa-header__logo"><img src="assets/icons/coupa-logo.svg" alt="Coupa"></span>
+        <button class="coupa-search" type="button" data-toast="Global search is out of scope for this prototype.">
+          <img src="assets/icons/global-search.svg" alt="">
+          What do you need?
+        </button>
+        <span class="coupa-header__mic">
+          <img src="assets/icons/write-request-bg.svg" alt="">
+          <img src="assets/icons/write-request.svg" alt="Write a request">
+        </span>
       </div>
-      <div class="csp-welcome">
-        <button class="csp-welcome__item" type="button" data-toast="Account menu is out of scope for this prototype.">
-          NILES <img class="csp-welcome__caret" src="assets/icons/caret-down-sm.svg" alt="">
+      <div class="coupa-header__actions">
+        <button class="coupa-pill" type="button" data-toast="Account menu is out of scope for this prototype.">RV</button>
+        <button class="coupa-pill" type="button" data-toast="No new notifications.">
+          <img src="assets/icons/bell.svg" alt="Notifications">
         </button>
-        <img class="csp-welcome__divider" src="assets/icons/divider.svg" alt="">
-        <button class="csp-welcome__item" type="button" data-toast="No new notifications.">
-          NOTIFICATIONS <span class="csp-welcome__count">0</span>
+        <button class="coupa-pill" type="button" data-toast="Cart is empty.">
+          <img src="assets/icons/cart.svg" alt="Cart">
         </button>
-        <img class="csp-welcome__divider" src="assets/icons/divider.svg" alt="">
-        <button class="csp-welcome__item" type="button" data-toast="Help menu is out of scope for this prototype.">
-          HELP <img class="csp-welcome__caret" src="assets/icons/caret-down-sm.svg" alt="">
+        <button class="coupa-pill" type="button" data-toast="Approvals: 1 pending.">
+          <img src="assets/icons/check-circle.svg" alt="Approvals">
+        </button>
+        <button class="coupa-pill" type="button" data-toast="Help menu is out of scope for this prototype.">
+          <img src="assets/icons/help.svg" alt="Help">
         </button>
       </div>
     </div>
 
-    <nav class="csp-nav" aria-label="Supplier portal">
-      <button class="csp-nav__tab" type="button" data-toast="Home">
-        <img class="csp-nav__home" src="assets/icons/csp-home.svg" alt="Home">
-      </button>
-      <button class="csp-nav__tab" type="button" data-toast="Profile">Profile</button>
-      <button class="csp-nav__tab" type="button" data-toast="Tasks">Tasks</button>
-      <button class="csp-nav__tab" type="button" data-toast="Items">Items</button>
-      <button class="csp-nav__tab" type="button" data-toast="Invoices">Invoices</button>
-      <button class="csp-nav__tab" type="button" data-toast="Orders">Orders</button>
-      <button class="csp-nav__tab csp-nav__tab--active" type="button" aria-current="page">Quality</button>
-      <button class="csp-nav__tab" type="button" data-toast="ASN">ASN</button>
+    <!-- Primary nav — Figma 3782:77327 -->
+    <nav class="coupa-nav" aria-label="Main">
+      <div class="coupa-nav__links">
+        <button class="coupa-nav__link coupa-nav__home" type="button" data-toast="Home">
+          <img src="assets/icons/home.svg" alt="Home">
+        </button>
+        <button class="coupa-nav__link" type="button" data-toast="Travel &amp; Expenses">Travel &amp; Expenses</button>
+        <button class="coupa-nav__link" type="button" data-toast="Forecasts">Forecasts</button>
+        <button class="coupa-nav__link" type="button" data-toast="Requests">Requests</button>
+        <button class="coupa-nav__link" type="button" data-toast="Orders">Orders</button>
+        <button class="coupa-nav__link" type="button" data-toast="Inventory">Inventory</button>
+        <button class="coupa-nav__link coupa-nav__link--active" type="button" aria-current="page">Quality</button>
+        <button class="coupa-nav__link" type="button" data-toast="Invoices">Invoices</button>
+        <button class="coupa-nav__link" type="button" data-toast="Community">Community</button>
+        <button class="coupa-nav__link" type="button" data-toast="Payments">Payments</button>
+        <button class="coupa-nav__link" type="button" data-toast="Setup">Setup</button>
+        <button class="coupa-nav__link" type="button" data-toast="More...">More...</button>
+      </div>
+      <img class="coupa-nav__border" src="assets/icons/nav-bottom-border.svg" alt="">
     </nav>
-
-    <!-- Customer selector — Figma 3782:74665 -->
-    <div class="csp-customer">
-      <label class="csp-customer__label" for="customer">Select Customer</label>
-      <select class="csp-customer__select" id="customer">
-        <option>Frasier Inc</option>
-        <option>Buyer Enterprises</option>
-        <option>Acme Manufacturing</option>
-      </select>
-    </div>
   </header>
 
   <div class="page-title page-title--list">
-    <h1>Inspections</h1>
+    <h1>Quality Inspections</h1>
   </div>
 
   <main class="content">
 
-    <!-- Inspections list — Figma 514:38555 -->
+    <!-- Success banner — matched to the supplied screengrab. The buyer lands
+         here after Accept, Reject or Send Back on buyer.html; the outcome comes
+         in the query string, so the banner is hidden on a plain visit. -->
+    <div class="success-banner" role="status" data-success-banner hidden>
+      <p class="success-banner__text" data-success-text></p>
+      <button class="success-banner__close" type="button" aria-label="Dismiss" data-success-close>
+        <img src="assets/icons/close-outline.svg" alt="">
+      </button>
+    </div>
+
+    <!-- Inspections list — Figma 514:38555, the supplier list's table under the
+         buyer chrome -->
     <section class="table-block">
       <div class="table-block__title-row">
         <button class="views-trigger views-trigger--bare" type="button" data-views-trigger aria-haspopup="true">
@@ -129,7 +147,7 @@
     </section>
   </main>
 
-  <!-- Footer — Figma 3782:74699 -->
+  <!-- Footer — Figma 3782:79111 -->
   <footer class="footer">
     <div class="footer__border"></div>
     <div class="footer__contents">
@@ -150,8 +168,8 @@
 <div class="proto-switch">
   <span class="proto-switch__label">View as</span>
   <a href="email.html">Email</a>
-  <a class="is-current" href="index.html">Supplier</a>
-  <a href="buyer.html">Buyer</a>
+  <a href="index.html">Supplier</a>
+  <a class="is-current" href="buyer.html">Buyer</a>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>

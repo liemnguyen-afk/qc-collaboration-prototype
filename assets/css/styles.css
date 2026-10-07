@@ -2586,6 +2586,49 @@ button {
   height: 20px;
 }
 
+/* ─── Success banner — buyer-inspections.html ─────────────────────────────
+   Matched to the supplied screengrab: a full-width green bar with bold white
+   text and a white close ×. The green is sampled from the screengrab; CUI has
+   no matching token. */
+
+.success-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 50px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  background: #6aaf5a;
+  color: #ffffff;
+}
+
+.success-banner[hidden] {
+  display: none;
+}
+
+.success-banner__text {
+  margin: 0;
+  font-size: 13px;
+  font-weight: var(--cui-weight-bold);
+  line-height: var(--cui-line-3xs);
+}
+
+.success-banner__close {
+  display: flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* close-outline.svg is drawn dark; the banner's × is white. */
+.success-banner__close img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
 /* ─── Modal / toast (prototype feedback) ──────────────────────────────── */
 
 .overlay {

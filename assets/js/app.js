@@ -642,6 +642,34 @@
     ];
 
     var insSearch = document.querySelector('[data-ins-search]');
+
+    /* buyer-inspections.html after Accept / Reject / Send Back: the banner says
+       what happened and 008's row takes the outcome, the way the screengrab's
+       accepted row reads "Accepted: All specification satisfied". */
+    var OUTCOMES = {
+      accepted: { verb: 'accepted', status: 'Closed', prefix: 'Accepted: ' },
+      rejected: { verb: 'rejected', status: 'Closed', prefix: 'Rejected: ' },
+      'sent-back': { verb: 'sent back to the supplier', status: 'In Progress', prefix: '' }
+    };
+    var params = new URLSearchParams(window.location.search);
+    var outcome = role === 'buyer' && OUTCOMES[params.get('result')];
+    var banner = document.querySelector('[data-success-banner]');
+    if (outcome && banner) {
+      var built = insById(QC.inspection.summary.inspectionId);
+      if (built) {
+        built.status = outcome.status;
+        built.resolutionReason = outcome.prefix && params.get('reason')
+          ? outcome.prefix + params.get('reason')
+          : '';
+      }
+      banner.querySelector('[data-success-text]').textContent =
+        'Quality Inspection #' + Number(QC.inspection.summary.inspectionId) +
+        ' has been ' + outcome.verb + '.';
+      banner.hidden = false;
+      banner.querySelector('[data-success-close]').addEventListener('click', function () {
+        banner.hidden = true;
+      });
+    }
     /* The design shows the list newest first, marked on Inspection ID. The IDs
        run with time, so descending is newest first — and 008, the inspection this
        prototype builds out, is the most recent one and opens at the top. */
@@ -684,7 +712,8 @@
         return;
       }
       if (row.href) {
-        window.location.href = row.href;
+        /* The built-out inspection opens the screen for whoever is looking. */
+        window.location.href = role === 'buyer' ? 'buyer.html' : row.href;
         return;
       }
       toast('Inspection ' + row.id + ' (' + row.itemName +
@@ -1634,12 +1663,11 @@
         toast('Select a reason first.');
         return;
       }
-      if (button.dataset.qmodalGoto) {
-        window.location.href = button.dataset.qmodalGoto;
-        return;
-      }
-      closeModal(button.closest('.overlay'));
-      toast(button.dataset.qmodalToast);
+      /* Every outcome lands on the buyer's list, which reads it back to show
+         the success banner and update 008's row. */
+      var query = '?result=' + button.dataset.qmodalResult;
+      if (select) query += '&reason=' + encodeURIComponent(select.dataset.value);
+      window.location.href = 'buyer-inspections.html' + query;
     });
   });
 
