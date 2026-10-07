@@ -643,16 +643,23 @@
 
     var insSearch = document.querySelector('[data-ins-search]');
 
-    /* buyer-inspections.html after Accept / Reject / Send Back: the banner says
-       what happened and 008's row takes the outcome, the way the screengrab's
-       accepted row reads "Accepted: All specification satisfied". */
+    /* After an action on the detail screen, each side lands on its own list:
+       the buyer's Accept / Reject / Send Back on buyer-inspections.html, the
+       supplier's Submit on inspections.html. The banner says what happened and
+       008's row takes the outcome, the way the screengrab's accepted row reads
+       "Accepted: All specification satisfied". */
     var OUTCOMES = {
-      accepted: { verb: 'accepted', status: 'Closed', prefix: 'Accepted: ' },
-      rejected: { verb: 'rejected', status: 'Closed', prefix: 'Rejected: ' },
-      'sent-back': { verb: 'sent back to the supplier', status: 'In Progress', prefix: '' }
+      buyer: {
+        accepted: { verb: 'accepted', status: 'Closed', prefix: 'Accepted: ' },
+        rejected: { verb: 'rejected', status: 'Closed', prefix: 'Rejected: ' },
+        'sent-back': { verb: 'sent back to the supplier', status: 'In Progress', prefix: '' }
+      },
+      supplier: {
+        submitted: { verb: 'submitted', status: 'In Buyer Review', prefix: '' }
+      }
     };
     var params = new URLSearchParams(window.location.search);
-    var outcome = role === 'buyer' && OUTCOMES[params.get('result')];
+    var outcome = (OUTCOMES[role] || {})[params.get('result')];
     var banner = document.querySelector('[data-success-banner]');
     if (outcome && banner) {
       var built = insById(QC.inspection.summary.inspectionId);

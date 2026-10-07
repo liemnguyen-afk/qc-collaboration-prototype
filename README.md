@@ -57,7 +57,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20261007g`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20261007h`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -75,7 +75,10 @@ python3 -m http.server 8000
 - **View All Quality Inspections** (bottom-left of both screens) → that side's Inspections list:
   `inspections.html` from the supplier screen, `buyer-inspections.html` from the buyer's. Inspection
   **008** in each list opens the screen it came from.
-- Supplier **Submit** → confirmation modal → lands on the buyer review screen (`buyer.html`).
+- Supplier **Submit** → confirmation modal → **Submit to Buyer** lands on the supplier's Inspections
+  list (`inspections.html?result=submitted`) with the green success banner, matched to the supplied
+  screengrab: *Quality Inspection #8 has been submitted.* 008's row reads **In Buyer Review**, and the
+  **×** dismisses the banner. The buyer review screen is reached from the *View as* switcher.
 - Buyer **Accept**, **Reject** and **Send Back to Supplier** each open a modal matched to the supplied
   *Modal flows* screengrab, and each opens blank:
   - **Reasons for Acceptance** / **Reason for Rejection** — a **Reason** dropdown with the design's
