@@ -259,6 +259,11 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
     the filter to the body's own value and cleared the active chip. Clicking *Supplier* on the supplier
     screen left no chip active and all 11 entries showing. The selector is now scoped to
     `.history-chip[data-history-filter]`, so a restored card gets working chips.
+- **The supplier alert is matched from a screengrab, not Figma.** The design's blue *“Quality
+  Inspection is ready to be submitted”* alert (`3782:74669`) became *Your Input Required* with the
+  buyer screen's warning treatment (`3782:77331`) and a *Characteristics Pending* chip, to suit a
+  table that starts blank. The screengrab's date, 07/15/25, is replaced by the Summary's due date,
+  **06/15/26**, so the two agree; its bolded “Prasad T. (” is bolded as just the name.
 - **The Comment section is core Coupa's legacy component, matched from a screengrab, and it replaces
   the CUI Comments card the Figma frames draw.** The frames have a CUI card (`3782:74677` on the
   supplier screen, `3782:79100` on the buyer screen) with a card border, radius and a single *Add

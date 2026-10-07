@@ -66,17 +66,20 @@
 
   <main class="content">
 
-    <!-- Alert — Figma 3782:74669 -->
-    <section class="alert" role="status">
-      <div class="alert__icon"><img src="assets/icons/info-outline.svg" alt="Information"></div>
+    <!-- Alert — matched to the supplied screengrab, which replaces the design's
+         blue "ready to be submitted" alert (Figma 3782:74669). The warning
+         treatment is the buyer screen's (Figma 3782:77331), since the table
+         starts with nothing entered. The due date is the Summary's. -->
+    <section class="alert alert--warning" role="status">
+      <div class="alert__icon"><img src="assets/icons/warning-outline.svg" alt="Warning"></div>
       <div class="alert__text">
-        <p class="alert__title">Quality Inspection is ready to be submitted to <strong>Prasad T.</strong> (Buyer Enterprises)</p>
-        <p class="alert__body">Send to <strong>Prasad T.</strong> (Buyer Enterprises) for review by clicking on Submit.</p>
+        <p class="alert__title">Your Input Required</p>
+        <p class="alert__body"><strong>Prasad T.</strong> (Buyer Enterprises) has sent this Quality Inspection for you to provide input by 06/15/26.</p>
       </div>
       <div class="alert__action">
-        <span class="chip">
-          <img src="assets/icons/schedule-outline.svg" alt="">
-          <span class="chip__label">Characteristics provided</span>
+        <span class="chip chip--warning">
+          <img src="assets/icons/file-search-outline.svg" alt="">
+          <span class="chip__label">Characteristics Pending</span>
           <span class="chip__count">8</span>
         </span>
       </div>
