@@ -56,7 +56,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20261007b`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20261007c`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -131,10 +131,11 @@ entries still exist in `QC.history` and are still what the email quotes.
   spec reads in place.
 - **Remarks** is clipped to its column width; hovering a clipped cell shows the full text in a
   tooltip. Cells that are not clipped show no tooltip.
-- On the **supplier** screen, **Result, Inspected By, Inspection Date, Remarks and Attachments start
-  blank** — they are the supplier's own entries, filled in by editing a row, and a saved row shows
-  what was entered. This is done in `app.js` at load, so `data.js` and the buyer screen keep the
-  submitted values. The seeded line-level files stay in the Attachments Library; the supplier's
+- On the **supplier** screen (`index.html`), **Result, Inspected By, Inspection Date, Remarks and
+  Attachments start blank** — they are the supplier's own entries, filled in by editing a row, and a
+  saved row shows what was entered. It is opt-in: `app.js` clears them at load only on a page whose
+  `<body>` carries `data-blank-results`, so `data.js`, the buyer screen and any other supplier page
+  keep the submitted values. The seeded line-level files stay in the Attachments Library; the supplier's
   Attachments cell lists only files attached to that row from this screen.
 - The **Attachments** column lists the row’s own line-level attachments **by file name**, with the
   same doc-type icon the library gives them (URLs in link blue). Clicking one expands the library,
