@@ -1547,7 +1547,7 @@
     };
 
     Object.keys(MAIL_FIELDS).forEach(function (key) {
-      emailRoot.querySelectorAll('[data-email-field="' + key + '"]').forEach(function (el) {
+      document.querySelectorAll('[data-email-field="' + key + '"]').forEach(function (el) {
         el.textContent = MAIL_FIELDS[key];
       });
     });

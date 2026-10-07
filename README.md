@@ -57,7 +57,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20261007f`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20261007g`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -96,6 +96,13 @@ python3 -m http.server 8000
 - A small “View as” switcher (bottom-left) jumps between **Email**, **Supplier** and **Buyer**. It is a prototype aid and is *not* part of the Figma design.
 
 **Notification email** (`email.html`)
+- The email is shown **open in a Gmail mock-up**, matched to the supplied Gmail screengrab: top bar
+  with search and the account pill, the folder nav with Compose, the message toolbar, the subject row
+  with *External* and *Inbox* tags, and the sender header — *Buyer Enterprises*, to Steven Neilson,
+  stamped *May 1, 2026, 9:12 AM* (the request's own `QC.history` time). **Only the email is live**;
+  every Gmail control toasts. The icons and the Gmail mark are drawn, not Google's assets, and Gmail's
+  colours are literals. The message panel scrolls inside the window as Gmail's does. The nav drops
+  away below 1100 px and the rail and most toolbar buttons below 760 px, so it still reads on a phone.
 - The email the supplier receives when the buyer raises the inspection, laid out to match the design's
   email screengrab: *Powered by Coupa* above a white body ruled top and bottom, the customer's logo,
   the blue subject line **New Quality Inspection is required for PO #5001**, a grey intro panel with a

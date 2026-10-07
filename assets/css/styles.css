@@ -2950,6 +2950,485 @@ button {
   color: var(--cui-text-t1);
 }
 
+/* ─── Gmail shell — email.html ─────────────────────────────────────────────
+   A mock-up of the inbox the supplier reads the notification in, matched to
+   the supplied Gmail screengrab: a top bar with search and the account pill,
+   the folder nav with Compose, the message on a white rounded panel with its
+   toolbar, subject row and sender header, and the side-panel rail. Gmail's
+   own colours are literals (they are not Coupa's, so there are no tokens).
+   The panel scrolls inside the window, as Gmail's does. Responsive: the nav
+   and then the rail drop away as the viewport narrows. */
+
+.gm-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.gm-body {
+  background: #f6f8fc;
+}
+
+.gm {
+  display: grid;
+  grid-template-columns: 256px minmax(0, 1fr) 56px;
+  grid-template-rows: 64px minmax(0, 1fr);
+  height: 100vh;
+  font-family: Roboto, Arial, sans-serif;
+  color: #1f1f1f;
+}
+
+.gm-icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.gm-icon--sm { width: 16px; height: 16px; }
+.gm-icon--xs { width: 12px; height: 12px; }
+
+.gm-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: #444746;
+  cursor: pointer;
+}
+
+.gm-iconbtn:hover {
+  background: rgba(68, 71, 70, 0.08);
+}
+
+.gm-iconbtn--wide {
+  width: 48px;
+  border-radius: 20px;
+}
+
+/* Top bar */
+.gm-top {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 8px 0 12px;
+}
+
+.gm-top__brand {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 232px;
+  flex: none;
+}
+
+.gm-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 6px;
+}
+
+.gm-logo__mark {
+  width: 32px;
+  height: 24px;
+}
+
+.gm-logo__word {
+  font-size: 22px;
+  line-height: 24px;
+  color: #444746;
+}
+
+.gm-search {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1 1 auto;
+  max-width: 720px;
+  min-width: 0;
+  height: 48px;
+  padding: 0 4px 0 16px;
+  border-radius: 24px;
+  background: #e9eef6;
+  color: #444746;
+}
+
+.gm-search input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 16px;
+  color: #1f1f1f;
+  outline: none;
+}
+
+.gm-search input::-webkit-search-cancel-button { display: none; }
+
+.gm-top__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.gm-account {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  margin-left: 8px;
+  padding: 0 4px 0 16px;
+  border: 1px solid #c4c7c5;
+  border-radius: 24px;
+}
+
+.gm-account img {
+  width: 64px;
+  height: 18px;
+}
+
+.gm-account__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #5e7d6b;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* Each region is pinned to its column, so hiding the nav on a narrow screen
+   does not let the panel slide into the nav's emptied track. */
+.gm-nav { grid-column: 1; grid-row: 2; }
+.gm-main { grid-column: 2; grid-row: 2; }
+.gm-rail { grid-column: 3; grid-row: 2; }
+
+/* Folder nav */
+.gm-nav {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 8px 16px 0 8px;
+  overflow-y: auto;
+}
+
+.gm-compose {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+  height: 56px;
+  margin: 0 0 16px;
+  padding: 0 24px 0 16px;
+  border: 0;
+  border-radius: 16px;
+  background: #c2e7ff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #001d35;
+  cursor: pointer;
+}
+
+.gm-compose:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.gm-nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  height: 32px;
+  padding: 0 12px 0 18px;
+  border: 0;
+  border-radius: 0 16px 16px 0;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: #1f1f1f;
+  text-align: left;
+  cursor: pointer;
+}
+
+.gm-nav__item:hover {
+  background: rgba(31, 31, 31, 0.06);
+}
+
+.gm-nav__item.is-current {
+  background: #d3e3fd;
+  font-weight: 700;
+  color: #001d35;
+  cursor: default;
+}
+
+.gm-nav__label { flex: 1 1 auto; }
+
+.gm-nav__count {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.gm-nav__caret {
+  position: absolute;
+  left: 2px;
+  display: inline-flex;
+}
+
+.gm-nav__labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0 0;
+  padding-left: 18px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* The message panel */
+.gm-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  margin-bottom: 16px;
+  border-radius: 16px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.gm-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 48px;
+  flex: none;
+  padding: 0 8px;
+}
+
+.gm-toolbar__left,
+.gm-toolbar__right {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.gm-sep {
+  width: 1px;
+  height: 20px;
+  margin: 0 8px;
+  background: #e0e3e1;
+}
+
+.gm-pager {
+  margin-right: 8px;
+  font-size: 12px;
+  color: #444746;
+  white-space: nowrap;
+}
+
+.gm-thread {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.gm-subject {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 16px 8px 72px;
+}
+
+.gm-subject__text {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #1f1f1f;
+}
+
+.gm-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: #ddd;
+  font-size: 12px;
+  line-height: 18px;
+  color: #444746;
+}
+
+.gm-tag button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.gm-tag--external {
+  padding: 0 6px;
+  background: #fbd863;
+  color: #1f1f1f;
+}
+
+.gm-subject__important {
+  color: #747775;
+}
+
+.gm-subject__tools {
+  display: flex;
+  margin-left: auto;
+}
+
+.gm-msg {
+  padding: 0 16px 24px;
+}
+
+.gm-msg__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 12px 0 8px;
+}
+
+.gm-msg__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  background: #e8eaed;
+  color: #9aa0a6;
+}
+
+.gm-msg__who {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.gm-msg__from {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+.gm-msg__from strong { font-weight: 700; }
+
+.gm-msg__addr {
+  font-size: 12px;
+  color: #5e5e5e;
+}
+
+.gm-msg__to {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: #5e5e5e;
+}
+
+.gm-msg__meta {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.gm-msg__date {
+  margin-right: 8px;
+  font-size: 12px;
+  color: #5e5e5e;
+  white-space: nowrap;
+}
+
+/* The email itself, indented under the sender as Gmail does. Its own page
+   chrome — full-window height and the 1440 cap — gives way to the panel. */
+.gm-msg__body {
+  margin-left: 56px;
+}
+
+.gm .email-page {
+  max-width: none;
+  min-height: 0;
+  padding: 20px clamp(12px, 2.2vw, 32px) 32px;
+  font-family: var(--cui-font-control);
+}
+
+/* Side-panel rail */
+.gm-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.gm-rail__app {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.gm-rail__sep {
+  width: 20px;
+  height: 1px;
+  background: #c4c7c5;
+}
+
+@media (max-width: 1100px) {
+  .gm { grid-template-columns: 0 minmax(0, 1fr) 56px; }
+  .gm-nav { display: none; }
+  .gm-top__brand { width: auto; }
+  .gm-main { margin-left: 8px; }
+}
+
+@media (max-width: 760px) {
+  .gm { grid-template-columns: 0 minmax(0, 1fr) 0; grid-template-rows: 56px minmax(0, 1fr); }
+  .gm-rail,
+  .gm-logo__word,
+  .gm-account img,
+  .gm-top__actions .gm-iconbtn,
+  .gm-search .gm-iconbtn,
+  .gm-toolbar__left .gm-sep,
+  .gm-toolbar__left .gm-iconbtn:nth-child(n+6),
+  .gm-pager,
+  .gm-toolbar__right .gm-iconbtn--wide,
+  .gm-subject__tools,
+  .gm-msg__meta .gm-iconbtn:not(:nth-last-child(2)) { display: none; }
+  .gm-top { gap: 8px; }
+  .gm-account { padding: 0; border: 0; margin: 0; }
+  .gm-main { margin: 0 8px 8px; }
+  .gm-subject { padding: 12px 8px 4px; }
+  .gm-subject__text { font-size: 18px; line-height: 24px; }
+  .gm-msg { padding: 0 8px 16px; }
+  .gm-msg__addr { display: none; }
+  .gm-msg__body { margin-left: 0; }
+}
+
 /* ─── Notification email — email.html ──────────────────────────────────────
    Matched to the design's email screengrab: a "Powered by Coupa" line above a
    full-width email body ruled top and bottom, the customer's logo over a blue

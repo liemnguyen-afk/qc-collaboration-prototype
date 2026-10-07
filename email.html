@@ -9,63 +9,192 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/tokens.css?v=20261007f">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261007f">
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20261007g">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261007g">
 </head>
-<body data-role="supplier">
+<body data-role="supplier" class="gm-body">
 
-<!-- Notification email — matched to the design's email screengrab. -->
-<div class="email-page" data-email>
+<!-- Gmail shell — a mock-up of the inbox the supplier reads this in, matched
+     to the supplied Gmail screengrab. Only the email inside it is live; every
+     Gmail control toasts. The icons and the Gmail mark are drawn, not Google's
+     own assets. The email body below is unchanged. -->
+<svg class="gm-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="gm-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="gm-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></symbol>
+  <symbol id="gm-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="gm-tune" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+  <symbol id="gm-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.5a2.5 2.5 0 1 1 3.4 2.3c-.7.3-1 .8-1 1.5v.4"/><circle cx="12" cy="17" r=".6"/></symbol>
+  <symbol id="gm-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/></symbol>
+  <symbol id="gm-apps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g stroke="none" fill="currentColor"><circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></g></symbol>
+  <symbol id="gm-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L16 5l3 3L8 19z"/></symbol>
+  <symbol id="gm-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 13h4l1.5 2h5L16 13h4"/></symbol>
+  <symbol id="gm-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l2.4 5 5.4.6-4 3.7 1.1 5.4L12 16l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/></symbol>
+  <symbol id="gm-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="gm-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5l16 7-16 7 3-7z"/><path d="M7 12h6"/></symbol>
+  <symbol id="gm-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></symbol>
+  <symbol id="gm-label" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h11l5 6-5 6H4z"/></symbol>
+  <symbol id="gm-chev-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></symbol>
+  <symbol id="gm-caret-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 8l4 4-4 4" /></symbol>
+  <symbol id="gm-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="gm-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="gm-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v4H4zM5 9v10h14V9"/><path d="M12 11v5M9.5 13.5L12 16l2.5-2.5"/></symbol>
+  <symbol id="gm-report" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5.5"/><circle cx="12" cy="16.3" r=".6"/></symbol>
+  <symbol id="gm-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14M10 7V5h4v2M7 7l1 13h8l1-13"/></symbol>
+  <symbol id="gm-unread" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12v12H4z"/><path d="M4 7l6 5 6-5"/><circle cx="19" cy="6" r="2.2"/></symbol>
+  <symbol id="gm-task" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="12" r="7.5"/><path d="M7.8 12l2.2 2.2 4-4M19 3v5M16.5 5.5h5"/></symbol>
+  <symbol id="gm-move" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M12 8v6M9.5 11.5L12 14l2.5-2.5M4 15h4l1 2h6l1-2h4"/></symbol>
+  <symbol id="gm-more" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g stroke="none" fill="currentColor"><circle cx="12" cy="5.5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="18.5" r="1.7"/></g></symbol>
+  <symbol id="gm-chev-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></symbol>
+  <symbol id="gm-chev-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6l6 6-6 6"/></symbol>
+  <symbol id="gm-keyboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v10H3z"/><path d="M6 10h1M9 10h1M12 10h1M15 10h1M18 10h0M7 14h10"/></symbol>
+  <symbol id="gm-unfold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l4-4 4 4M8 15l4 4 4-4"/></symbol>
+  <symbol id="gm-print" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V4h10v5M7 17H4v-8h16v8h-3M7 14h10v6H7z"/></symbol>
+  <symbol id="gm-popout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4h7v7M20 4l-9 9M18 14v6H4V6h6"/></symbol>
+  <symbol id="gm-smile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 14a4 4 0 0 0 7 0"/><circle cx="9.3" cy="10" r=".7"/><circle cx="14.7" cy="10" r=".7"/></symbol>
+  <symbol id="gm-reply" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6l-6 6 6 6M4 12h9a7 7 0 0 1 7 7"/></symbol>
+  <symbol id="gm-person" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></symbol>
+  <symbol id="gm-important" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10l5 6-5 6H4l5-6z"/></symbol>
+</svg>
 
-  <p class="email-powered">Powered by <img src="assets/icons/coupa-logo.svg" alt="Coupa"></p>
+<div class="gm">
+  <header class="gm-top">
+    <div class="gm-top__brand">
+      <button class="gm-iconbtn" type="button" aria-label="Main menu" title="Main menu" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-menu"/></svg></button>
+      <span class="gm-logo" aria-label="Gmail">
+        <svg class="gm-logo__mark" viewBox="0 0 32 24" aria-hidden="true">
+          <path d="M2.5 21.5V5.5L16 15.5 29.5 5.5v16" fill="none" stroke-width="4" stroke-linejoin="round" stroke="#ea4335"/>
+          <path d="M2.5 21.5V7" stroke="#4285f4" stroke-width="4" stroke-linecap="round"/>
+          <path d="M29.5 21.5V7" stroke="#34a853" stroke-width="4" stroke-linecap="round"/>
+          <path d="M26 8.2l3.5-2.7" stroke="#fbbc04" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <span class="gm-logo__word">Gmail</span>
+      </span>
+    </div>
 
-  <div class="email-frame">
-    <div class="email-frame__body">
+    <label class="gm-search">
+      <svg class="gm-icon"><use href="#gm-search"/></svg>
+      <input type="search" value="quality inspection" aria-label="Search mail">
+      <button class="gm-iconbtn" type="button" aria-label="Clear search" title="Clear search" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-close"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Show search options" title="Show search options" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-tune"/></svg></button>
+    </label>
 
-      <!-- The customer's own logo heads the email; Buyer Enterprises stands in
-           for the design's placeholder mark. -->
-      <div class="email-brand">
-        <img class="email-brand__mark" src="assets/img/customer-logo-mark.svg" alt="">
-        <span class="email-brand__name">Buyer Enterprises</span>
+    <div class="gm-top__actions">
+      <button class="gm-iconbtn" type="button" aria-label="Support" title="Support" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-help"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Settings" title="Settings" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-gear"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Google apps" title="Google apps" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-apps"/></svg></button>
+      <span class="gm-account">
+        <img src="assets/icons/coupa-logo.svg" alt="Apex Exhaust Systems workspace">
+        <span class="gm-account__avatar">SN</span>
+      </span>
+    </div>
+  </header>
+
+  <nav class="gm-nav" aria-label="Mail folders">
+    <button class="gm-compose" type="button" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-pencil"/></svg><span>Compose</span></button>
+    <div class="gm-nav__list">
+        <button class="gm-nav__item is-current" type="button"><svg class="gm-icon"><use href="#gm-inbox"/></svg><span class="gm-nav__label">Inbox</span><span class="gm-nav__count">225</span></button>
+        <button class="gm-nav__item" type="button" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-star"/></svg><span class="gm-nav__label">Starred</span></button>
+        <button class="gm-nav__item" type="button" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-clock"/></svg><span class="gm-nav__label">Snoozed</span></button>
+        <button class="gm-nav__item" type="button" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-send"/></svg><span class="gm-nav__label">Sent</span></button>
+        <button class="gm-nav__item" type="button" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-file"/></svg><span class="gm-nav__label">Drafts</span></button>
+        <button class="gm-nav__item" type="button" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><span class="gm-nav__caret"><svg class="gm-icon gm-icon--sm"><use href="#gm-caret-right"/></svg></span><svg class="gm-icon"><use href="#gm-label"/></svg><span class="gm-nav__label">Categories</span></button>
+        <button class="gm-nav__item" type="button" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-chev-down"/></svg><span class="gm-nav__label">More</span></button>
+    </div>
+    <p class="gm-nav__labels"><span>Labels</span><button class="gm-iconbtn" type="button" aria-label="Create new label" title="Create new label" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-plus"/></svg></button></p>
+  </nav>
+
+  <main class="gm-main">
+    <div class="gm-toolbar">
+      <div class="gm-toolbar__left"><button class="gm-iconbtn" type="button" aria-label="Back to Inbox" title="Back to Inbox" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-back"/></svg></button><span class="gm-sep"></span><button class="gm-iconbtn" type="button" aria-label="Archive" title="Archive" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-archive"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Report spam" title="Report spam" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-report"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Delete" title="Delete" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-trash"/></svg></button><span class="gm-sep"></span><button class="gm-iconbtn" type="button" aria-label="Mark as unread" title="Mark as unread" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-unread"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Snooze" title="Snooze" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-clock"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Add to Tasks" title="Add to Tasks" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-task"/></svg></button><span class="gm-sep"></span><button class="gm-iconbtn" type="button" aria-label="Move to" title="Move to" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-move"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Labels" title="Labels" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-label"/></svg></button><button class="gm-iconbtn" type="button" aria-label="More" title="More" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-more"/></svg></button></div>
+      <div class="gm-toolbar__right">
+        <span class="gm-pager">12 of many</span>
+        <button class="gm-iconbtn" type="button" aria-label="Newer" title="Newer" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-chev-left"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Older" title="Older" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-chev-right"/></svg></button><button class="gm-iconbtn gm-iconbtn--wide" type="button" aria-label="Input tools" title="Input tools" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-keyboard"/></svg></button>
+      </div>
+    </div>
+
+    <div class="gm-thread">
+      <div class="gm-subject">
+        <h2 class="gm-subject__text">New Quality Inspection is required for PO <span data-email-field="poNumber">#5001</span></h2>
+        <span class="gm-tag gm-tag--external">External</span>
+        <svg class="gm-icon gm-icon--sm gm-subject__important"><use href="#gm-important"/></svg>
+        <span class="gm-tag">Inbox <button type="button" aria-label="Remove label Inbox" data-toast="Gmail is a mock-up in this prototype — only the email itself is live.">×</button></span>
+        <span class="gm-subject__tools"><button class="gm-iconbtn" type="button" aria-label="Expand all" title="Expand all" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-unfold"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Print all" title="Print all" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-print"/></svg></button><button class="gm-iconbtn" type="button" aria-label="In new window" title="In new window" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-popout"/></svg></button></span>
       </div>
 
-      <h1 class="email-subject">
-        New Quality Inspection is required for PO <span data-email-field="poNumber">#5001</span>
-      </h1>
-
-      <section class="email-intro">
-        <div class="email-intro__col">
-          <p class="email-intro__greeting">Hello Steven,</p>
-          <p class="email-intro__text">
-            You have received a new quality inspection request for
-            <strong data-email-field="poReference">PO #5001 / 0008</strong> for
-            <strong data-email-field="itemName">Performance Muffler XR-3</strong>, please review and
-            submit inspection by <strong data-email-field="dueDate">06/15/26</strong>. There are
-            <strong><span data-email-field="characteristicCount">8</span> characteristics</strong> required.
-          </p>
-          <p class="email-intro__text email-intro__requested">
-            Requested by<br>
-            <strong data-email-field="requestedByLine">Prasad T., Buyer Enterprises</strong>
-          </p>
-          <button class="email-cta" type="button" data-goto="index.html">View &amp; Complete Inspection</button>
+      <div class="gm-msg">
+        <div class="gm-msg__head">
+          <span class="gm-msg__avatar"><svg class="gm-icon"><use href="#gm-person"/></svg></span>
+          <div class="gm-msg__who">
+            <p class="gm-msg__from"><strong>Buyer Enterprises</strong> <span class="gm-msg__addr">&lt;do_not_reply@buyerenterprises.coupahost.com&gt;</span></p>
+            <p class="gm-msg__to">to steven.neilson <svg class="gm-icon gm-icon--xs"><use href="#gm-chev-down"/></svg></p>
+          </div>
+          <div class="gm-msg__meta">
+            <!-- The request's own timestamp: QC.history's "Requested" entry. -->
+            <span class="gm-msg__date">May 1, 2026, 9:12 AM</span>
+            <button class="gm-iconbtn" type="button" aria-label="Not starred" title="Not starred" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-star"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Add reaction" title="Add reaction" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-smile"/></svg></button><button class="gm-iconbtn" type="button" aria-label="Reply" title="Reply" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-reply"/></svg></button><button class="gm-iconbtn" type="button" aria-label="More" title="More" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-more"/></svg></button>
+          </div>
         </div>
-      </section>
 
-      <section class="email-summary">
-        <h2 class="email-summary__title">Summary</h2>
-        <div class="email-summary__grid" data-email-summary></div>
-      </section>
+        <div class="gm-msg__body">
+          <!-- Notification email — matched to the design's email screengrab. -->
+          <div class="email-page" data-email>
+
+            <p class="email-powered">Powered by <img src="assets/icons/coupa-logo.svg" alt="Coupa"></p>
+
+            <div class="email-frame">
+              <div class="email-frame__body">
+
+                <!-- The customer's own logo heads the email; Buyer Enterprises stands in
+                     for the design's placeholder mark. -->
+                <div class="email-brand">
+                  <img class="email-brand__mark" src="assets/img/customer-logo-mark.svg" alt="">
+                  <span class="email-brand__name">Buyer Enterprises</span>
+                </div>
+
+                <h1 class="email-subject">
+                  New Quality Inspection is required for PO <span data-email-field="poNumber">#5001</span>
+                </h1>
+
+                <section class="email-intro">
+                  <div class="email-intro__col">
+                    <p class="email-intro__greeting">Hello Steven,</p>
+                    <p class="email-intro__text">
+                      You have received a new quality inspection request for
+                      <strong data-email-field="poReference">PO #5001 / 0008</strong> for
+                      <strong data-email-field="itemName">Performance Muffler XR-3</strong>, please review and
+                      submit inspection by <strong data-email-field="dueDate">06/15/26</strong>. There are
+                      <strong><span data-email-field="characteristicCount">8</span> characteristics</strong> required.
+                    </p>
+                    <p class="email-intro__text email-intro__requested">
+                      Requested by<br>
+                      <strong data-email-field="requestedByLine">Prasad T., Buyer Enterprises</strong>
+                    </p>
+                    <button class="email-cta" type="button" data-goto="index.html">View &amp; Complete Inspection</button>
+                  </div>
+                </section>
+
+                <section class="email-summary">
+                  <h2 class="email-summary__title">Summary</h2>
+                  <div class="email-summary__grid" data-email-summary></div>
+                </section>
+              </div>
+            </div>
+
+            <footer class="email-footer">
+              <img class="email-footer__logo" src="assets/icons/coupa-logo.svg" alt="Coupa">
+              <p class="email-footer__tagline">Business Spend Management</p>
+              <p class="email-footer__prefs">
+                To change your notification preferences,
+                <button class="email-footer__link" type="button" data-toast="Notification preferences are out of scope for this prototype.">go here and adjust your settings</button>
+              </p>
+            </footer>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </main>
 
-  <footer class="email-footer">
-    <img class="email-footer__logo" src="assets/icons/coupa-logo.svg" alt="Coupa">
-    <p class="email-footer__tagline">Business Spend Management</p>
-    <p class="email-footer__prefs">
-      To change your notification preferences,
-      <button class="email-footer__link" type="button" data-toast="Notification preferences are out of scope for this prototype.">go here and adjust your settings</button>
-    </p>
-  </footer>
+  <aside class="gm-rail" aria-label="Side panel"><span class="gm-rail__app" style="background:#4285f4"></span><span class="gm-rail__app" style="background:#fbbc04"></span><span class="gm-rail__app" style="background:#1a73e8"></span><span class="gm-rail__app" style="background:#0b57d0"></span>
+    <span class="gm-rail__sep"></span>
+    <button class="gm-iconbtn" type="button" aria-label="Get add-ons" title="Get add-ons" data-toast="Gmail is a mock-up in this prototype — only the email itself is live."><svg class="gm-icon"><use href="#gm-plus"/></svg></button>
+  </aside>
 </div>
 
 <div class="proto-switch">
@@ -77,7 +206,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/data.js?v=20261007f"></script>
-<script src="assets/js/app.js?v=20261007f"></script>
+<script src="assets/js/data.js?v=20261007g"></script>
+<script src="assets/js/app.js?v=20261007g"></script>
 </body>
 </html>
