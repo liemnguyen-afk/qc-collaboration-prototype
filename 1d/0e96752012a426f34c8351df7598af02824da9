@@ -1,0 +1,29 @@
+README.md
+  s_ef47aaeecae543::t_f3e6ec273793e8 80
+buyer.html
+  s_ef47aaeecae543::t_aa67fc1a996925 425
+email.html
+  s_ef47aaeecae543::t_570bd8b9e6a8c1 73
+index.html
+  s_ef47aaeecae543::t_74ec96502ad970 384
+index2.html
+  s_ef47aaeecae543::t_b0012220e4f728 389
+inspections.html
+  s_ef47aaeecae543::t_c5337eb4cdcf8d 152
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1d0e96752012a426f34c8351df7598af02824da9",
+  "prompts": {},
+  "sessions": {
+    "s_ef47aaeecae543": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "651b7a29-8edb-4825-9eff-d57fd6780e42",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "liemnguyen-afk <301846626+liemnguyen-afk@users.noreply.github.com>"
+    }
+  }
+}
