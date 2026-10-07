@@ -833,6 +833,25 @@ button {
   text-overflow: ellipsis;
 }
 
+/* Supplier screen only: Specification is a fixed 300px column whose text wraps
+   instead of clipping, so the full spec reads in place. A wrapped cell is never
+   clipped, so the hover tooltip stops appearing there by itself. The buyer
+   screen keeps the 420px clipped column. */
+body[data-role='supplier'] .data-table th[data-sort-key='specification'],
+body[data-role='supplier'] .data-table .col-spec {
+  box-sizing: border-box;
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+}
+
+body[data-role='supplier'] .data-table .col-spec {
+  white-space: normal;
+  overflow-wrap: break-word;
+  overflow: visible;
+  text-overflow: clip;
+}
+
 .data-table .col-remarks {
   max-width: 300px;
   overflow: hidden;
