@@ -56,7 +56,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20261007c`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20261007d`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -135,8 +135,9 @@ entries still exist in `QC.history` and are still what the email quotes.
   Attachments start blank** — they are the supplier's own entries, filled in by editing a row, and a
   saved row shows what was entered. It is opt-in: `app.js` clears them at load only on a page whose
   `<body>` carries `data-blank-results`, so `data.js`, the buyer screen and any other supplier page
-  keep the submitted values. The seeded line-level files stay in the Attachments Library; the supplier's
-  Attachments cell lists only files attached to that row from this screen.
+  keep the submitted values. The same page also starts with **nothing at the Attachments Library's
+  Line Level** (the 10 seeded files are cleared; Header Level keeps its 3), so the counts read
+  *3 Files | 0 URLs* until a file is attached from a row or the library.
 - The **Attachments** column lists the row’s own line-level attachments **by file name**, with the
   same doc-type icon the library gives them (URLs in link blue). Clicking one expands the library,
   switches to **Line Level**, pages to the file, selects it and renders its preview. A characteristic

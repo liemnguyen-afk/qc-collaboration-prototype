@@ -113,14 +113,12 @@
   var openInLibrary = null;
 
   /* A page whose <body> carries data-blank-results (index.html) opens with
-     Result through Attachments blank: those are the supplier's own entries,
-     filled in by editing a row. Other supplier pages keep the seeded values.
-     data.js is loaded fresh per page, so clearing them here leaves every other
-     page alone. The seeded line-level files stay in the library; the table just
-     does not list them, so a row's Attachments cell shows only what is attached
-     to it from this screen. */
+     Result through Attachments blank, and with nothing at the library's Line
+     Level: those are the supplier's own entries, filled in by editing a row or
+     attaching a file. Other supplier pages keep the seeded values. data.js is
+     loaded fresh per page, so clearing them here leaves every other page
+     alone. Header Level is left as seeded. */
   var blankResults = role === 'supplier' && document.body.hasAttribute('data-blank-results');
-  var seededLineIds = {};
   if (blankResults) {
     QC.characteristics.forEach(function (row) {
       row.result = '';
@@ -129,12 +127,12 @@
       row.inspectionDate = '';
       row.remarks = '';
     });
-    QC.attachments.line.forEach(function (item) { seededLineIds[item.id] = true; });
+    QC.attachments.line.length = 0;
   }
 
   function lineAttachments(row) {
     return QC.attachments.line.filter(function (item) {
-      return String(item.line) === String(row.id) && !seededLineIds[item.id];
+      return String(item.line) === String(row.id);
     });
   }
 
