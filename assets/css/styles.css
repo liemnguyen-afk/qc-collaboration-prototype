@@ -474,6 +474,27 @@ button {
   border-color: var(--cui-orange-subtle-border);
 }
 
+/* A chip that is a control: the alert's "Characteristics Pending" jumps to
+   the table. Same look as the static chip, plus the pointer and states. */
+.chip--link {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.chip--link.chip--warning:hover {
+  background: #ffd9ad;
+}
+
+/* The jump stops a little short of the table, not flush with the window. */
+#characteristics {
+  scroll-margin-top: 20px;
+}
+
+.chip--link:focus-visible {
+  outline: 2px solid var(--cui-light-blue-subtle-border);
+  outline-offset: 2px;
+}
+
 .chip--warning .chip__count {
   background: var(--cui-status-warning-bold);
 }

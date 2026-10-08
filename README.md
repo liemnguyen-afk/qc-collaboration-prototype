@@ -57,7 +57,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20261007i`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20261007j`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
@@ -294,6 +294,8 @@ Things that are deliberate deviations or additions, so nothing here reads as uni
   buyer screen's warning treatment (`3782:77331`) and a *Characteristics Pending* chip, to suit a
   table that starts blank. The screengrab's date, 07/15/25, is replaced by the Summary's due date,
   **06/15/26**, so the two agree; its bolded “Prasad T. (” is bolded as just the name.
+  The **Characteristics Pending** chip is a button: clicking it smooth-scrolls down to the All
+  Characteristics table.
 - **The Comment section is core Coupa's legacy component, matched from a screengrab, and it replaces
   the CUI Comments card the Figma frames draw.** The frames have a CUI card (`3782:74677` on the
   supplier screen, `3782:79100` on the buyer screen) with a card border, radius and a single *Add

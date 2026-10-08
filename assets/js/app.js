@@ -1732,6 +1732,14 @@
     if (button) toast(button.dataset.toast);
   });
 
+  /* In-page jumps, e.g. the alert's chip to the All Characteristics table. */
+  document.querySelectorAll('[data-scroll-to]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var target = document.getElementById(button.dataset.scrollTo);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
   /* ── Initial render ──────────────────────────────────────────────────── */
 
   renderTable();
