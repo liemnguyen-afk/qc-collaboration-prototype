@@ -115,9 +115,11 @@
   /* A page whose <body> carries data-blank-results (index.html) opens with
      Result through Attachments blank, and with nothing at the library's Line
      Level: those are the supplier's own entries, filled in by editing a row or
-     attaching a file. Other supplier pages keep the seeded values. data.js is
-     loaded fresh per page, so clearing them here leaves every other page
-     alone. Header Level is left as seeded. */
+     attaching a file. The Comment section starts empty too: the seeded
+     comments are dropped from QC.history before its thread is built. Other
+     supplier pages keep the seeded values. data.js is loaded fresh per page,
+     so clearing them here leaves every other page alone. Header Level is left
+     as seeded. */
   var blankResults = role === 'supplier' && document.body.hasAttribute('data-blank-results');
   if (blankResults) {
     QC.characteristics.forEach(function (row) {
@@ -128,6 +130,10 @@
       row.remarks = '';
     });
     QC.attachments.line.length = 0;
+    /* The same test the thread uses to pick comments out of the history. */
+    QC.history = QC.history.filter(function (entry) {
+      return entry.actor === 'system' || entry.action.indexOf('Added a comment') !== 0;
+    });
   }
 
   function lineAttachments(row) {
