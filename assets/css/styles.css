@@ -481,6 +481,10 @@ button {
   cursor: pointer;
 }
 
+.chip--link:hover {
+  background: var(--cui-border-b2);
+}
+
 .chip--link.chip--warning:hover {
   background: #ffd9ad;
 }

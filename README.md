@@ -57,7 +57,7 @@ GitHub Pages serves the prototype from `main` / root:
 
 GitHub Pages serves CSS and JS with `Cache-Control: max-age=600`, so a browser that has the page open
 will keep using the old files for ten minutes after a push. The four HTML files therefore link their
-assets with a version query (`assets/css/styles.css?v=20261007j`) — **bump that date whenever you change
+assets with a version query (`assets/css/styles.css?v=20261007k`) — **bump that date whenever you change
 CSS or JS**, so a shared link shows the new build immediately instead of a cached one.
 
 To run it locally, no build step is needed — open `index.html`, or serve the folder:
