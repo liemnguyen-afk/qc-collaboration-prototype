@@ -938,16 +938,27 @@ button {
   outline-offset: -1px;
 }
 
-/* Two buttons where the pencil was, without widening the locked column. */
-.row-edit-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
+/* Figma 642:203993: Cancel and Save in a footer under the edited row, right
+   aligned. The edited row drops its divider so the two read as one block. */
+.data-table tbody tr.is-editing td {
+  border-bottom: 0;
 }
 
-.row-edit-actions .row-action {
-  width: 24px;
-  height: 24px;
+.data-table tbody tr.is-editing-footer td,
+.data-table tbody tr.is-editing-footer:hover td {
+  padding: 4px 16px 20px;
+  background: var(--cui-surface-s3);
+}
+
+/* Sticky so the buttons stay in view when the table is scrolled sideways. */
+.row-edit-actions {
+  position: sticky;
+  right: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  width: max-content;
+  margin-left: auto;
 }
 
 /* Full text for the cells the columns clip */
@@ -2528,6 +2539,13 @@ button {
   font-weight: var(--cui-weight-semibold);
   line-height: var(--cui-line-2xs);
   cursor: pointer;
+}
+
+/* Clarity Button, Size=Small: 28px tall. */
+.btn--sm {
+  padding: 5px 11px;
+  font-size: var(--cui-font-size-2xs);
+  line-height: 16px;
 }
 
 .btn--primary {

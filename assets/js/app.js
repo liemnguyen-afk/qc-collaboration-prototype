@@ -223,18 +223,8 @@
 
   function actionsCell(row) {
     if (role === 'supplier') {
-      if (editingId === row.id) {
-        return (
-          '<span class="row-edit-actions">' +
-          '<button class="row-action row-action--bare" type="button" data-row-save="' + row.id +
-          '" title="Save">' +
-          '<img src="' + ICONS + 'check-outline.svg" alt="Save"></button>' +
-          '<button class="row-action row-action--bare" type="button" data-row-cancel="' + row.id +
-          '" title="Cancel">' +
-          '<img src="' + ICONS + 'close-outline.svg" alt="Cancel"></button>' +
-          '</span>'
-        );
-      }
+      /* Cancel and Save sit in the row's footer instead — editFooterHtml(). */
+      if (editingId === row.id) return '';
       return (
         '<button class="row-action" type="button" data-row-edit="' +
         row.id +
@@ -249,6 +239,21 @@
       row.id +
       '" title="' + label + '">' +
       '<img src="' + ICONS + icon + '" alt="' + label + '"></button>'
+    );
+  }
+
+  /* Figma 642:203993: the edited row ends in a full-width footer with Cancel
+     and Save at the right — Clarity Button, Small, Secondary Outline and
+     Primary Contained. */
+  function editFooterHtml(row, colspan) {
+    return (
+      '<tr class="is-editing-footer"><td colspan="' + colspan + '">' +
+      '<span class="row-edit-actions">' +
+      '<button class="btn btn--outline btn--sm" type="button" data-row-cancel="' + row.id +
+      '">Cancel</button>' +
+      '<button class="btn btn--primary btn--sm" type="button" data-row-save="' + row.id +
+      '">Save</button>' +
+      '</span></td></tr>'
     );
   }
 
@@ -267,7 +272,8 @@
       cells.push('<td class="col-remarks">' + editCell('remarks') + '</td>');
       cells.push(attEditCell(row));
       cells.push('<td class="col-actions">' + actionsCell(row) + '</td>');
-      return '<tr class="is-editing">' + cells.join('') + '</tr>';
+      return '<tr class="is-editing">' + cells.join('') + '</tr>' +
+        editFooterHtml(row, cells.length);
     }
 
     if (role === 'buyer') {
